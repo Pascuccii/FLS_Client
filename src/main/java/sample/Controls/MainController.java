@@ -40,6 +40,7 @@ import static java.lang.Thread.sleep;
 
 @SuppressWarnings("ALL")
 public class MainController extends Application {
+    private static String serverIP = "127.0.0.1";
     private Instant start;
     private Instant stop;
     private double xOffset = 0;
@@ -56,6 +57,12 @@ public class MainController extends Application {
     private TableColumn deleteColumn;
     private ObservableList<User> usersData = FXCollections.observableArrayList();
     private ObservableList<Client> clientsData = FXCollections.observableArrayList();
+    private ObservableList<Group> groupsData = FXCollections.observableArrayList();
+    private ObservableList<Lesson> lessonsData = FXCollections.observableArrayList();
+    private ObservableList<Student> studentsData = FXCollections.observableArrayList();
+    private ObservableList<Subject> subjectsData = FXCollections.observableArrayList();
+    private ObservableList<Teacher> teachersData = FXCollections.observableArrayList();
+    private ObservableList<TeacherSubject> teachersSubjectsData = FXCollections.observableArrayList();
 
     @FXML
     private TableView<User> usersTable;
@@ -69,50 +76,76 @@ public class MainController extends Application {
     private TableColumn<User, String> passwordColumn;
     @FXML
     private TableColumn<User, String> emailColumn;
+
     @FXML
-    private TableView<Client> clientsTable;
+    private TableView<Group> groupsTable;
     @FXML
-    private TableColumn<Client, Integer> idClientColumn;
+    private TableColumn<Group, Integer> groupIdColumn;
     @FXML
-    private TableColumn<Client, String> nameColumn;
+    private TableColumn<Group, String> groupLevelColumn;
+
     @FXML
-    private TableColumn<Client, String> surnameColumn;
+    private TableView<Lesson> lessonsTable;
     @FXML
-    private TableColumn<Client, String> patronymicColumn;
+    private TableColumn<Lesson, Integer> lessonIdColumn;
     @FXML
-    private TableColumn<Client, String> birthDateColumn;
+    private TableColumn<Lesson, Integer> lessonGroupIdColumn;
     @FXML
-    private TableColumn<Client, String> birthPlaceColumn;
+    private TableColumn<Lesson, Integer> lessonTeacherSubjectIdColumn;
     @FXML
-    private TableColumn<Client, String> passportSeriesColumn;
+    private TableColumn<Lesson, Integer> lessonCabinetColumn;
     @FXML
-    private TableColumn<Client, String> passportNumberColumn;
+    private TableColumn<Lesson, String> lessonDateColumn;
     @FXML
-    private TableColumn<Client, String> issuedByColumn;
+    private TableColumn<Lesson, String> lessonTimeColumn;
+
     @FXML
-    private TableColumn<Client, String> issuedDateColumn;
+    private TableView<Student> studentsTable;
     @FXML
-    private TableColumn<Client, String> actualResidenceCityColumn;
+    private TableColumn<Student, Integer> studentIdColumn;
     @FXML
-    private TableColumn<Client, String> actualResidenceAddressColumn;
+    private TableColumn<Student, String> studentNameColumn;
     @FXML
-    private TableColumn<Client, String> homeNumberColumn;
+    private TableColumn<Student, String> studentSurnameColumn;
     @FXML
-    private TableColumn<Client, String> mobileNumberColumn;
+    private TableColumn<Student, String> studentPatronymicColumn;
     @FXML
-    private TableColumn<Client, String> emailClientColumn;
+    private TableColumn<Student, Integer> studentGroupIdColumn;
     @FXML
-    private TableColumn<Client, String> jobColumn;
+    private TableColumn<Student, String> studentEmailColumn;
     @FXML
-    private TableColumn<Client, String> positionColumn;
+    private TableColumn<Student, String> studentPhoneColumn;
+
     @FXML
-    private TableColumn<Client, String> registrationCityColumn;
+    private TableView<Subject> subjectsTable;
     @FXML
-    private TableColumn<Client, String> citizenshipColumn;
+    private TableColumn<Subject, Integer> subjectIdColumn;
     @FXML
-    private TableColumn<Client, String> monthlyIncomeColumn;
+    private TableColumn<Subject, String> subjectNameColumn;
     @FXML
-    private TableColumn<Client, String> idNumberColumn;
+    private TableColumn<Subject, Integer> subjectHoursColumn;
+
+    @FXML
+    private TableView<Teacher> teachersTable;
+    @FXML
+    private TableColumn<Teacher, Integer> teacherIdColumn;
+    @FXML
+    private TableColumn<Teacher, String> teacherNameColumn;
+    @FXML
+    private TableColumn<Teacher, String> teacherSurnameColumn;
+    @FXML
+    private TableColumn<Teacher, String> teacherPatronymicColumn;
+
+    @FXML
+    private TableView<TeacherSubject> teachersSubjectsTable;
+    @FXML
+    private TableColumn<TeacherSubject, Integer> teacherSubjectIdColumn;
+    @FXML
+    private TableColumn<TeacherSubject, Integer> teacherSubjectTeacherIdColumn;
+    @FXML
+    private TableColumn<TeacherSubject, Integer> teacherSubjectSubjectIdColumn;
+
+
     @FXML
     private AnchorPane primaryAnchorPane;
     @FXML
@@ -575,11 +608,16 @@ public class MainController extends Application {
         /*connDB =
                 new DatabaseConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true" +
                         "&useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow", "root", "root");*/
-        connServer = new ServerConnection("127.0.0.1", 8189);
+        connServer = new ServerConnection("127.0.0.1", 8000);
         if (!connServer.exists()) {
-            loginWarning.setStyle("-fx-text-fill: #d85751");
-            loginWarning.setText("No connection.");
-        }
+            connServer = new ServerConnection("192.168.43.226", 8000);
+            if (!connServer.exists()) {
+                loginWarning.setStyle("-fx-text-fill: #d85751");
+                loginWarning.setText("No connection.");
+            } else
+                serverIP = "192.168.43.226";
+        } else
+            serverIP = "127.0.0.1";
 
 
         //       initUsersData();
@@ -798,7 +836,6 @@ public class MainController extends Application {
             }
         });
 
-        serverConnectButton.setOnAction(event -> connServer.sendString("addClient|0|Глеба|Скачков|Дмитриевича|2019-11-13|MP|3418582|Орган выдачи|2019-11-13|Минск|Минск|Козлова|null|null|null|null|null|Минск|Single|Беларусь|No|No|null|6632915P119P01"));
         clientsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         addClientNameDescription.setText("");
@@ -947,6 +984,42 @@ public class MainController extends Application {
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
+        groupIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        groupLevelColumn.setCellValueFactory(new PropertyValueFactory<>("level"));
+
+        lessonIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lessonGroupIdColumn.setCellValueFactory(new PropertyValueFactory<>("groupId"));
+        lessonTeacherSubjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("teacher_subjectId"));
+        lessonCabinetColumn.setCellValueFactory(new PropertyValueFactory<>("cabinet"));
+        lessonDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        lessonTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+
+        studentIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        studentNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        studentSurnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        studentPatronymicColumn.setCellValueFactory(new PropertyValueFactory<>("patronymic"));
+        studentGroupIdColumn.setCellValueFactory(new PropertyValueFactory<>("groupId"));
+        studentEmailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        studentPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        subjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        subjectNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        subjectHoursColumn.setCellValueFactory(new PropertyValueFactory<>("hours"));
+
+        teacherIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        teacherNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        teacherSurnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        teacherPatronymicColumn.setCellValueFactory(new PropertyValueFactory<>("patronymic"));
+
+        teacherSubjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        teacherSubjectTeacherIdColumn.setCellValueFactory(new PropertyValueFactory<>("teacherId"));
+        teacherSubjectSubjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("subjectId"));
+
+
+
+
+
+
         menuAdminButton1.setOnAction(actionEvent -> selectMenuItem(menuAdminButton1, menuPane1));
         menuAdminButton2.setOnAction(actionEvent -> selectMenuItem(menuAdminButton2, menuPane2));
         menuUserButton2.setOnAction(actionEvent -> selectMenuItem(menuUserButton2, menuPane2));
@@ -974,6 +1047,12 @@ public class MainController extends Application {
         logoutButtonAdmin.getStyleClass().add("logoutButton");
         logoutButtonUser.getStyleClass().add("logoutButton");
         usersTable.getStyleClass().add("usersTable");
+        groupsTable.getStyleClass().add("usersTable");
+        lessonsTable.getStyleClass().add("usersTable");
+        studentsTable.getStyleClass().add("usersTable");
+        subjectsTable.getStyleClass().add("usersTable");
+        teachersSubjectsTable.getStyleClass().add("usersTable");
+        teachersTable.getStyleClass().add("usersTable");
 
         loginPane.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER && !(usernameField.getText().equals("") || passwordField.getText().equals("")))
@@ -1126,10 +1205,11 @@ public class MainController extends Application {
         });
 
         loginButton.setOnAction(actionEvent -> {
+            System.out.println(serverIP);
             if (!connServer.exists()) {
                 loginButton.setDisable(true);
                 signUpButton.setDisable(true);
-                connServer = new ServerConnection("127.0.0.1", 8189);
+                connServer = new ServerConnection(serverIP, 8000);
 
                 if (connServer.exists()) {
                     loginWarning.setStyle("-fx-text-fill: #7f8e55");
@@ -1189,7 +1269,7 @@ public class MainController extends Application {
             if (!connServer.exists()) {
                 loginButton.setDisable(true);
                 signUpButton.setDisable(true);
-                connServer = new ServerConnection("127.0.0.1", 8189);
+                connServer = new ServerConnection("serverIP", 8000);
                 if (connServer.exists()) {
                     loginWarning.setStyle("-fx-text-fill: #7f8e55");
                     loginWarning.setText("Connection established.");
@@ -2196,12 +2276,13 @@ public class MainController extends Application {
                         changeUser_AnchorPane_Password.setText("");
                         changeUser_AnchorPane_Email.setText("");
                         for (User u : usersData)
-                            if (u.getId() == enteredId) {
-                                u.setUsernameServer(connServer, enteredUsername);
-                                u.setPasswordServer(connServer, enteredPassword);
-                                u.setAccessModeServer(connServer, String.valueOf(enteredAccessMode));
-                                u.setEMailServer(connServer, enteredEmail);
-                            }
+                            if (u.getId() == enteredId)
+                                if (enteredPassword.matches("[0-9a-zA-Z]{6,}")) {
+                                    u.setUsernameServer(connServer, enteredUsername);
+                                    u.setPasswordServer(connServer, enteredPassword);
+                                    u.setAccessModeServer(connServer, String.valueOf(enteredAccessMode));
+                                    u.setEMailServer(connServer, enteredEmail);
+                                }
                         new Thread() {
                             @Override
                             public void run() {
@@ -2222,7 +2303,6 @@ public class MainController extends Application {
                 for (User u : usersData)
                     if (id == u.getId()) {
                         changeUser_AnchorPane_Username.setText(u.getUsername());
-                        changeUser_AnchorPane_Password.setText(u.getPassword());
                         changeUser_AnchorPane_Email.setText(u.getEmail());
                         if (currentLanguage.equals("English"))
                             changeUser_AnchorPane_AccessMode_MenuButton.setText((u.getAccessMode() == 0) ? "User" : "Admin");
@@ -2279,21 +2359,24 @@ public class MainController extends Application {
                 }
 
             if (!was) {
-                createUser_AnchorPane_Username.setText("");
-                createUser_AnchorPane_Password.setText("");
-                createUser_AnchorPane_Email.setText("");
-                User u = new User(0, access_mode, username, password, email, false);
-                connServer.sendString("addUser|" + u.toString());
-                new Thread() {
-                    @Override
-                    public void run() {
-                        initDataFromServer();
-                        System.out.println("added");
-                    }
-                }.start();
+                if (password.matches("[0-9a-zA-Z]{6,}")) {
+                    createUser_AnchorPane_Username.setText("");
+                    createUser_AnchorPane_Password.setText("");
+                    createUser_AnchorPane_Email.setText("");
+                    User u = new User(0, access_mode, username, password, email, false);
+                    connServer.sendString("addUser|" + u.toString());
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            initDataFromServer();
+                            System.out.println("added");
+                        }
+                    }.start();
 
-                warningLabel.setStyle("-fx-text-fill: #7f8e55");
-                warningLabel.setText(username + " registered");
+                    warningLabel.setStyle("-fx-text-fill: #7f8e55");
+                    warningLabel.setText(username + " registered");
+                } else
+                    warningLabel.setText("Incorrect password format");
             } else
                 warningLabel.setText("Username is not free");
         } else {
@@ -2315,18 +2398,21 @@ public class MainController extends Application {
                 }
 
             if (!was) {
-                User u = new User(0, 0, username, password, "", false);
-                connServer.sendString("addUser|" + u.toString());
-                new Thread() {
-                    @Override
-                    public void run() {
-                        initDataFromServer();
-                        System.out.println("added");
-                    }
-                }.start();
+                if (password.matches("[0-9a-zA-Z]{6,}")) {
+                    User u = new User(0, 0, username, password, "", false);
+                    connServer.sendString("addUser|" + u.toString());
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            initDataFromServer();
+                            System.out.println("added");
+                        }
+                    }.start();
 
-                warningLabel.setStyle("-fx-text-fill: #7f8e55");
-                warningLabel.setText(username + " registered");
+                    warningLabel.setStyle("-fx-text-fill: #7f8e55");
+                    warningLabel.setText(username + " registered");
+                } else
+                    warningLabel.setText("Incorrect password format");
             } else
                 warningLabel.setText("Username is not free");
         } else
@@ -2403,8 +2489,6 @@ public class MainController extends Application {
         } else {
             stage.setMaximized(true);
             usersTable.setPrefHeight(606d);
-            clientsTable.setPrefWidth(1250d);
-            clientsTable.setPrefHeight(370d);
             createUser_AnchorPane.setLayoutY(667);
             minimizeButton.setStyle("-fx-background-image: url(assets/minimize-white.png)");
             loginElementsPane.setLayoutX(610);
@@ -2518,20 +2602,60 @@ public class MainController extends Application {
 
     }
 */
-    private synchronized void initClientsDataServerBuffer() {
-        clientsTable.setItems(clientsData);
-        clientsData.clear();
-        for (Client c : connServer.getClientList())
-            clientsData.add(c);
-        clientsTable.refresh();
-    }
-
     private synchronized void initUsersDataServerBuffer() {
         usersTable.setItems(usersData);
         usersData.clear();
         for (User u : connServer.getUserList())
             usersData.add(u);
         usersTable.refresh();
+    }
+
+    private synchronized void initGroupsDataServerBuffer() {
+        groupsTable.setItems(groupsData);
+        groupsData.clear();
+        for (Group g : connServer.getGroupsList())
+            groupsData.add(g);
+        groupsTable.refresh();
+    }
+
+    private synchronized void initLessonsDataServerBuffer() {
+        lessonsTable.setItems(lessonsData);
+        lessonsData.clear();
+        for (Lesson l : connServer.getLessonsList())
+            lessonsData.add(l);
+        lessonsTable.refresh();
+    }
+
+    private synchronized void initStudentsDataServerBuffer() {
+        studentsTable.setItems(studentsData);
+        studentsData.clear();
+        for (Student st : connServer.getStudentsList())
+            studentsData.add(st);
+        studentsTable.refresh();
+    }
+
+    private synchronized void initSubjectsDataServerBuffer() {
+        subjectsTable.setItems(subjectsData);
+        subjectsData.clear();
+        for (Subject sb : connServer.getSubjectsList())
+            subjectsData.add(sb);
+        subjectsTable.refresh();
+    }
+
+    private synchronized void initTeachersDataServerBuffer() {
+        teachersTable.setItems(teachersData);
+        teachersData.clear();
+        for (Teacher t : connServer.getTeachersList())
+            teachersData.add(t);
+        teachersTable.refresh();
+    }
+
+    private synchronized void initTeachersSubjectsDataServerBuffer() {
+        teachersSubjectsTable.setItems(teachersSubjectsData);
+        teachersSubjectsData.clear();
+        for (TeacherSubject ts : connServer.getTeachersSubjectsList())
+            teachersSubjectsData.add(ts);
+        teachersSubjectsTable.refresh();
     }
 
 
@@ -3363,7 +3487,34 @@ public class MainController extends Application {
             for (int i = 0; i < 10; i++) {
                 if (!connServer.isInProcess()) {
                     initUsersDataServerBuffer();
-                    initClientsDataServerBuffer();
+                    initGroupsDataServerBuffer();
+                    initLessonsDataServerBuffer();
+                    initStudentsDataServerBuffer();
+                    initSubjectsDataServerBuffer();
+                    initTeachersDataServerBuffer();
+                    initTeachersSubjectsDataServerBuffer();
+
+                    System.out.println("USERS :");
+                    for (User u : usersData)
+                        System.out.println(u);
+                    System.out.println("GROUPS :");
+                    for (Group g : groupsData)
+                        System.out.println(g);
+                    System.out.println("LESSONS :");
+                    for (Lesson l : lessonsData)
+                        System.out.println(l);
+                    System.out.println("STUDENTS :");
+                    for (Student s : studentsData)
+                        System.out.println(s);
+                    System.out.println("SUBJECTS :");
+                    for (Subject sb : subjectsData)
+                        System.out.println(sb);
+                    System.out.println("TEACHERS :");
+                    for (Teacher t : teachersData)
+                        System.out.println(t);
+                    System.out.println("TEACHERS SUBJECTS :");
+                    for (TeacherSubject ts : teachersSubjectsData)
+                        System.out.println(ts);
                     break;
                 }
                 try {
@@ -3375,5 +3526,5 @@ public class MainController extends Application {
         }
     }
 
-    // TODO: ПРОВЕРКИ РЕДАКТИРОВАНИЯ
+    // TODO:
 }

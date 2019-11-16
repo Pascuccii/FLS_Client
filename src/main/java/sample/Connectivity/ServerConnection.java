@@ -3,14 +3,18 @@ package sample.Connectivity;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.Controls.Client;
-import sample.Controls.User;
+import sample.Controls.*;
 
 public class ServerConnection implements TCPConnectionListener {
-
-
     private ObservableList<User> userList = FXCollections.observableArrayList();
     private ObservableList<Client> clientList = FXCollections.observableArrayList();
+    private ObservableList<Group> groupsList = FXCollections.observableArrayList();
+    private ObservableList<Lesson> lessonsList = FXCollections.observableArrayList();
+    private ObservableList<Student> studentsList = FXCollections.observableArrayList();
+    private ObservableList<Subject> subjectsList = FXCollections.observableArrayList();
+    private ObservableList<Teacher> teachersList = FXCollections.observableArrayList();
+    private ObservableList<TeacherSubject> teachersSubjectsList = FXCollections.observableArrayList();
+
     private String mode = "User";
     private int cnt = 0;
     private boolean inProcess = false;
@@ -54,6 +58,30 @@ public class ServerConnection implements TCPConnectionListener {
                     clientList.clear();
                     cnt = Integer.parseInt(vals[0]);
                     mode = "Client";
+                } else if (value.matches("[0-9]+ TEACHERS:")) {
+                    teachersList.clear();
+                    cnt = Integer.parseInt(vals[0]);
+                    mode = "Teacher";
+                } else if (value.matches("[0-9]+ STUDENTS:")) {
+                    studentsList.clear();
+                    cnt = Integer.parseInt(vals[0]);
+                    mode = "Student";
+                } else if (value.matches("[0-9]+ LESSONS:")) {
+                    lessonsList.clear();
+                    cnt = Integer.parseInt(vals[0]);
+                    mode = "Lesson";
+                } else if (value.matches("[0-9]+ SUBJECTS:")) {
+                    subjectsList.clear();
+                    cnt = Integer.parseInt(vals[0]);
+                    mode = "Subject";
+                } else if (value.matches("[0-9]+ GROUPS:")) {
+                    groupsList.clear();
+                    cnt = Integer.parseInt(vals[0]);
+                    mode = "Group";
+                } else if (value.matches("[0-9]+ TEACHERSSUBJECTS:")) {
+                    teachersSubjectsList.clear();
+                    cnt = Integer.parseInt(vals[0]);
+                    mode = "TeacherSubject";
                 }
             } else {
                 cnt--;
@@ -61,6 +89,18 @@ public class ServerConnection implements TCPConnectionListener {
                     userList.add(new User(value, true));
                 if (mode.equals("Client"))
                     clientList.add(new Client(value));
+                if (mode.equals("Teacher"))
+                    teachersList.add(new Teacher(value));
+                if (mode.equals("Student"))
+                    studentsList.add(new Student(value));
+                if (mode.equals("Lesson"))
+                    lessonsList.add(new Lesson(value));
+                if (mode.equals("Subject"))
+                    subjectsList.add(new Subject(value));
+                if (mode.equals("Group"))
+                    groupsList.add(new Group(value));
+                if (mode.equals("TeacherSubject"))
+                    teachersSubjectsList.add(new TeacherSubject(value));
             }
             if (value.equals("close"))
                 connection.disconnect();
@@ -97,6 +137,30 @@ public class ServerConnection implements TCPConnectionListener {
 
     public ObservableList<Client> getClientList() {
         return clientList;
+    }
+
+    public ObservableList<Group> getGroupsList() {
+        return groupsList;
+    }
+
+    public ObservableList<Lesson> getLessonsList() {
+        return lessonsList;
+    }
+
+    public ObservableList<Student> getStudentsList() {
+        return studentsList;
+    }
+
+    public ObservableList<Subject> getSubjectsList() {
+        return subjectsList;
+    }
+
+    public ObservableList<Teacher> getTeachersList() {
+        return teachersList;
+    }
+
+    public ObservableList<TeacherSubject> getTeachersSubjectsList() {
+        return teachersSubjectsList;
     }
 
     public void printUsersBuffer() {

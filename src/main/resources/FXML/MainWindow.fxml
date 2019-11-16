@@ -128,8 +128,9 @@
                 <AnchorPane fx:id="rightAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="369.0" prefWidth="409.0">
                      <children>
                          <AnchorPane fx:id="menuPane1" minHeight="0.0" minWidth="0.0" prefHeight="160.0"
-                                     prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                     prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0"
+                                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                     AnchorPane.topAnchor="0.0">
                            <children>
                               <TextField fx:id="searchField" layoutX="221.0" layoutY="12.0" prefHeight="27.0" prefWidth="286.0" promptText="Search..." AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="271.0" AnchorPane.topAnchor="12.0" />
                               <TableView fx:id="usersTable" editable="true" focusTraversable="false" layoutX="14.0" layoutY="43.0" maxWidth="513.0" prefHeight="154.0" prefWidth="513.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="50.0">
@@ -200,9 +201,8 @@
                               </AnchorPane>
                            </children></AnchorPane>
                          <AnchorPane fx:id="menuPane2" minHeight="0.0" minWidth="0.0" prefHeight="160.0"
-                                     prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0"
-                                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                     AnchorPane.topAnchor="0.0">
+                                     prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <ScrollPane fx:id="clientManagementScrollPane" focusTraversable="false" prefHeight="462.0" prefWidth="573.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <content>

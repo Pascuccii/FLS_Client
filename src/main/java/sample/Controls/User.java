@@ -252,10 +252,12 @@ public class User implements Serializable {
     }
 
     public void setPasswordServer(ServerConnection conn, String value) {
-        this.password = value;
-        encrypted = false;
-        encryptPassword();
-        conn.sendString("User|setPassword|" + id + "|" + this.password);
+        if (value.matches("[0-9a-zA-Z]{6,}")) {
+            this.password = value;
+            encrypted = false;
+            encryptPassword();
+            conn.sendString("User|setPassword|" + id + "|" + this.password);
+        }
     }
 
     public void setEMailServer(ServerConnection conn, String value) {
