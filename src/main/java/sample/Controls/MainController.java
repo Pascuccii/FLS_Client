@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -165,13 +164,23 @@ public class MainController extends Application {
     @FXML
     private Label currentUserLabelAdmin;
     @FXML
-    private Button menuAdminButton1;
+    private Button menuAdminUsersButton;
     @FXML
-    private Button menuAdminButton2;
+    private Button menuAdminLessonsButton;
     @FXML
-    private Button menuAdminButton3;
+    private Button menuAdminTeachersSubjectsButton;
     @FXML
-    private Button menuAdminButton4;
+    private Button menuAdminGroupsButton;
+    @FXML
+    private Button menuAdminStudentsButton;
+    @FXML
+    private Button menuAdminTeachersButton;
+    @FXML
+    private Button menuAdminSubjectsButton;
+    @FXML
+    private Button menuAdminSettingsButton;
+    @FXML
+    private Button menuAdminInfoButton;
     @FXML
     private Button logoutButtonAdmin;
     @FXML
@@ -179,11 +188,9 @@ public class MainController extends Application {
     @FXML
     private Label currentUserLabelUser;
     @FXML
-    private Button menuUserButton2;
+    private Button menuUserSettingsButton;
     @FXML
-    private Button menuUserButton3;
-    @FXML
-    private Button menuUserButton4;
+    private Button menuUserInfoButton;
     @FXML
     private Button logoutButtonUser;
     @FXML
@@ -191,7 +198,43 @@ public class MainController extends Application {
     @FXML
     private AnchorPane rightAnchorPane;
     @FXML
-    private AnchorPane menuPane1;
+    private AnchorPane menuPaneUsers;
+    @FXML
+    private AnchorPane menuPaneLessons;
+    @FXML
+    private ScrollPane LessonsScrollPane;
+    @FXML
+    private AnchorPane LessonsAnchorPane;
+    @FXML
+    private AnchorPane menuPaneTeachersSubjects;
+    @FXML
+    private ScrollPane TeachersSubjectsScrollPane;
+    @FXML
+    private AnchorPane TeachersSubjectsAnchorPane;
+    @FXML
+    private AnchorPane menuPaneGroups;
+    @FXML
+    private ScrollPane GroupsScrollPane;
+    @FXML
+    private AnchorPane GroupsAnchorPane;
+    @FXML
+    private AnchorPane menuPaneStudents;
+    @FXML
+    private ScrollPane StudentsScrollPane;
+    @FXML
+    private AnchorPane StudentsAnchorPane;
+    @FXML
+    private AnchorPane menuPaneTeachers;
+    @FXML
+    private ScrollPane TeachersScrollPane;
+    @FXML
+    private AnchorPane TeachersAnchorPane;
+    @FXML
+    private AnchorPane menuPaneSubjects;
+    @FXML
+    private ScrollPane SubjectsScrollPane;
+    @FXML
+    private AnchorPane SubjectsAnchorPane;
     @FXML
     private TextField searchField;
     @FXML
@@ -254,8 +297,6 @@ public class MainController extends Application {
     private Button deleteUserButton;
     @FXML
     private Label deleteUserLabel;
-    @FXML
-    private AnchorPane menuPane2;
     @FXML
     private ScrollPane clientManagementScrollPane;
     @FXML
@@ -505,7 +546,7 @@ public class MainController extends Application {
     @FXML
     private MenuItem criteriaClientID;
     @FXML
-    private AnchorPane menuPane3;
+    private AnchorPane menuPaneSettings;
     @FXML
     private AnchorPane menuPane31;
     @FXML
@@ -573,7 +614,7 @@ public class MainController extends Application {
     @FXML
     private Label menuPane1_DBLabel;
     @FXML
-    private AnchorPane menuPane4;
+    private AnchorPane menuPaneInfo;
     @FXML
     private AnchorPane loginPane;
     @FXML
@@ -624,7 +665,7 @@ public class MainController extends Application {
         //       initClientsData();
 
 
-        idClientColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        /*idClientColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
         patronymicColumn.setCellValueFactory(new PropertyValueFactory<>("patronymic"));
@@ -836,9 +877,9 @@ public class MainController extends Application {
             }
         });
 
-        clientsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        clientsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);*/
 
-        addClientNameDescription.setText("");
+        /*addClientNameDescription.setText("");
         addClientSurnameDescription.setText("");
         addClientPatronymicDescription.setText("");
         addClientJobDescription.setText("");
@@ -887,7 +928,7 @@ public class MainController extends Application {
         addClientMonthlyIncomeDescription.getStyleClass().add("descriptionLabel");
         addClientMobilePhoneDescription.getStyleClass().add("descriptionLabel");
         addClientEmailDescription.getStyleClass().add("descriptionLabel");
-        addButtonsToTable();
+        addButtonsToTable();*/
 
 
         //Дальше - функционал элементов
@@ -895,7 +936,6 @@ public class MainController extends Application {
         connectionIndicator.getStyleClass().add("connectionIndicator");
         connectionIndicator.setOnAction(actionEvent -> {
             initUsersDataServerBuffer();
-            initClientsDataServerBuffer();
         });
 
         title.getStyleClass().add("title");
@@ -912,25 +952,43 @@ public class MainController extends Application {
                 switch (keyEvent.getCode()) {
                     case DIGIT1:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminButton1.fire();
+                            menuAdminUsersButton.fire();
                         break;
                     case DIGIT2:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminButton2.fire();
-                        else
-                            menuUserButton2.fire();
+                            menuAdminLessonsButton.fire();
                         break;
                     case DIGIT3:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminButton3.fire();
-                        else
-                            menuUserButton3.fire();
+                            menuAdminTeachersSubjectsButton.fire();
                         break;
                     case DIGIT4:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminButton4.fire();
+                            menuAdminGroupsButton.fire();
+                        break;
+                    case DIGIT5:
+                        if (currentUser.getAccessMode() == 1)
+                            menuAdminStudentsButton.fire();
+                        break;
+                    case DIGIT6:
+                        if (currentUser.getAccessMode() == 1)
+                            menuAdminTeachersButton.fire();
+                        break;
+                    case DIGIT7:
+                        if (currentUser.getAccessMode() == 1)
+                            menuAdminSubjectsButton.fire();
+                        break;
+                    case DIGIT8:
+                        if (currentUser.getAccessMode() == 1)
+                            menuAdminSettingsButton.fire();
                         else
-                            menuUserButton4.fire();
+                            menuUserSettingsButton.fire();
+                        break;
+                    case DIGIT9:
+                        if (currentUser.getAccessMode() == 1)
+                            menuAdminInfoButton.fire();
+                        else
+                            menuUserInfoButton.fire();
                         break;
                     case ESCAPE:
                         logoutButtonAdmin.fire();
@@ -943,14 +1001,14 @@ public class MainController extends Application {
         createUser_AnchorPane.getStyleClass().add("elementsPane");
         changeUser_AnchorPane.getStyleClass().add("elementsPane");
         deleteUser_AnchorPane.getStyleClass().add("elementsPane");
-        createClient_AnchorPane.getStyleClass().add("elementsPane");
+        /*createClient_AnchorPane.getStyleClass().add("elementsPane");
         createClient_AnchorPane_NameJobResidencePane.getStyleClass().add("oneBorderPane");
         createClient_AnchorPane_PassportDataPane.getStyleClass().add("oneBorderPane");
         clientManagementAnchorPane.getStyleClass().add("clientManagementAnchorPane");
         clientManagementScrollPane.getStyleClass().add("clientManagementScrollPane");
         clientManagementScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         clientManagementScrollPane.setMinWidth(550);
-        clientManagementScrollPane.setMaxWidth(1920);
+        clientManagementScrollPane.setMaxWidth(1920);*/
 
 
         hideButton.getStyleClass().add("hideButton");
@@ -976,7 +1034,12 @@ public class MainController extends Application {
         exitButton.setFocusTraversable(false);
         logoutButtonAdmin.setFocusTraversable(false);
         logoutButtonUser.setFocusTraversable(false);
-        clientManagementScrollPane.setFocusTraversable(false);
+        LessonsScrollPane.setFocusTraversable(false);
+        TeachersSubjectsScrollPane.setFocusTraversable(false);
+        GroupsScrollPane.setFocusTraversable(false);
+        StudentsScrollPane.setFocusTraversable(false);
+        TeachersScrollPane.setFocusTraversable(false);
+        SubjectsScrollPane.setFocusTraversable(false);
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         accessModeColumn.setCellValueFactory(new PropertyValueFactory<>("accessMode"));
@@ -1016,31 +1079,39 @@ public class MainController extends Application {
         teacherSubjectSubjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("subjectId"));
 
 
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //1
+        menuAdminUsersButton.setOnAction(actionEvent -> selectMenuItem(menuAdminUsersButton, menuPaneUsers));
+        //2
+        menuAdminLessonsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminLessonsButton, menuPaneLessons));
+        //3
+        menuAdminTeachersSubjectsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminTeachersSubjectsButton, menuPaneTeachersSubjects));
+        //4
+        menuAdminGroupsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminGroupsButton, menuPaneGroups));
+        //5
+        menuAdminStudentsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminStudentsButton, menuPaneStudents));
+        //6
+        menuAdminTeachersButton.setOnAction(actionEvent -> selectMenuItem(menuAdminTeachersButton, menuPaneTeachers));
+        //7
+        menuAdminSubjectsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminSubjectsButton, menuPaneSubjects));
+        //8
+        menuAdminSettingsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminSettingsButton, menuPaneSettings));
+        menuUserSettingsButton.setOnAction(actionEvent -> selectMenuItem(menuUserSettingsButton, menuPaneSettings));
+        //9
+        menuAdminInfoButton.setOnAction(actionEvent -> selectMenuItem(menuAdminInfoButton, menuPaneInfo));
+        menuUserInfoButton.setOnAction(actionEvent -> selectMenuItem(menuUserInfoButton, menuPaneInfo));
 
-
-
-
-        menuAdminButton1.setOnAction(actionEvent -> selectMenuItem(menuAdminButton1, menuPane1));
-        menuAdminButton2.setOnAction(actionEvent -> selectMenuItem(menuAdminButton2, menuPane2));
-        menuUserButton2.setOnAction(actionEvent -> selectMenuItem(menuUserButton2, menuPane2));
-        menuAdminButton3.setOnAction(actionEvent -> selectMenuItem(menuAdminButton3, menuPane3));
-        menuUserButton3.setOnAction(actionEvent -> selectMenuItem(menuUserButton3, menuPane3));
-        menuAdminButton4.setOnAction(actionEvent -> selectMenuItem(menuAdminButton4, menuPane4));
-        menuUserButton4.setOnAction(actionEvent -> selectMenuItem(menuUserButton4, menuPane4));
-
-        menuPane1.setOnMouseClicked(mouseEvent -> {
-            menuPane1.requestFocus();
+        menuPaneUsers.setOnMouseClicked(mouseEvent -> {
+            menuPaneUsers.requestFocus();
             usersTable.getSelectionModel().clearSelection();
         });
-        menuPane2.setOnMouseClicked(mouseEvent -> menuPane2.requestFocus());
-        menuPane3.setOnMouseClicked(mouseEvent -> menuPane3.requestFocus());
-        menuPane4.setOnMouseClicked(mouseEvent -> menuPane4.requestFocus());
+        menuPaneSettings.setOnMouseClicked(mouseEvent -> menuPaneSettings.requestFocus());
+        menuPaneInfo.setOnMouseClicked(mouseEvent -> menuPaneInfo.requestFocus());
         loginPane.setOnMouseClicked(mouseEvent -> loginPane.requestFocus());
 
-        menuPane1.getStyleClass().add("menuPane");
-        menuPane2.getStyleClass().add("menuPane");
-        menuPane3.getStyleClass().add("menuPane");
-        menuPane4.getStyleClass().add("menuPane");
+        menuPaneUsers.getStyleClass().add("menuPane");
+        menuPaneSettings.getStyleClass().add("menuPane");
+        menuPaneInfo.getStyleClass().add("menuPane");
 
         signUpButton.getStyleClass().add("signUpButton");
         loginButton.getStyleClass().add("loginButton");
@@ -1335,7 +1406,7 @@ public class MainController extends Application {
         criteriaMenuItem_Password.setOnAction(actionEvent -> criteriaButton.setText("Password"));
         criteriaMenuItem_Email.setOnAction(actionEvent -> criteriaButton.setText("E-mail"));
 
-        criteriaClientName.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientName.getText()));
+        /*criteriaClientName.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientName.getText()));
         criteriaClientSurname.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientSurname.getText()));
         criteriaClientPatronymic.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientPatronymic.getText()));
         criteriaClientFIO.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientFIO.getText()));
@@ -1360,7 +1431,7 @@ public class MainController extends Application {
         criteriaClientMaritalStatus.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientMaritalStatus.getText()));
         criteriaClientCitizenship.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientCitizenship.getText()));
         criteriaClientID.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientID.getText()));
-
+*/
         createUser_AccessMenuItem_User.setOnAction(actionEvent -> {
             if (currentLanguage.equals("English"))
                 createUser_AnchorPane_AccessMode_MenuButton.setText("User");
@@ -1386,7 +1457,7 @@ public class MainController extends Application {
                 changeUser_AnchorPane_AccessMode_MenuButton.setText("Администратор");
         });
 
-        addClientMaritalStatusMenuButton.setOnAction(actionEvent -> addClientMaritalStatusMenuButton.setText(addClientMaritalStatusMenuButton.getText()));
+        /*addClientMaritalStatusMenuButton.setOnAction(actionEvent -> addClientMaritalStatusMenuButton.setText(addClientMaritalStatusMenuButton.getText()));
         addClientDisabilityMenuButton.setOnAction(actionEvent -> addClientDisabilityMenuButton.setText(criteriaClientID.getText()));
         addClientRetireeMenuButton.setOnAction(actionEvent -> addClientRetireeMenuButton.setText(criteriaClientID.getText()));
 
@@ -1574,7 +1645,7 @@ public class MainController extends Application {
         });
 
         addClientButton.setOnAction(actionEvent -> addClient());
-
+*/
         languageItem_English.setOnAction(actionEvent -> {
             try {
                 if (currentUser != null)
@@ -1607,17 +1678,16 @@ public class MainController extends Application {
         themeItem_Light.setDisable(false);
 
         resetSearchButton.getStyleClass().add("resetSearchButton");
-        resetSearchButtonClient.getStyleClass().add("resetSearchButton");
+        /*resetSearchButtonClient.getStyleClass().add("resetSearchButton");
         resetSearchButtonClient.setOnAction(actionEvent -> {
             searchFieldClient.clear();
-            initClientsDataServerBuffer();
             new Thread() {
                 @Override
                 public void run() {
                     initDataFromServer();
                 }
             }.start();
-        });
+        });*/
         resetSearchButton.setOnAction(actionEvent -> {
             searchField.clear();
             new Thread() {
@@ -1631,16 +1701,16 @@ public class MainController extends Application {
             if (keyEvent.getCode() == KeyCode.ENTER)
                 searchButton.fire();
         });
-        searchFieldClient.setOnKeyPressed(keyEvent -> {
+        /*searchFieldClient.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER)
                 searchButtonClient.fire();
-        });
+        });*/
         searchButton.setOnAction(actionEvent -> searchUser());
-        searchButtonClient.setOnAction(actionEvent -> searchClient());
+        /*searchButtonClient.setOnAction(actionEvent -> searchClient());*/
         //databaseSettingsConnectButton.setOnAction(actionEvent -> newConnection());
 
         //#######################################################################УБРАТЬ
-        addClientMobilePhoneTextField.setText("");
+        /*addClientMobilePhoneTextField.setText("");
         addClientMonthlyIncomeTextField.setText("");
         addClientEmailTextField.setText("");
         addClientHomePhoneTextField.setText("");
@@ -1657,7 +1727,7 @@ public class MainController extends Application {
         addClientJobTextField.setText("");
         addClientSurnameTextField.setText("Скачков");
         addClientCityTextField.setText("Минск");
-        addClientAddressTextField.setText("Козлова");
+        addClientAddressTextField.setText("Козлова");*/
 
 
         translate("English");
@@ -1752,26 +1822,24 @@ public class MainController extends Application {
             case "English":
                 currentLanguage = "English";
                 searchField.setPromptText("Search...");
-                searchFieldClient.setPromptText("Search...");
+                //searchFieldClient.setPromptText("Search...");
                 languageButton.setText("English");
                 loginUsernameLabel.setText("Username");
                 loginPasswordLabel.setText("Password");
                 loginButton.setText("Log In");
-                menuAdminButton1.setText(" 1 User management");
-                menuAdminButton2.setText(" 2 Client management");
-                menuUserButton2.setText(" 2 Client management");
-                menuAdminButton3.setText(" 3 Settings");
-                menuUserButton3.setText(" 3 Settings");
-                menuAdminButton4.setText(" 4 Information");
-                menuUserButton4.setText(" 4 Information");
+                menuAdminUsersButton.setText(" 1 User management");
+                menuAdminSettingsButton.setText(" 3 Settings");
+                menuUserSettingsButton.setText(" 3 Settings");
+                menuAdminInfoButton.setText(" 4 Information");
+                menuUserInfoButton.setText(" 4 Information");
                 logoutButtonAdmin.setText(" 5 Log Out");
                 logoutButtonUser.setText(" 5 Log Out");
 
 
                 menuPane1_DBLabel.setText("Connection");
                 searchButton.setText("Search");
-                searchButtonClient.setText("Search");
-                criteriaButtonClient.setText("ID");
+                //searchButtonClient.setText("Search");
+                //criteriaButtonClient.setText("ID");
 
                 languageLabel.setText("Language");
                 languageItem_Russian.setText("Russian");
@@ -1808,7 +1876,7 @@ public class MainController extends Application {
                 deleteUserLabel.setText("ID's to delete:");
                 deleteUserButton.setText("Delete");
 
-                nameColumn.setText("Name");
+                /*nameColumn.setText("Name");
                 surnameColumn.setText("Surname");
                 patronymicColumn.setText("Patronymic");
                 birthDateColumn.setText("Birth date");
@@ -1830,9 +1898,9 @@ public class MainController extends Application {
                 disabilityColumn.setText("Disability");
                 retireeColumn.setText("Retiree");
                 monthlyIncomeColumn.setText("Monthly income");
-                idNumberColumn.setText("ID number");
+                idNumberColumn.setText("ID number");*/
 
-                criteriaClientName.setText("Name");
+                /*criteriaClientName.setText("Name");
                 criteriaClientSurname.setText("Surname");
                 criteriaClientPatronymic.setText("Patronymic");
                 criteriaClientFIO.setText("Full name");
@@ -1927,31 +1995,29 @@ public class MainController extends Application {
                 addClientRetireeMenuItem_No.setText("No");
 
                 addClientLabel.setText("Add client");
-                addClientButton.setText("Add");
+                addClientButton.setText("Add");*/
 
                 break;
             case "Russian":
                 currentLanguage = "Russian";
                 searchField.setPromptText("Искать...");
-                searchFieldClient.setPromptText("Искать...");
+                //searchFieldClient.setPromptText("Искать...");
                 languageButton.setText("Русский");
                 loginUsernameLabel.setText("Имя");
                 loginPasswordLabel.setText("Пароль");
                 loginButton.setText("Войти");
-                menuAdminButton1.setText(" 1 Управление пользователями");
-                menuAdminButton2.setText(" 2 Управление клиентами");
-                menuUserButton2.setText(" 2 Управление клиентами");
-                menuAdminButton3.setText(" 3 Настройки");
-                menuUserButton3.setText(" 3 Настройки");
-                menuAdminButton4.setText(" 4 Информация");
-                menuUserButton4.setText(" 4 Информация");
+                menuAdminUsersButton.setText(" 1 Управление пользователями");
+                menuAdminSettingsButton.setText(" 3 Настройки");
+                menuUserSettingsButton.setText(" 3 Настройки");
+                menuAdminInfoButton.setText(" 4 Информация");
+                menuUserInfoButton.setText(" 4 Информация");
                 logoutButtonAdmin.setText(" 5 Выйти");
                 logoutButtonUser.setText(" 5 Выйти");
 
                 menuPane1_DBLabel.setText("Соединение");
                 searchButton.setText("Поиск");
-                searchButtonClient.setText("Поиск");
-                criteriaButtonClient.setText("ID");
+                //searchButtonClient.setText("Поиск");
+                //criteriaButtonClient.setText("ID");
                 languageLabel.setText("Язык");
                 languageItem_Russian.setText("Русский");
                 languageItem_English.setText("Английский");
@@ -1986,7 +2052,7 @@ public class MainController extends Application {
                 deleteUserLabel.setText("Удаляемые ID:");
                 deleteUserButton.setText("Удалить");
 
-                nameColumn.setText("Имя");
+                /*nameColumn.setText("Имя");
                 surnameColumn.setText("Фамииля");
                 patronymicColumn.setText("Отчество");
                 birthDateColumn.setText("Дата рождения");
@@ -2008,9 +2074,9 @@ public class MainController extends Application {
                 disabilityColumn.setText("Инвалидность");
                 retireeColumn.setText("Пенсионер");
                 monthlyIncomeColumn.setText("Месячный доход");
-                idNumberColumn.setText("Идент. номер");
+                idNumberColumn.setText("Идент. номер");*/
 
-                criteriaClientName.setText("Имя");
+                /*criteriaClientName.setText("Имя");
                 criteriaClientSurname.setText("Фамииля");
                 criteriaClientPatronymic.setText("Отчество");
                 criteriaClientFIO.setText("ФИО");
@@ -2105,10 +2171,10 @@ public class MainController extends Application {
 
                 addClientLabel.setText("Добавление клиента");
                 addClientButton.setText("Добавить");
-
+*/
                 break;
         }
-        clientsTable.refresh();
+        //clientsTable.refresh();
         //initClientsDataServer();
     }
 
@@ -2134,19 +2200,43 @@ public class MainController extends Application {
     }
 
     private void selectMenuItem(Button menuItem, AnchorPane pane) {
-        menuAdminButton1.setStyle("");
-        menuAdminButton2.setStyle("");
-        menuUserButton2.setStyle("");
-        menuAdminButton3.setStyle("");
-        menuUserButton3.setStyle("");
-        menuAdminButton4.setStyle("");
-        menuUserButton4.setStyle("");
+        menuAdminUsersButton.setStyle("");
+        menuAdminLessonsButton.setStyle("");
+        menuAdminTeachersSubjectsButton.setStyle("");
+        menuAdminGroupsButton.setStyle("");
+        menuAdminStudentsButton.setStyle("");
+        menuAdminTeachersButton.setStyle("");
+        menuAdminSubjectsButton.setStyle("");
+        menuAdminSettingsButton.setStyle("");
+        menuUserSettingsButton.setStyle("");
+        menuAdminInfoButton.setStyle("");
+        menuUserInfoButton.setStyle("");
 
-        setAllInvisible();
-        if (pane == menuPane2) {
-            menuPane2.setVisible(true);
-            clientManagementScrollPane.setVisible(true);
-            clientManagementAnchorPane.requestFocus();
+        setAllPanesInvisible();
+        if (pane == menuPaneLessons) {
+            menuPaneLessons.setVisible(true);
+            LessonsScrollPane.setVisible(true);
+            LessonsAnchorPane.requestFocus();
+        } else if (pane == menuPaneTeachersSubjects) {
+            menuPaneTeachersSubjects.setVisible(true);
+            TeachersSubjectsScrollPane.setVisible(true);
+            TeachersSubjectsAnchorPane.requestFocus();
+        } else if (pane == menuPaneGroups) {
+            menuPaneGroups.setVisible(true);
+            GroupsScrollPane.setVisible(true);
+            GroupsAnchorPane.requestFocus();
+        } else if (pane == menuPaneStudents) {
+            menuPaneStudents.setVisible(true);
+            StudentsScrollPane.setVisible(true);
+            StudentsAnchorPane.requestFocus();
+        } else if (pane == menuPaneTeachers) {
+            menuPaneTeachers.setVisible(true);
+            TeachersScrollPane.setVisible(true);
+            TeachersAnchorPane.requestFocus();
+        } else if (pane == menuPaneSubjects) {
+            menuPaneSubjects.setVisible(true);
+            SubjectsScrollPane.setVisible(true);
+            SubjectsAnchorPane.requestFocus();
         } else {
             pane.setVisible(true);
             pane.requestFocus();
@@ -2163,7 +2253,7 @@ public class MainController extends Application {
             leftAnchorPane.setDisable(true);
             if (currentUser != null) connServer.sendString("setCurrentUser|null|");
             currentUser = null;
-            setAllInvisible();
+            setAllPanesInvisible();
             loginPane.setVisible(true);
         } catch (IllegalStateException e) {
             System.out.println("GG");
@@ -2174,11 +2264,11 @@ public class MainController extends Application {
         leftAnchorPane.setDisable(false);
         if (currentUser.getAccessMode() == 1) {
             menuAdmin.setVisible(true);
-            menuAdminButton1.fire();
+            menuAdminInfoButton.fire();
             databaseSettingsPane.setDisable(false);
         } else {
             menuUser.setVisible(true);
-            menuUserButton2.fire();
+            menuUserInfoButton.fire();
             databaseSettingsPane.setDisable(true);
         }
         translate(currentUser.getLanguage());
@@ -2196,11 +2286,16 @@ public class MainController extends Application {
         loginWarning.setText("");
     }
 
-    private void setAllInvisible() {
-        menuPane1.setVisible(false);
-        menuPane2.setVisible(false);
-        menuPane3.setVisible(false);
-        menuPane4.setVisible(false);
+    private void setAllPanesInvisible() {
+        menuPaneUsers.setVisible(false);
+        menuPaneLessons.setVisible(false);
+        menuPaneTeachersSubjects.setVisible(false);
+        menuPaneGroups.setVisible(false);
+        menuPaneStudents.setVisible(false);
+        menuPaneTeachers.setVisible(false);
+        menuPaneSubjects.setVisible(false);
+        menuPaneSettings.setVisible(false);
+        menuPaneInfo.setVisible(false);
         loginPane.setVisible(false);
     }
 
@@ -2448,8 +2543,8 @@ public class MainController extends Application {
         if (stage.isMaximized() && theme == 0) {
             stage.setMaximized(false);
             usersTable.setPrefHeight(154d);
-            clientsTable.setPrefWidth(513d);
-            clientsTable.setPrefHeight(200d);
+//            clientsTable.setPrefWidth(513d);
+//            clientsTable.setPrefHeight(200d);
             createUser_AnchorPane.setLayoutY(212);
             minimizeButton.setStyle("-fx-background-image: url(assets/expand-white.png)");
             loginElementsPane.setLayoutX(250);
@@ -2458,7 +2553,7 @@ public class MainController extends Application {
             loginWarning.setLayoutY(117);
             searchField.setPrefWidth(136);
 
-            clientManagementScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            /*clientManagementScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             clientManagementScrollPane.setPrefWidth(573);
             clientManagementAnchorPane.setPrefWidth(556);
             clientManagementScrollPane.setPrefHeight(462);
@@ -2485,7 +2580,7 @@ public class MainController extends Application {
 
             addClientLabel.setLayoutX(176);
             addClientButton.setLayoutX(215);
-            addClientButton.setLayoutY(888);
+            addClientButton.setLayoutY(888);*/
         } else {
             stage.setMaximized(true);
             usersTable.setPrefHeight(606d);
@@ -2497,7 +2592,7 @@ public class MainController extends Application {
             loginWarning.setLayoutY(290);
             searchField.setPrefWidth(350);
 
-            clientManagementScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            /*clientManagementScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             clientManagementScrollPane.setPrefWidth(1310);
             clientManagementAnchorPane.setPrefWidth(1304);
             clientManagementScrollPane.setPrefHeight(850);
@@ -2524,7 +2619,7 @@ public class MainController extends Application {
 
             addClientLabel.setLayoutX(555);
             addClientButton.setLayoutX(1005);
-            addClientButton.setLayoutY(320);
+            addClientButton.setLayoutY(320);*/
         }
     }
 
@@ -2967,7 +3062,7 @@ public class MainController extends Application {
                         btn.setOnAction(event -> {
                             getTableView().getItems().get(getIndex()).deleteServer(connServer);
                             clientsData.remove(getTableView().getItems().get(getIndex()));
-                            clientsTable.refresh();
+                            //clientsTable.refresh();
                             new Thread() {
                                 @Override
                                 public void run() {
@@ -3004,10 +3099,10 @@ public class MainController extends Application {
         retireeColumn.setCellFactory(cellFactory3);
         deleteColumn.setCellFactory(cellFactory4);
 
-        clientsTable.getColumns().add(18, maritalStatusColumn);
-        clientsTable.getColumns().add(18, disabilityColumn);
-        clientsTable.getColumns().add(18, retireeColumn);
-        clientsTable.getColumns().add(0, deleteColumn);
+//        clientsTable.getColumns().add(18, maritalStatusColumn);
+//        clientsTable.getColumns().add(18, disabilityColumn);
+//        clientsTable.getColumns().add(18, retireeColumn);
+//        clientsTable.getColumns().add(0, deleteColumn);
     }
 
     private boolean checkEmail(TextField toCheck) {
@@ -3079,7 +3174,7 @@ public class MainController extends Application {
     }
 
     private void searchClient() {
-        initClientsDataServerBuffer();
+        //initClientsDataServerBuffer();
         if (!searchFieldClient.getText().equals("")) {
             Iterator<Client> i = clientsData.iterator();
             switch (criteriaButtonClient.getText()) {
