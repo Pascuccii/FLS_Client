@@ -951,6 +951,7 @@ public class MainController extends Application {
             if (currentUser != null) {
                 switch (keyEvent.getCode()) {
                     case DIGIT1:
+                        System.out.println("YEEESSS");
                         if (currentUser.getAccessMode() == 1)
                             menuAdminUsersButton.fire();
                         break;

@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="FLS_Client" />
+        <module name="JavaFX11-example" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="FLS_Client" target="11" />
+      <module name="JavaFX11-example" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
