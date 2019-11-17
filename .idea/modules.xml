@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FLS_Client.iml" filepath="$PROJECT_DIR$/FLS_Client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/JavaFX11-example.iml" filepath="$PROJECT_DIR$/JavaFX11-example.iml" />
-    </modules>
+      </modules>
   </component>
 </project>
