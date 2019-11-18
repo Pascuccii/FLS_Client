@@ -1,5 +1,7 @@
 package sample.Controls;
 
+import sample.Connectivity.ServerConnection;
+
 public class TeacherSubject {
     private int id;
     private int teacherId;
@@ -51,4 +53,9 @@ public class TeacherSubject {
     public void setSubjectId(int subjectId) {
         this.subjectId = subjectId;
     }
+
+    public void deleteServer(ServerConnection conn) {
+        conn.sendString("TeacherSubject|delete|" + id + "|" + teacherId);
+    }
+
 }

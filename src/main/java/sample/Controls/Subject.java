@@ -1,5 +1,7 @@
 package sample.Controls;
 
+import sample.Connectivity.ServerConnection;
+
 import java.util.Objects;
 
 public class Subject {
@@ -53,4 +55,9 @@ public class Subject {
     public void setHours(Integer hours) {
         this.hours = hours;
     }
+
+    public void deleteServer(ServerConnection conn) {
+        conn.sendString("Subject|delete|" + id + "|" + name);
+    }
+
 }

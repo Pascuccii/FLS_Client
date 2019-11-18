@@ -53,7 +53,12 @@ public class MainController extends Application {
     private TableColumn maritalStatusColumn;
     private TableColumn disabilityColumn;
     private TableColumn retireeColumn;
-    private TableColumn deleteColumn;
+    private TableColumn deleteLessonColumn;
+    private TableColumn deleteTeacherSubjectColumn;
+    private TableColumn deleteGroupColumn;
+    private TableColumn deleteStudentColumn;
+    private TableColumn deleteTeacherColumn;
+    private TableColumn deleteSubjectColumn;
     private ObservableList<User> usersData = FXCollections.observableArrayList();
     private ObservableList<Client> clientsData = FXCollections.observableArrayList();
     private ObservableList<Group> groupsData = FXCollections.observableArrayList();
@@ -202,39 +207,53 @@ public class MainController extends Application {
     @FXML
     private AnchorPane menuPaneLessons;
     @FXML
-    private ScrollPane LessonsScrollPane;
+    private ScrollPane lessonsScrollPane;
     @FXML
-    private AnchorPane LessonsAnchorPane;
+    private AnchorPane lessonsAnchorPane;
     @FXML
     private AnchorPane menuPaneTeachersSubjects;
     @FXML
-    private ScrollPane TeachersSubjectsScrollPane;
+    private ScrollPane teachersSubjectsScrollPane;
     @FXML
-    private AnchorPane TeachersSubjectsAnchorPane;
+    private AnchorPane teachersSubjectsAnchorPane;
     @FXML
     private AnchorPane menuPaneGroups;
     @FXML
-    private ScrollPane GroupsScrollPane;
+    private ScrollPane groupsScrollPane;
     @FXML
-    private AnchorPane GroupsAnchorPane;
+    private AnchorPane groupsAnchorPane;
     @FXML
     private AnchorPane menuPaneStudents;
     @FXML
-    private ScrollPane StudentsScrollPane;
+    private ScrollPane studentsScrollPane;
     @FXML
-    private AnchorPane StudentsAnchorPane;
+    private AnchorPane studentsAnchorPane;
     @FXML
     private AnchorPane menuPaneTeachers;
     @FXML
-    private ScrollPane TeachersScrollPane;
+    private ScrollPane teachersScrollPane;
     @FXML
-    private AnchorPane TeachersAnchorPane;
+    private AnchorPane teachersAnchorPane;
     @FXML
     private AnchorPane menuPaneSubjects;
     @FXML
-    private ScrollPane SubjectsScrollPane;
+    private ScrollPane subjectsScrollPane;
     @FXML
-    private AnchorPane SubjectsAnchorPane;
+    private AnchorPane subjectsAnchorPane;
+
+    @FXML
+    private AnchorPane createLessonAnchorPane;
+    @FXML
+    private AnchorPane createTeacherSubjectAnchorPane;
+    @FXML
+    private AnchorPane createGroupAnchorPane;
+    @FXML
+    private AnchorPane createStudentAnchorPane;
+    @FXML
+    private AnchorPane createTeacherAnchorPane;
+    @FXML
+    private AnchorPane createSubjectAnchorPane;
+
     @FXML
     private TextField searchField;
     @FXML
@@ -253,6 +272,18 @@ public class MainController extends Application {
     private Button searchButton;
     @FXML
     private Button resetSearchButton;
+    @FXML
+    private Button resetButtonLessons;
+    @FXML
+    private Button resetButtonTeachersSubjects;
+    @FXML
+    private Button resetButtonGroups;
+    @FXML
+    private Button resetButtonStudents;
+    @FXML
+    private Button resetButtonTeachers;
+    @FXML
+    private Button resetButtonSubjects;
     @FXML
     private AnchorPane createUser_AnchorPane;
     @FXML
@@ -927,8 +958,8 @@ public class MainController extends Application {
         addClientHomePhoneDescription.getStyleClass().add("descriptionLabel");
         addClientMonthlyIncomeDescription.getStyleClass().add("descriptionLabel");
         addClientMobilePhoneDescription.getStyleClass().add("descriptionLabel");
-        addClientEmailDescription.getStyleClass().add("descriptionLabel");
-        addButtonsToTable();*/
+        addClientEmailDescription.getStyleClass().add("descriptionLabel");*/
+        addButtonsToTable();
 
 
         //Дальше - функционал элементов
@@ -1011,6 +1042,32 @@ public class MainController extends Application {
         clientManagementScrollPane.setMinWidth(550);
         clientManagementScrollPane.setMaxWidth(1920);*/
 
+        lessonsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        teachersSubjectsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        groupsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        studentsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        teachersScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        subjectsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        lessonsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        teachersSubjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        groupsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        studentsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        teachersScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        subjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        lessonsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
+        lessonsScrollPane.getStyleClass().add("clientManagementScrollPane");
+        teachersSubjectsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
+        teachersSubjectsScrollPane.getStyleClass().add("clientManagementScrollPane");
+        groupsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
+        groupsScrollPane.getStyleClass().add("clientManagementScrollPane");
+        studentsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
+        studentsScrollPane.getStyleClass().add("clientManagementScrollPane");
+        teachersAnchorPane.getStyleClass().add("clientManagementAnchorPane");
+        teachersScrollPane.getStyleClass().add("clientManagementScrollPane");
+        subjectsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
+        subjectsScrollPane.getStyleClass().add("clientManagementScrollPane");
 
         hideButton.getStyleClass().add("hideButton");
         minimizeButton.getStyleClass().add("minimizeButton");
@@ -1035,12 +1092,12 @@ public class MainController extends Application {
         exitButton.setFocusTraversable(false);
         logoutButtonAdmin.setFocusTraversable(false);
         logoutButtonUser.setFocusTraversable(false);
-        LessonsScrollPane.setFocusTraversable(false);
-        TeachersSubjectsScrollPane.setFocusTraversable(false);
-        GroupsScrollPane.setFocusTraversable(false);
-        StudentsScrollPane.setFocusTraversable(false);
-        TeachersScrollPane.setFocusTraversable(false);
-        SubjectsScrollPane.setFocusTraversable(false);
+        lessonsScrollPane.setFocusTraversable(false);
+        teachersSubjectsScrollPane.setFocusTraversable(false);
+        groupsScrollPane.setFocusTraversable(false);
+        studentsScrollPane.setFocusTraversable(false);
+        teachersScrollPane.setFocusTraversable(false);
+        subjectsScrollPane.setFocusTraversable(false);
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         accessModeColumn.setCellValueFactory(new PropertyValueFactory<>("accessMode"));
@@ -1651,7 +1708,7 @@ public class MainController extends Application {
             try {
                 if (currentUser != null)
                     currentUser.setLanguageServer(connServer, "English");
-                translate("English");
+                translate("Russian");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -1679,6 +1736,12 @@ public class MainController extends Application {
         themeItem_Light.setDisable(false);
 
         resetSearchButton.getStyleClass().add("resetSearchButton");
+        resetButtonLessons.getStyleClass().add("resetSearchButton");
+        resetButtonTeachersSubjects.getStyleClass().add("resetSearchButton");
+        resetButtonGroups.getStyleClass().add("resetSearchButton");
+        resetButtonStudents.getStyleClass().add("resetSearchButton");
+        resetButtonTeachers.getStyleClass().add("resetSearchButton");
+        resetButtonSubjects.getStyleClass().add("resetSearchButton");
         /*resetSearchButtonClient.getStyleClass().add("resetSearchButton");
         resetSearchButtonClient.setOnAction(actionEvent -> {
             searchFieldClient.clear();
@@ -1698,6 +1761,61 @@ public class MainController extends Application {
                 }
             }.start();
         });
+        resetButtonLessons.setOnAction(actionEvent -> {
+            searchField.clear();
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                }
+            }.start();
+        });
+        resetButtonTeachersSubjects.setOnAction(actionEvent -> {
+            searchField.clear();
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                }
+            }.start();
+        });
+        resetButtonGroups.setOnAction(actionEvent -> {
+            searchField.clear();
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                }
+            }.start();
+        });
+        resetButtonStudents.setOnAction(actionEvent -> {
+            searchField.clear();
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                }
+            }.start();
+        });
+        resetButtonTeachers.setOnAction(actionEvent -> {
+            searchField.clear();
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                }
+            }.start();
+        });
+        resetButtonSubjects.setOnAction(actionEvent -> {
+            searchField.clear();
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                }
+            }.start();
+        });
+
         searchField.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER)
                 searchButton.fire();
@@ -1731,7 +1849,7 @@ public class MainController extends Application {
         addClientAddressTextField.setText("Козлова");*/
 
 
-        translate("English");
+        translate("Russian");
         if (connServer.exists())
             initDataFromServer();
 
@@ -1793,7 +1911,7 @@ public class MainController extends Application {
             String theme = reader.readLine();
             System.out.println("SAVED THEME: " + theme);
             System.out.println("SAVED LANGUAGE: " + language);
-            translate(language);
+            translate("Russian");
             setTheme(theme);
         } catch (IOException | SQLException e) {
             e.printStackTrace();
@@ -1823,7 +1941,6 @@ public class MainController extends Application {
             case "English":
                 currentLanguage = "English";
                 searchField.setPromptText("Search...");
-                //searchFieldClient.setPromptText("Search...");
                 languageButton.setText("English");
                 loginUsernameLabel.setText("Username");
                 loginPasswordLabel.setText("Password");
@@ -1876,127 +1993,6 @@ public class MainController extends Application {
 
                 deleteUserLabel.setText("ID's to delete:");
                 deleteUserButton.setText("Delete");
-
-                /*nameColumn.setText("Name");
-                surnameColumn.setText("Surname");
-                patronymicColumn.setText("Patronymic");
-                birthDateColumn.setText("Birth date");
-                birthPlaceColumn.setText("Birth place");
-                passportSeriesColumn.setText("Passport series");
-                passportNumberColumn.setText("Passport number");
-                issuedByColumn.setText("Issued by");
-                issuedDateColumn.setText("Issued date");
-                actualResidenceCityColumn.setText("Act. residence city");
-                actualResidenceAddressColumn.setText("Act. residence address");
-                homeNumberColumn.setText("Home phone");
-                mobileNumberColumn.setText("Mobile phone");
-                emailClientColumn.setText("E-Mail");
-                jobColumn.setText("Job");
-                positionColumn.setText("Position");
-                registrationCityColumn.setText("Registration city");
-                maritalStatusColumn.setText("Marital status");
-                citizenshipColumn.setText("Citizenship");
-                disabilityColumn.setText("Disability");
-                retireeColumn.setText("Retiree");
-                monthlyIncomeColumn.setText("Monthly income");
-                idNumberColumn.setText("ID number");*/
-
-                /*criteriaClientName.setText("Name");
-                criteriaClientSurname.setText("Surname");
-                criteriaClientPatronymic.setText("Patronymic");
-                criteriaClientFIO.setText("Full name");
-                criteriaClientBirthDate.setText("Birth date");
-                criteriaClientBirthPlace.setText("Birth place");
-                criteriaClientPassportSeries.setText("Passport series");
-                criteriaClientPassportNumber.setText("Passport number");
-                criteriaClientIssuedBy.setText("Issued by");
-                criteriaClientIssuedDate.setText("Issued date");
-                criteriaClientActCity.setText("Act. residence city");
-                criteriaClientActAddress.setText("Act. residence address");
-                criteriaClientHomePhone.setText("Home phone");
-                criteriaClientMobilePhone.setText("Mobile phone");
-                criteriaClientEmail.setText("E-Mail");
-                criteriaClientJob.setText("Job");
-                criteriaClientPosition.setText("Position");
-                criteriaClientRegCity.setText("Registration city");
-                criteriaClientMaritalStatus.setText("Marital status");
-                criteriaClientCitizenship.setText("Citizenship");
-                criteriaClientDisability.setText("Disability");
-                criteriaClientRetiree.setText("Retiree");
-                criteriaClientMonthlyIncome.setText("Monthly income");
-                criteriaClientIDNumber.setText("ID number");
-
-
-                criteriaClientMenuFIO.setText("Full Name");
-                criteriaClientMenuPassport.setText("Passport Data");
-                criteriaClientMenuResidence.setText("Residence");
-                criteriaClientMenuJob.setText("Job");
-                criteriaClientMenuContacts.setText("Contacts");
-                criteriaClientMenuOther.setText("Other");
-
-                addClientNameLabel.setText("Name*");
-                addClientSurnameLabel.setText("Surname*");
-                addClientPatronymicLabel.setText("Patronymic*");
-                addClientJobLabel.setText("Job");
-                addClientPositionLabel.setText("Position");
-                addClientRegistrationCityLabel.setText("Registr. city*");
-                addClientCityLabel.setText("City*");
-                addClientAddressLabel.setText("Address*");
-                addClientBirthDateLabel.setText("Birth date*");
-                addClientBirthPlaceLabel.setText("Birth place*");
-                addClientPassportSeriesLabel.setText("Passport series*");
-                addClientPassportNumberLabel.setText("Passport number*");
-                addClientIssuedByLabel.setText("Issued by*");
-                addClientIssuedDateLabel.setText("Issued date*");
-                addClientCitizenshipLabel.setText("Citizenship*");
-                addClientIDNumberLabel.setText("ID number*");
-                addClientMaritalStatusLabel.setText("Marital status*");
-                addClientDisabilityLabel.setText("Disability*");
-                addClientRetireeLabel.setText("Retiree*");
-                addClientHomePhoneLabel.setText("Home phone");
-                addClientMonthlyIncomeLabel.setText("Monthly income");
-                addClientMobilePhoneLabel.setText("Mobile phone");
-                addClientEmailLabel.setText("E-Mail");
-
-                addClientNameDescription.setText("");
-                addClientSurnameDescription.setText("");
-                addClientPatronymicDescription.setText("");
-                addClientJobDescription.setText("");
-                addClientPositionDescription.setText("");
-                addClientRegistrationCityDescription.setText("");
-                addClientCityDescription.setText("");
-                addClientAddressDescription.setText("");
-                addClientBirthDateDescription.setText("");
-                addClientBirthPlaceDescription.setText("");
-                addClientPassportSeriesDescription.setText("");
-                addClientPassportNumberDescription.setText("");
-                addClientIssuedByDescription.setText("");
-                addClientIssuedDateDescription.setText("");
-                addClientCitizenshipDescription.setText("");
-                addClientIDNumberDescription.setText("");
-                addClientMaritalStatusDescription.setText("");
-                addClientDisabilityDescription.setText("");
-                addClientRetireeDescription.setText("");
-                addClientHomePhoneDescription.setText("");
-                addClientMonthlyIncomeDescription.setText("");
-                addClientMobilePhoneDescription.setText("");
-                addClientEmailDescription.setText("");
-
-                addClientMaritalStatusMenuButton.setText("Single");
-                addClientMaritalStatusMenuItem_Single.setText("Single");
-                addClientMaritalStatusMenuItem_Married.setText("Married");
-                addClientMaritalStatusMenuItem_Divorced.setText("Divorced");
-                addClientDisabilityMenuButton.setText("No");
-                addClientDisabilityMenuItem_FirstGroup.setText("First group");
-                addClientDisabilityMenuItem_SecondGroup.setText("Second group");
-                addClientDisabilityMenuItem_ThirdGroup.setText("Third group");
-                addClientDisabilityMenuItem_No.setText("No");
-                addClientRetireeMenuButton.setText("No");
-                addClientRetireeMenuItem_Yes.setText("Yes");
-                addClientRetireeMenuItem_No.setText("No");
-
-                addClientLabel.setText("Add client");
-                addClientButton.setText("Add");*/
 
                 break;
             case "Russian":
@@ -2216,28 +2212,28 @@ public class MainController extends Application {
         setAllPanesInvisible();
         if (pane == menuPaneLessons) {
             menuPaneLessons.setVisible(true);
-            LessonsScrollPane.setVisible(true);
-            LessonsAnchorPane.requestFocus();
+            lessonsScrollPane.setVisible(true);
+            lessonsAnchorPane.requestFocus();
         } else if (pane == menuPaneTeachersSubjects) {
             menuPaneTeachersSubjects.setVisible(true);
-            TeachersSubjectsScrollPane.setVisible(true);
-            TeachersSubjectsAnchorPane.requestFocus();
+            teachersSubjectsScrollPane.setVisible(true);
+            teachersSubjectsAnchorPane.requestFocus();
         } else if (pane == menuPaneGroups) {
             menuPaneGroups.setVisible(true);
-            GroupsScrollPane.setVisible(true);
-            GroupsAnchorPane.requestFocus();
+            groupsScrollPane.setVisible(true);
+            groupsAnchorPane.requestFocus();
         } else if (pane == menuPaneStudents) {
             menuPaneStudents.setVisible(true);
-            StudentsScrollPane.setVisible(true);
-            StudentsAnchorPane.requestFocus();
+            studentsScrollPane.setVisible(true);
+            studentsAnchorPane.requestFocus();
         } else if (pane == menuPaneTeachers) {
             menuPaneTeachers.setVisible(true);
-            TeachersScrollPane.setVisible(true);
-            TeachersAnchorPane.requestFocus();
+            teachersScrollPane.setVisible(true);
+            teachersAnchorPane.requestFocus();
         } else if (pane == menuPaneSubjects) {
             menuPaneSubjects.setVisible(true);
-            SubjectsScrollPane.setVisible(true);
-            SubjectsAnchorPane.requestFocus();
+            subjectsScrollPane.setVisible(true);
+            subjectsAnchorPane.requestFocus();
         } else {
             pane.setVisible(true);
             pane.requestFocus();
@@ -2272,7 +2268,6 @@ public class MainController extends Application {
             menuUserInfoButton.fire();
             databaseSettingsPane.setDisable(true);
         }
-        translate(currentUser.getLanguage());
         setTheme(currentUser.getTheme());
         currentTheme = currentUser.getTheme();
         currentLanguage = currentUser.getLanguage();
@@ -2544,8 +2539,22 @@ public class MainController extends Application {
         if (stage.isMaximized() && theme == 0) {
             stage.setMaximized(false);
             usersTable.setPrefHeight(154d);
-//            clientsTable.setPrefWidth(513d);
-//            clientsTable.setPrefHeight(200d);
+
+
+            lessonsTable.setPrefWidth(513d);
+            lessonsTable.setPrefHeight(200d);
+            teachersSubjectsTable.setPrefWidth(513d);
+            teachersSubjectsTable.setPrefHeight(200d);
+            groupsTable.setPrefWidth(513d);
+            groupsTable.setPrefHeight(200d);
+            studentsTable.setPrefWidth(513d);
+            studentsTable.setPrefHeight(200d);
+            teachersTable.setPrefWidth(513d);
+            teachersTable.setPrefHeight(200d);
+            subjectsTable.setPrefWidth(513d);
+            subjectsTable.setPrefHeight(200d);
+
+
             createUser_AnchorPane.setLayoutY(212);
             minimizeButton.setStyle("-fx-background-image: url(assets/expand-white.png)");
             loginElementsPane.setLayoutX(250);
@@ -2554,34 +2563,48 @@ public class MainController extends Application {
             loginWarning.setLayoutY(117);
             searchField.setPrefWidth(136);
 
-            /*clientManagementScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-            clientManagementScrollPane.setPrefWidth(573);
-            clientManagementAnchorPane.setPrefWidth(556);
-            clientManagementScrollPane.setPrefHeight(462);
-            clientManagementAnchorPane.setPrefHeight(1200);
-            createClient_AnchorPane.setPrefHeight(930);
+            lessonsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            lessonsScrollPane.setPrefWidth(573);
+            lessonsAnchorPane.setPrefWidth(556);
+            lessonsScrollPane.setPrefHeight(462);
+            lessonsAnchorPane.setPrefHeight(1200);
 
-            createClient_AnchorPane_NameJobResidencePane.setLayoutX(10);
-            createClient_AnchorPane_NameJobResidencePane.setLayoutY(26);
-            createClient_AnchorPane_NameJobResidencePane.setPrefWidth(504);
-            createClient_AnchorPane_NameJobResidencePane.setPrefHeight(297);
+            teachersSubjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            teachersSubjectsScrollPane.setPrefWidth(573);
+            teachersSubjectsAnchorPane.setPrefWidth(556);
+            teachersSubjectsScrollPane.setPrefHeight(462);
+            teachersSubjectsAnchorPane.setPrefHeight(1200);
 
-            createClient_AnchorPane_PassportDataPane.setLayoutX(10);
-            createClient_AnchorPane_PassportDataPane.setLayoutY(325);
-            createClient_AnchorPane_PassportDataPane.setPrefWidth(504);
-            createClient_AnchorPane_PassportDataPane.setPrefHeight(295);
+            groupsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            groupsScrollPane.setPrefWidth(573);
+            groupsAnchorPane.setPrefWidth(556);
+            groupsScrollPane.setPrefHeight(462);
+            groupsAnchorPane.setPrefHeight(1200);
 
-            createClient_AnchorPane_ContactsOtherPane.setLayoutX(10);
-            createClient_AnchorPane_ContactsOtherPane.setLayoutY(623);
-            createClient_AnchorPane_ContactsOtherPane.setPrefWidth(504);
-            createClient_AnchorPane_ContactsOtherPane.setPrefHeight(250);
+            studentsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            studentsScrollPane.setPrefWidth(573);
+            studentsAnchorPane.setPrefWidth(556);
+            studentsScrollPane.setPrefHeight(462);
+            studentsAnchorPane.setPrefHeight(1200);
 
-            createClient_AnchorPane_NameJobResidencePane.setStyle("-fx-border-width: 0 0 1 0");
-            createClient_AnchorPane_PassportDataPane.setStyle("-fx-border-width: 0 0 1 0");
+            teachersScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            teachersScrollPane.setPrefWidth(573);
+            teachersAnchorPane.setPrefWidth(556);
+            teachersScrollPane.setPrefHeight(462);
+            teachersAnchorPane.setPrefHeight(1200);
 
-            addClientLabel.setLayoutX(176);
-            addClientButton.setLayoutX(215);
-            addClientButton.setLayoutY(888);*/
+            subjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            subjectsScrollPane.setPrefWidth(573);
+            subjectsAnchorPane.setPrefWidth(556);
+            subjectsScrollPane.setPrefHeight(462);
+            subjectsAnchorPane.setPrefHeight(1200);
+
+            createLessonAnchorPane.setPrefHeight(930);
+            createTeacherSubjectAnchorPane.setPrefHeight(930);
+            createGroupAnchorPane.setPrefHeight(930);
+            createStudentAnchorPane.setPrefHeight(930);
+            createTeacherAnchorPane.setPrefHeight(930);
+            createSubjectAnchorPane.setPrefHeight(930);
         } else {
             stage.setMaximized(true);
             usersTable.setPrefHeight(606d);
@@ -2593,34 +2616,48 @@ public class MainController extends Application {
             loginWarning.setLayoutY(290);
             searchField.setPrefWidth(350);
 
-            /*clientManagementScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            clientManagementScrollPane.setPrefWidth(1310);
-            clientManagementAnchorPane.setPrefWidth(1304);
-            clientManagementScrollPane.setPrefHeight(850);
-            clientManagementAnchorPane.setPrefHeight(820);
-            createClient_AnchorPane.setPrefHeight(380);
+            lessonsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            lessonsScrollPane.setPrefWidth(1310);
+            lessonsAnchorPane.setPrefWidth(1304);
+            lessonsScrollPane.setPrefHeight(850);
+            lessonsAnchorPane.setPrefHeight(820);
 
-            createClient_AnchorPane_NameJobResidencePane.setLayoutX(10);
-            createClient_AnchorPane_NameJobResidencePane.setLayoutY(35);
-            createClient_AnchorPane_NameJobResidencePane.setPrefWidth(420);
-            createClient_AnchorPane_NameJobResidencePane.setPrefHeight(297);
+            teachersSubjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            teachersSubjectsScrollPane.setPrefWidth(1310);
+            teachersSubjectsAnchorPane.setPrefWidth(1304);
+            teachersSubjectsScrollPane.setPrefHeight(850);
+            teachersSubjectsAnchorPane.setPrefHeight(820);
 
-            createClient_AnchorPane_PassportDataPane.setLayoutX(430);
-            createClient_AnchorPane_PassportDataPane.setLayoutY(35);
-            createClient_AnchorPane_PassportDataPane.setPrefWidth(420);
-            createClient_AnchorPane_PassportDataPane.setPrefHeight(295);
+            groupsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            groupsScrollPane.setPrefWidth(1310);
+            groupsAnchorPane.setPrefWidth(1304);
+            groupsScrollPane.setPrefHeight(850);
+            groupsAnchorPane.setPrefHeight(820);
 
-            createClient_AnchorPane_ContactsOtherPane.setLayoutX(850);
-            createClient_AnchorPane_ContactsOtherPane.setLayoutY(35);
-            createClient_AnchorPane_ContactsOtherPane.setPrefWidth(420);
-            createClient_AnchorPane_ContactsOtherPane.setPrefHeight(250);
+            studentsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            studentsScrollPane.setPrefWidth(1310);
+            studentsAnchorPane.setPrefWidth(1304);
+            studentsScrollPane.setPrefHeight(850);
+            studentsAnchorPane.setPrefHeight(820);
 
-            createClient_AnchorPane_NameJobResidencePane.setStyle("-fx-border-width: 0 1 0 0");
-            createClient_AnchorPane_PassportDataPane.setStyle("-fx-border-width: 0 1 0 0");
+            teachersScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            teachersScrollPane.setPrefWidth(1310);
+            teachersAnchorPane.setPrefWidth(1304);
+            teachersScrollPane.setPrefHeight(850);
+            teachersAnchorPane.setPrefHeight(820);
 
-            addClientLabel.setLayoutX(555);
-            addClientButton.setLayoutX(1005);
-            addClientButton.setLayoutY(320);*/
+            subjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            subjectsScrollPane.setPrefWidth(1310);
+            subjectsAnchorPane.setPrefWidth(1304);
+            subjectsScrollPane.setPrefHeight(850);
+            subjectsAnchorPane.setPrefHeight(820);
+
+            createLessonAnchorPane.setPrefHeight(380);
+            createTeacherSubjectAnchorPane.setPrefHeight(380);
+            createGroupAnchorPane.setPrefHeight(380);
+            createStudentAnchorPane.setPrefHeight(380);
+            createTeacherAnchorPane.setPrefHeight(380);
+            createSubjectAnchorPane.setPrefHeight(380);
         }
     }
 
@@ -2759,18 +2796,38 @@ public class MainController extends Application {
         maritalStatusColumn = new TableColumn("Marital Status");
         disabilityColumn = new TableColumn("Disability");
         retireeColumn = new TableColumn("Retiree");
-        deleteColumn = new TableColumn("");
+        deleteLessonColumn = new TableColumn("");
+        deleteTeacherSubjectColumn = new TableColumn("");
+        deleteGroupColumn = new TableColumn("");
+        deleteStudentColumn = new TableColumn("");
+        deleteTeacherColumn = new TableColumn("");
+        deleteSubjectColumn = new TableColumn("");
 
         maritalStatusColumn.setMinWidth(180);
         disabilityColumn.setMinWidth(180);
         retireeColumn.setMinWidth(80);
-        deleteColumn.setMaxWidth(23);
-        deleteColumn.setMinWidth(23);
+        deleteLessonColumn.setMaxWidth(23);
+        deleteLessonColumn.setMinWidth(23);
+        deleteTeacherSubjectColumn.setMaxWidth(23);
+        deleteTeacherSubjectColumn.setMinWidth(23);
+        deleteGroupColumn.setMaxWidth(23);
+        deleteGroupColumn.setMinWidth(23);
+        deleteStudentColumn.setMaxWidth(23);
+        deleteStudentColumn.setMinWidth(23);
+        deleteTeacherColumn.setMaxWidth(23);
+        deleteTeacherColumn.setMinWidth(23);
+        deleteSubjectColumn.setMaxWidth(23);
+        deleteSubjectColumn.setMinWidth(23);
 
         maritalStatusColumn.setResizable(false);
         disabilityColumn.setResizable(false);
         retireeColumn.setResizable(false);
-        deleteColumn.setResizable(false);
+        deleteLessonColumn.setResizable(false);
+        deleteTeacherSubjectColumn.setResizable(false);
+        deleteGroupColumn.setResizable(false);
+        deleteStudentColumn.setResizable(false);
+        deleteTeacherColumn.setResizable(false);
+        deleteSubjectColumn.setResizable(false);
 
         Callback<TableColumn<Client, Void>, TableCell<Client, Void>> cellFactory1 = new Callback<>() {
             @Override
@@ -3048,9 +3105,9 @@ public class MainController extends Application {
                 };
             }
         };
-        Callback<TableColumn<Client, Void>, TableCell<Client, Void>> cellFactory4 = new Callback<>() {
+        Callback<TableColumn<Lesson, Void>, TableCell<Lesson, Void>> cellFactoryDeleteLesson = new Callback<>() {
             @Override
-            public TableCell<Client, Void> call(TableColumn<Client, Void> param) {
+            public TableCell<Lesson, Void> call(TableColumn<Lesson, Void> param) {
                 return new TableCell<>() {
 
                     private Button btn =
@@ -3062,7 +3119,7 @@ public class MainController extends Application {
                         btn.setPrefWidth(15);
                         btn.setOnAction(event -> {
                             getTableView().getItems().get(getIndex()).deleteServer(connServer);
-                            clientsData.remove(getTableView().getItems().get(getIndex()));
+                            lessonsData.remove(getTableView().getItems().get(getIndex()));
                             //clientsTable.refresh();
                             new Thread() {
                                 @Override
@@ -3081,7 +3138,231 @@ public class MainController extends Application {
                             setGraphic(null);
                         } else {
                             String toSet;
-                            Client data = getTableView().getItems().get(getIndex());
+                            if (currentLanguage.equals("English")) {
+                                btn.setText("");
+                            }
+                            if (currentLanguage.equals("Russian")) {
+                                btn.setText("");
+                            }
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+        Callback<TableColumn<TeacherSubject, Void>, TableCell<TeacherSubject, Void>> cellFactoryDeleteTeacherSubject = new Callback<>() {
+            @Override
+            public TableCell<TeacherSubject, Void> call(TableColumn<TeacherSubject, Void> param) {
+                return new TableCell<>() {
+
+                    private Button btn =
+                            new Button("");
+
+                    {
+                        btn.getStyleClass().add("deleteClientButton");
+                        btn.setMinWidth(15);
+                        btn.setPrefWidth(15);
+                        btn.setOnAction(event -> {
+                            getTableView().getItems().get(getIndex()).deleteServer(connServer);
+                            lessonsData.remove(getTableView().getItems().get(getIndex()));
+                            //clientsTable.refresh();
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    initDataFromServer();
+                                    System.out.println("deleted");
+                                }
+                            }.start();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            String toSet;
+                            if (currentLanguage.equals("English")) {
+                                btn.setText("");
+                            }
+                            if (currentLanguage.equals("Russian")) {
+                                btn.setText("");
+                            }
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+        Callback<TableColumn<Group, Void>, TableCell<Group, Void>> cellFactoryDeleteGroup = new Callback<>() {
+            @Override
+            public TableCell<Group, Void> call(TableColumn<Group, Void> param) {
+                return new TableCell<>() {
+
+                    private Button btn =
+                            new Button("");
+
+                    {
+                        btn.getStyleClass().add("deleteClientButton");
+                        btn.setMinWidth(15);
+                        btn.setPrefWidth(15);
+                        btn.setOnAction(event -> {
+                            getTableView().getItems().get(getIndex()).deleteServer(connServer);
+                            lessonsData.remove(getTableView().getItems().get(getIndex()));
+                            //clientsTable.refresh();
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    initDataFromServer();
+                                    System.out.println("deleted");
+                                }
+                            }.start();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            String toSet;
+                            if (currentLanguage.equals("English")) {
+                                btn.setText("");
+                            }
+                            if (currentLanguage.equals("Russian")) {
+                                btn.setText("");
+                            }
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+        Callback<TableColumn<Student, Void>, TableCell<Student, Void>> cellFactoryDeleteStudent = new Callback<>() {
+            @Override
+            public TableCell<Student, Void> call(TableColumn<Student, Void> param) {
+                return new TableCell<>() {
+
+                    private Button btn =
+                            new Button("");
+
+                    {
+                        btn.getStyleClass().add("deleteClientButton");
+                        btn.setMinWidth(15);
+                        btn.setPrefWidth(15);
+                        btn.setOnAction(event -> {
+                            getTableView().getItems().get(getIndex()).deleteServer(connServer);
+                            lessonsData.remove(getTableView().getItems().get(getIndex()));
+                            //clientsTable.refresh();
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    initDataFromServer();
+                                    System.out.println("deleted");
+                                }
+                            }.start();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            String toSet;
+                            if (currentLanguage.equals("English")) {
+                                btn.setText("");
+                            }
+                            if (currentLanguage.equals("Russian")) {
+                                btn.setText("");
+                            }
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+        Callback<TableColumn<Teacher, Void>, TableCell<Teacher, Void>> cellFactoryDeleteTeacher = new Callback<>() {
+            @Override
+            public TableCell<Teacher, Void> call(TableColumn<Teacher, Void> param) {
+                return new TableCell<>() {
+
+                    private Button btn =
+                            new Button("");
+
+                    {
+                        btn.getStyleClass().add("deleteClientButton");
+                        btn.setMinWidth(15);
+                        btn.setPrefWidth(15);
+                        btn.setOnAction(event -> {
+                            getTableView().getItems().get(getIndex()).deleteServer(connServer);
+                            lessonsData.remove(getTableView().getItems().get(getIndex()));
+                            //clientsTable.refresh();
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    initDataFromServer();
+                                    System.out.println("deleted");
+                                }
+                            }.start();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            String toSet;
+                            if (currentLanguage.equals("English")) {
+                                btn.setText("");
+                            }
+                            if (currentLanguage.equals("Russian")) {
+                                btn.setText("");
+                            }
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+        Callback<TableColumn<Subject, Void>, TableCell<Subject, Void>> cellFactoryDeleteSubject = new Callback<>() {
+            @Override
+            public TableCell<Subject, Void> call(TableColumn<Subject, Void> param) {
+                return new TableCell<>() {
+
+                    private Button btn =
+                            new Button("");
+
+                    {
+                        btn.getStyleClass().add("deleteClientButton");
+                        btn.setMinWidth(15);
+                        btn.setPrefWidth(15);
+                        btn.setOnAction(event -> {
+                            getTableView().getItems().get(getIndex()).deleteServer(connServer);
+                            lessonsData.remove(getTableView().getItems().get(getIndex()));
+                            //clientsTable.refresh();
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    initDataFromServer();
+                                    System.out.println("deleted");
+                                }
+                            }.start();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            String toSet;
                             if (currentLanguage.equals("English")) {
                                 btn.setText("");
                             }
@@ -3098,7 +3379,20 @@ public class MainController extends Application {
         maritalStatusColumn.setCellFactory(cellFactory1);
         disabilityColumn.setCellFactory(cellFactory2);
         retireeColumn.setCellFactory(cellFactory3);
-        deleteColumn.setCellFactory(cellFactory4);
+
+        deleteLessonColumn.setCellFactory(cellFactoryDeleteLesson);
+        deleteTeacherSubjectColumn.setCellFactory(cellFactoryDeleteTeacherSubject);
+        deleteGroupColumn.setCellFactory(cellFactoryDeleteGroup);
+        deleteStudentColumn.setCellFactory(cellFactoryDeleteStudent);
+        deleteTeacherColumn.setCellFactory(cellFactoryDeleteTeacher);
+        deleteSubjectColumn.setCellFactory(cellFactoryDeleteSubject);
+
+        lessonsTable.getColumns().add(0, deleteLessonColumn);
+        teachersSubjectsTable.getColumns().add(0, deleteTeacherSubjectColumn);
+        groupsTable.getColumns().add(0, deleteGroupColumn);
+        studentsTable.getColumns().add(0, deleteStudentColumn);
+        teachersTable.getColumns().add(0, deleteTeacherColumn);
+        subjectsTable.getColumns().add(0, deleteSubjectColumn);
 
 //        clientsTable.getColumns().add(18, maritalStatusColumn);
 //        clientsTable.getColumns().add(18, disabilityColumn);

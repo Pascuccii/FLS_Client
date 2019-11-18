@@ -1,5 +1,7 @@
 package sample.Controls;
 
+import sample.Connectivity.ServerConnection;
+
 import java.util.Objects;
 
 public class Student {
@@ -101,4 +103,9 @@ public class Student {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public void deleteServer(ServerConnection conn) {
+        conn.sendString("Student|delete|" + id + "|" + name);
+    }
+
 }

@@ -1,5 +1,7 @@
 package sample.Controls;
 
+import sample.Connectivity.ServerConnection;
+
 public class Group {
     private int id;
     private String level;
@@ -38,4 +40,9 @@ public class Group {
     public void setLevel(String level) {
         this.level = level;
     }
+
+    public void deleteServer(ServerConnection conn) {
+        conn.sendString("Group|delete|" + id + "|" + level);
+    }
+
 }

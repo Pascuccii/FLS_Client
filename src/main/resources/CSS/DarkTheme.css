@@ -15,6 +15,10 @@
     -fx-font-weight: bold;
 }
 
+.scroll-pane .corner {
+    -fx-background-color: #383838;
+}
+
 .scroll-pane > .text-field {
     -fx-border-color: transparent;
     -fx-border-width: 1px;

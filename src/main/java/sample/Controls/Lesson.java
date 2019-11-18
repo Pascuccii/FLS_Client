@@ -1,5 +1,7 @@
 package sample.Controls;
 
+import sample.Connectivity.ServerConnection;
+
 public class Lesson {
     private int id;
     private int groupId;
@@ -87,4 +89,9 @@ public class Lesson {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public void deleteServer(ServerConnection conn) {
+        conn.sendString("Lesson|delete|" + id + "|" + cabinet);
+    }
+
 }

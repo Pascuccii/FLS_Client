@@ -1,5 +1,7 @@
 package sample.Controls;
 
+import sample.Connectivity.ServerConnection;
+
 public class Teacher {
     private int id;
     private String name;
@@ -63,4 +65,9 @@ public class Teacher {
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
     }
+
+    public void deleteServer(ServerConnection conn) {
+        conn.sendString("Teacher|delete|" + id + "|" + name);
+    }
+
 }
