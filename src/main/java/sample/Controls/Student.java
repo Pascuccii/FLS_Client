@@ -9,11 +9,11 @@ public class Student {
     private String name;
     private String surname;
     private String patronymic;
-    private int groupId;
+    private String groupId;
     private String email;
     private String phone;
 
-    public Student(int id, String name, String surname, String patronymic, int groupId, String email, String phone) {
+    public Student(int id, String name, String surname, String patronymic, String groupId, String email, String phone) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -29,7 +29,7 @@ public class Student {
         if (!vals[1].equals("null")) this.name = vals[1];
         if (!vals[2].equals("null")) this.surname = vals[2];
         if (!vals[3].equals("null")) this.patronymic = vals[3];
-        if (!vals[4].equals("null")) this.groupId = Integer.parseInt(vals[4]);
+        if (!vals[4].equals("null")) this.groupId = vals[4];
         if (!vals[5].equals("null")) this.email = vals[5];
         if (!vals[6].equals("null")) this.phone = vals[6];
     }
@@ -80,11 +80,11 @@ public class Student {
         this.patronymic = patronymic;
     }
 
-    public int getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
@@ -103,6 +103,32 @@ public class Student {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public void setNameServer(ServerConnection conn, String name) {
+        this.name = name;
+        conn.sendString("Student|setName|" + id + "|" + name);
+    }
+    public void setSurnameServer(ServerConnection conn, String surname) {
+        this.surname = surname;
+        conn.sendString("Student|setSurname|" + id + "|" + surname);
+    }
+    public void setPatronymicServer(ServerConnection conn, String patronymic) {
+        this.patronymic = patronymic;
+        conn.sendString("Student|setPatronymic|" + id + "|" + patronymic);
+    }
+    public void setGroupIdServer(ServerConnection conn, String groupId) {
+        this.groupId = groupId;
+        conn.sendString("Student|setGroupId|" + id + "|" + groupId);
+    }
+    public void setEmailServer(ServerConnection conn, String email) {
+        this.email = email;
+        conn.sendString("Student|setEmail|" + id + "|" + email);
+    }
+    public void setPhoneServer(ServerConnection conn, String phone) {
+        this.phone = phone;
+        conn.sendString("Student|setPhone|" + id + "|" + phone);
+    }
+
 
     public void deleteServer(ServerConnection conn) {
         conn.sendString("Student|delete|" + id + "|" + name);

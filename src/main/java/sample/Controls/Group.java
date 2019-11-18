@@ -41,6 +41,11 @@ public class Group {
         this.level = level;
     }
 
+    public void setLevelServer(ServerConnection conn, String level) {
+        this.level = level;
+        conn.sendString("Group|setLevel|" + id + "|" + level);
+    }
+
     public void deleteServer(ServerConnection conn) {
         conn.sendString("Group|delete|" + id + "|" + level);
     }

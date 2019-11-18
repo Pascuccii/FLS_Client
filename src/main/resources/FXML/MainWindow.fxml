@@ -281,8 +281,8 @@
                                                 <TableColumn fx:id="lessonTimeColumn" prefWidth="75.0" text="Время" />
                                              </columns>
                                           </TableView>
-                                          <TextField fx:id="searchFieldClient1" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="searchButtonClient1" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                                          <TextField fx:id="searchFieldLesson" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
+                                          <Button fx:id="searchButtonLesson" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
                                           <Button fx:id="resetButtonLessons" focusTraversable="false" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" AnchorPane.rightAnchor="263.6" AnchorPane.topAnchor="9.0" />
                                           <MenuButton fx:id="criteriaButtonLesson" focusTraversable="false" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" text="ID" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="9.0">
                                              <items>
@@ -314,8 +314,8 @@
                                                 <TableColumn fx:id="teacherSubjectSubjectIdColumn" prefWidth="75.0" text="ID предмета" />
                                              </columns>
                                           </TableView>
-                                          <TextField fx:id="searchFieldClient11" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="searchButtonClient11" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                                          <TextField fx:id="searchFieldTeacherSubject" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
+                                          <Button fx:id="searchButtonTeacherSubject" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
                                           <Button fx:id="resetButtonTeachersSubjects" focusTraversable="false" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" AnchorPane.rightAnchor="263.6" AnchorPane.topAnchor="9.0" />
                                           <MenuButton fx:id="criteriaButtonTeacherSubject" focusTraversable="false" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" text="ID" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="9.0">
                                              <items>
@@ -343,8 +343,8 @@
                                                 <TableColumn fx:id="groupLevelColumn" prefWidth="75.0" text="Уровень" />
                                              </columns>
                                           </TableView>
-                                          <TextField fx:id="searchFieldClient111" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="searchButtonClient111" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                                          <TextField fx:id="searchFieldGroup" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
+                                          <Button fx:id="searchButtonGroup" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
                                           <Button fx:id="resetButtonGroups" focusTraversable="false" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" AnchorPane.rightAnchor="263.6" AnchorPane.topAnchor="9.0" />
                                           <MenuButton fx:id="criteriaButtonGroup" focusTraversable="false" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" text="ID" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="9.0">
                                              <items>
@@ -376,8 +376,8 @@
                                                 <TableColumn fx:id="studentPhoneColumn" prefWidth="75.0" text="Телефон" />
                                              </columns>
                                           </TableView>
-                                          <TextField fx:id="searchFieldClient1111" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="searchButtonClient1111" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                                          <TextField fx:id="searchFieldStudent" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
+                                          <Button fx:id="searchButtonStudent" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
                                           <Button fx:id="resetButtonStudents" focusTraversable="false" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" AnchorPane.rightAnchor="263.6" AnchorPane.topAnchor="9.0" />
                                           <MenuButton fx:id="criteriaButtonStudent" focusTraversable="false" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" text="ID" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="9.0">
                                              <items>
@@ -411,8 +411,8 @@
                                                 <TableColumn fx:id="teacherPatronymicColumn" prefWidth="75.0" text="Отчество" />
                                              </columns>
                                           </TableView>
-                                          <TextField fx:id="searchFieldClient11111" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="searchButtonClient11111" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                                          <TextField fx:id="searchFieldTeacher" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
+                                          <Button fx:id="searchButtonTeacher" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
                                           <Button fx:id="resetButtonTeachers" focusTraversable="false" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" AnchorPane.rightAnchor="263.6" AnchorPane.topAnchor="9.0" />
                                           <MenuButton fx:id="criteriaButtonTeacher" focusTraversable="false" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" text="ID" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="9.0">
                                              <items>
@@ -442,8 +442,8 @@
                                                 <TableColumn fx:id="subjectHoursColumn" prefWidth="75.0" text="К-во часов" />
                                              </columns>
                                           </TableView>
-                                          <TextField fx:id="searchFieldClient111111" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="searchButtonClient111111" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
+                                          <TextField fx:id="searchFieldSubject" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
+                                          <Button fx:id="searchButtonSubject" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
                                           <Button fx:id="resetButtonSubjects" focusTraversable="false" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" AnchorPane.rightAnchor="263.6" AnchorPane.topAnchor="9.0" />
                                           <MenuButton fx:id="criteriaButtonSubject" focusTraversable="false" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" text="ID" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="9.0">
                                              <items>

@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -93,11 +94,11 @@ public class MainController extends Application {
     @FXML
     private TableColumn<Lesson, Integer> lessonIdColumn;
     @FXML
-    private TableColumn<Lesson, Integer> lessonGroupIdColumn;
+    private TableColumn<Lesson, String> lessonGroupIdColumn;
     @FXML
-    private TableColumn<Lesson, Integer> lessonTeacherSubjectIdColumn;
+    private TableColumn<Lesson, String> lessonTeacherSubjectIdColumn;
     @FXML
-    private TableColumn<Lesson, Integer> lessonCabinetColumn;
+    private TableColumn<Lesson, String> lessonCabinetColumn;
     @FXML
     private TableColumn<Lesson, String> lessonDateColumn;
     @FXML
@@ -114,7 +115,7 @@ public class MainController extends Application {
     @FXML
     private TableColumn<Student, String> studentPatronymicColumn;
     @FXML
-    private TableColumn<Student, Integer> studentGroupIdColumn;
+    private TableColumn<Student, String> studentGroupIdColumn;
     @FXML
     private TableColumn<Student, String> studentEmailColumn;
     @FXML
@@ -127,7 +128,7 @@ public class MainController extends Application {
     @FXML
     private TableColumn<Subject, String> subjectNameColumn;
     @FXML
-    private TableColumn<Subject, Integer> subjectHoursColumn;
+    private TableColumn<Subject, String> subjectHoursColumn;
 
     @FXML
     private TableView<Teacher> teachersTable;
@@ -145,9 +146,9 @@ public class MainController extends Application {
     @FXML
     private TableColumn<TeacherSubject, Integer> teacherSubjectIdColumn;
     @FXML
-    private TableColumn<TeacherSubject, Integer> teacherSubjectTeacherIdColumn;
+    private TableColumn<TeacherSubject, String> teacherSubjectTeacherIdColumn;
     @FXML
-    private TableColumn<TeacherSubject, Integer> teacherSubjectSubjectIdColumn;
+    private TableColumn<TeacherSubject, String> teacherSubjectSubjectIdColumn;
 
 
     @FXML
@@ -257,6 +258,18 @@ public class MainController extends Application {
     @FXML
     private TextField searchField;
     @FXML
+    private TextField searchFieldLesson;
+    @FXML
+    private TextField searchFieldTeacherSubject;
+    @FXML
+    private TextField searchFieldGroup;
+    @FXML
+    private TextField searchFieldStudent;
+    @FXML
+    private TextField searchFieldTeacher;
+    @FXML
+    private TextField searchFieldSubject;
+    @FXML
     private MenuButton criteriaButton;
     @FXML
     private MenuItem criteriaMenuItem_Id;
@@ -269,7 +282,84 @@ public class MainController extends Application {
     @FXML
     private MenuItem criteriaMenuItem_Email;
     @FXML
+    private MenuButton criteriaButtonLesson;
+    @FXML
+    private MenuItem criteriaLessonId;
+    @FXML
+    private MenuItem criteriaLessonGroupId;
+    @FXML
+    private MenuItem criteriaLessonTeacherSubjectId;
+    @FXML
+    private MenuItem criteriaLessonCebinet;
+    @FXML
+    private MenuItem criteriaLessonDate;
+    @FXML
+    private MenuItem criteriaLessonTime;
+    @FXML
+    private MenuButton criteriaButtonTeacherSubject;
+    @FXML
+    private MenuItem criteriaTeacherSubjectId;
+    @FXML
+    private MenuItem criteriaTeacherSubjectTeacherId;
+    @FXML
+    private MenuItem criteriaTeacherSubjectSubjectId;
+    @FXML
+    private MenuButton criteriaButtonGroup;
+    @FXML
+    private MenuItem criteriaGroupId;
+    @FXML
+    private MenuItem criteriaGroupLevel;
+    @FXML
+    private MenuButton criteriaButtonStudent;
+    @FXML
+    private MenuItem criteriaStudentId;
+    @FXML
+    private MenuItem criteriaStudentName;
+    @FXML
+    private MenuItem criteriaStudentSurname;
+    @FXML
+    private MenuItem criteriaStudentPatronymic;
+    @FXML
+    private MenuItem criteriaStudentGroupId;
+    @FXML
+    private MenuItem criteriaStudentEmail;
+    @FXML
+    private MenuItem criteriaStudentPhone;
+    @FXML
+    private MenuButton criteriaButtonTeacher;
+    @FXML
+    private MenuItem criteriaTeacherId;
+    @FXML
+    private MenuItem criteriaTeacherName;
+    @FXML
+    private MenuItem criteriaTeacherSurname;
+    @FXML
+    private MenuItem criteriaTeacherPatronymic;
+    @FXML
+    private MenuButton criteriaButtonSubject;
+    @FXML
+    private MenuItem criteriaSubjectId;
+    @FXML
+    private MenuItem criteriaSubjectName;
+    @FXML
+    private MenuItem criteriaSubjectHours;
+
+
+
+    @FXML
     private Button searchButton;
+    @FXML
+    private Button searchButtonLesson;
+    @FXML
+    private Button searchButtonTeacherSubject;
+    @FXML
+    private Button searchButtonGroup;
+    @FXML
+    private Button searchButtonStudent;
+    @FXML
+    private Button searchButtonTeacher;
+    @FXML
+    private Button searchButtonSubject;
     @FXML
     private Button resetSearchButton;
     @FXML
@@ -718,18 +808,214 @@ public class MainController extends Application {
         monthlyIncomeColumn.setCellValueFactory(new PropertyValueFactory<>("monthlyIncome"));
         idNumberColumn.setCellValueFactory(new PropertyValueFactory<>("idNumber"));
         clientsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        */
 
         //patro, series, mob,
-        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        nameColumn.setOnEditCommit((TableColumn.CellEditEvent<Client, String> t) -> {
-            Client cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[а-яА-Я]{2,20}") && isFullnameUnique(t.getNewValue(), cl.getSurname(), cl.getPatronymic())) {
-                cl.setNameServer(connServer, t.getNewValue());
-                clientsTable.requestFocus();
+        groupLevelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        groupLevelColumn.setOnEditCommit((TableColumn.CellEditEvent<Group, String> t) -> {
+            Group cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[ABC]")) {
+                cl.setLevelServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
             } else {
-                initClientsDataServerBuffer();
+                initGroupsDataServerBuffer();
             }
         });
+
+
+        lessonGroupIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lessonGroupIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
+            Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setGroupIdServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        lessonTeacherSubjectIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lessonTeacherSubjectIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
+            Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setTeacherSubjectIdServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        lessonCabinetColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lessonCabinetColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
+            Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setCabinetServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        lessonDateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lessonDateColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
+            Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setDateServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        lessonTimeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lessonTimeColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
+            Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setTimeServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+
+
+        studentNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        studentNameColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+            Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[а-яА-Я]{2,20}")) {
+                cl.setNameServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        studentSurnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        studentSurnameColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+            Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[а-яА-Я]{2,20}")) {
+                cl.setSurnameServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        studentPatronymicColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        studentPatronymicColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+            Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[а-яА-Я]{2,30}")) {
+                cl.setPatronymicServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        studentGroupIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        studentGroupIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+            Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setGroupIdServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        studentEmailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        studentEmailColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+            Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setEmailServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        studentPhoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        studentPhoneColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
+            Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setPhoneServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+
+
+
+        subjectNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        subjectNameColumn.setOnEditCommit((TableColumn.CellEditEvent<Subject, String> t) -> {
+            Subject cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[а-яА-Я]{2,40}")) {
+                cl.setNameServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        subjectHoursColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        subjectHoursColumn.setOnEditCommit((TableColumn.CellEditEvent<Subject, String> t) -> {
+            Subject cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setHoursServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+
+
+
+        teacherNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        teacherNameColumn.setOnEditCommit((TableColumn.CellEditEvent<Teacher, String> t) -> {
+            Teacher cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[а-яА-Я]{2,20}")) {
+                cl.setNameServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        teacherSurnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        teacherSurnameColumn.setOnEditCommit((TableColumn.CellEditEvent<Teacher, String> t) -> {
+            Teacher cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[а-яА-Я]{2,20}")) {
+                cl.setSurnameServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        teacherPatronymicColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        teacherPatronymicColumn.setOnEditCommit((TableColumn.CellEditEvent<Teacher, String> t) -> {
+            Teacher cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[а-яА-Я]{2,30}")) {
+                cl.setPatronymicServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+
+
+        teacherSubjectTeacherIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        teacherSubjectTeacherIdColumn.setOnEditCommit((TableColumn.CellEditEvent<TeacherSubject, String> t) -> {
+            TeacherSubject cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setTeacherIdServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+        teacherSubjectSubjectIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        teacherSubjectSubjectIdColumn.setOnEditCommit((TableColumn.CellEditEvent<TeacherSubject, String> t) -> {
+            TeacherSubject cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (t.getNewValue().trim().matches("[0-9]+")) {
+                cl.setSubjectIdServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
+
+
+        /*
         surnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameColumn.setOnEditCommit((TableColumn.CellEditEvent<Client, String> t) -> {
             Client cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
@@ -1458,11 +1744,43 @@ public class MainController extends Application {
                 deleteUsers();
         });
 
-        criteriaMenuItem_Id.setOnAction(actionEvent -> criteriaButton.setText("Id"));
-        criteriaMenuItem_Access.setOnAction(actionEvent -> criteriaButton.setText("Access"));
-        criteriaMenuItem_Username.setOnAction(actionEvent -> criteriaButton.setText("Username"));
-        criteriaMenuItem_Password.setOnAction(actionEvent -> criteriaButton.setText("Password"));
-        criteriaMenuItem_Email.setOnAction(actionEvent -> criteriaButton.setText("E-mail"));
+        criteriaMenuItem_Id.setOnAction(actionEvent -> criteriaButton.setText("ID"));
+        criteriaMenuItem_Access.setOnAction(actionEvent -> criteriaButton.setText("Доступ"));
+        criteriaMenuItem_Username.setOnAction(actionEvent -> criteriaButton.setText("Имя"));
+        criteriaMenuItem_Password.setOnAction(actionEvent -> criteriaButton.setText("Пароль"));
+        criteriaMenuItem_Email.setOnAction(actionEvent -> criteriaButton.setText("Эл. почта"));
+
+        criteriaLessonId.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonId.getText()));
+        criteriaLessonGroupId.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonGroupId.getText()));
+        criteriaLessonTeacherSubjectId.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonTeacherSubjectId.getText()));
+        criteriaLessonCebinet.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonCebinet.getText()));
+        criteriaLessonDate.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonDate.getText()));
+        criteriaLessonTime.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonTime.getText()));
+
+        criteriaTeacherSubjectId.setOnAction(actionEvent -> criteriaButtonTeacherSubject.setText(criteriaTeacherSubjectId.getText()));
+        criteriaTeacherSubjectTeacherId.setOnAction(actionEvent -> criteriaButtonTeacherSubject.setText(criteriaTeacherSubjectTeacherId.getText()));
+        criteriaTeacherSubjectSubjectId.setOnAction(actionEvent -> criteriaButtonTeacherSubject.setText(criteriaTeacherSubjectSubjectId.getText()));
+
+        criteriaGroupId.setOnAction(actionEvent -> criteriaButtonGroup.setText(criteriaGroupId.getText()));
+        criteriaGroupLevel.setOnAction(actionEvent -> criteriaButtonGroup.setText(criteriaGroupLevel.getText()));
+
+        criteriaStudentId.setOnAction(actionEvent -> criteriaButtonStudent.setText(criteriaStudentId.getText()));
+        criteriaStudentName.setOnAction(actionEvent -> criteriaButtonStudent.setText(criteriaStudentName.getText()));
+        criteriaStudentSurname.setOnAction(actionEvent -> criteriaButtonStudent.setText(criteriaStudentSurname.getText()));
+        criteriaStudentPatronymic.setOnAction(actionEvent -> criteriaButtonStudent.setText(criteriaStudentPatronymic.getText()));
+        criteriaStudentGroupId.setOnAction(actionEvent -> criteriaButtonStudent.setText(criteriaStudentGroupId.getText()));
+        criteriaStudentEmail.setOnAction(actionEvent -> criteriaButtonStudent.setText(criteriaStudentEmail.getText()));
+        criteriaStudentPhone.setOnAction(actionEvent -> criteriaButtonStudent.setText(criteriaStudentPhone.getText()));
+
+        criteriaTeacherId.setOnAction(actionEvent -> criteriaButtonTeacher.setText(criteriaTeacherId.getText()));
+        criteriaTeacherName.setOnAction(actionEvent -> criteriaButtonTeacher.setText(criteriaTeacherName.getText()));
+        criteriaTeacherSurname.setOnAction(actionEvent -> criteriaButtonTeacher.setText(criteriaTeacherSurname.getText()));
+        criteriaTeacherPatronymic.setOnAction(actionEvent -> criteriaButtonTeacher.setText(criteriaTeacherPatronymic.getText()));
+
+        criteriaSubjectId.setOnAction(actionEvent -> criteriaButtonSubject.setText(criteriaSubjectId.getText()));
+        criteriaSubjectName.setOnAction(actionEvent -> criteriaButtonSubject.setText(criteriaSubjectName.getText()));
+        criteriaSubjectHours.setOnAction(actionEvent -> criteriaButtonSubject.setText(criteriaSubjectHours.getText()));
+
 
         /*criteriaClientName.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientName.getText()));
         criteriaClientSurname.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientSurname.getText()));
@@ -1762,7 +2080,7 @@ public class MainController extends Application {
             }.start();
         });
         resetButtonLessons.setOnAction(actionEvent -> {
-            searchField.clear();
+            searchFieldLesson.clear();
             new Thread() {
                 @Override
                 public void run() {
@@ -1771,7 +2089,7 @@ public class MainController extends Application {
             }.start();
         });
         resetButtonTeachersSubjects.setOnAction(actionEvent -> {
-            searchField.clear();
+            searchFieldTeacherSubject.clear();
             new Thread() {
                 @Override
                 public void run() {
@@ -1780,7 +2098,7 @@ public class MainController extends Application {
             }.start();
         });
         resetButtonGroups.setOnAction(actionEvent -> {
-            searchField.clear();
+            searchFieldGroup.clear();
             new Thread() {
                 @Override
                 public void run() {
@@ -1789,7 +2107,7 @@ public class MainController extends Application {
             }.start();
         });
         resetButtonStudents.setOnAction(actionEvent -> {
-            searchField.clear();
+            searchFieldStudent.clear();
             new Thread() {
                 @Override
                 public void run() {
@@ -1798,7 +2116,7 @@ public class MainController extends Application {
             }.start();
         });
         resetButtonTeachers.setOnAction(actionEvent -> {
-            searchField.clear();
+            searchFieldTeacher.clear();
             new Thread() {
                 @Override
                 public void run() {
@@ -1807,7 +2125,7 @@ public class MainController extends Application {
             }.start();
         });
         resetButtonSubjects.setOnAction(actionEvent -> {
-            searchField.clear();
+            searchFieldSubject.clear();
             new Thread() {
                 @Override
                 public void run() {
@@ -1820,11 +2138,39 @@ public class MainController extends Application {
             if (keyEvent.getCode() == KeyCode.ENTER)
                 searchButton.fire();
         });
-        /*searchFieldClient.setOnKeyPressed(keyEvent -> {
+        searchFieldLesson.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER)
-                searchButtonClient.fire();
-        });*/
+                searchButtonLesson.fire();
+        });
+        searchFieldTeacherSubject.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                searchButtonTeacherSubject.fire();
+        });
+        searchFieldGroup.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                searchButtonGroup.fire();
+        });
+        searchFieldStudent.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                searchButtonStudent.fire();
+        });
+        searchFieldTeacher.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                searchButtonTeacher.fire();
+        });
+        searchFieldSubject.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                searchButtonSubject.fire();
+        });
+
         searchButton.setOnAction(actionEvent -> searchUser());
+        searchButtonLesson.setOnAction(actionEvent -> searchLesson());
+        searchButtonTeacherSubject.setOnAction(actionEvent -> searchTeacherSubject());
+        searchButtonGroup.setOnAction(actionEvent -> searchGroup());
+        searchButtonStudent.setOnAction(actionEvent -> searchStudent());
+        searchButtonTeacher.setOnAction(actionEvent -> searchTeacher());
+        searchButtonSubject.setOnAction(actionEvent -> searchSubject());
+
         /*searchButtonClient.setOnAction(actionEvent -> searchClient());*/
         //databaseSettingsConnectButton.setOnAction(actionEvent -> newConnection());
 
@@ -2565,39 +2911,39 @@ public class MainController extends Application {
 
             lessonsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             lessonsScrollPane.setPrefWidth(573);
-            lessonsAnchorPane.setPrefWidth(556);
+            lessonsAnchorPane.setPrefWidth(572);
             lessonsScrollPane.setPrefHeight(462);
-            lessonsAnchorPane.setPrefHeight(1200);
+            lessonsAnchorPane.setPrefHeight(459);
 
             teachersSubjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             teachersSubjectsScrollPane.setPrefWidth(573);
-            teachersSubjectsAnchorPane.setPrefWidth(556);
+            teachersSubjectsAnchorPane.setPrefWidth(572);
             teachersSubjectsScrollPane.setPrefHeight(462);
-            teachersSubjectsAnchorPane.setPrefHeight(1200);
+            teachersSubjectsAnchorPane.setPrefHeight(459);
 
             groupsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             groupsScrollPane.setPrefWidth(573);
-            groupsAnchorPane.setPrefWidth(556);
+            groupsAnchorPane.setPrefWidth(572);
             groupsScrollPane.setPrefHeight(462);
-            groupsAnchorPane.setPrefHeight(1200);
+            groupsAnchorPane.setPrefHeight(459);
 
             studentsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             studentsScrollPane.setPrefWidth(573);
-            studentsAnchorPane.setPrefWidth(556);
+            studentsAnchorPane.setPrefWidth(572);
             studentsScrollPane.setPrefHeight(462);
-            studentsAnchorPane.setPrefHeight(1200);
+            studentsAnchorPane.setPrefHeight(459);
 
             teachersScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             teachersScrollPane.setPrefWidth(573);
-            teachersAnchorPane.setPrefWidth(556);
+            teachersAnchorPane.setPrefWidth(572);
             teachersScrollPane.setPrefHeight(462);
-            teachersAnchorPane.setPrefHeight(1200);
+            teachersAnchorPane.setPrefHeight(459);
 
             subjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             subjectsScrollPane.setPrefWidth(573);
-            subjectsAnchorPane.setPrefWidth(556);
+            subjectsAnchorPane.setPrefWidth(572);
             subjectsScrollPane.setPrefHeight(462);
-            subjectsAnchorPane.setPrefHeight(1200);
+            subjectsAnchorPane.setPrefHeight(459);
 
             createLessonAnchorPane.setPrefHeight(930);
             createTeacherSubjectAnchorPane.setPrefHeight(930);
@@ -3460,6 +3806,235 @@ public class MainController extends Application {
                 case "E-mail":
                     while (i.hasNext()) {
                         if (!i.next().getEmail().equals(searchField.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void searchLesson() {
+        initUsersDataServerBuffer();
+        if (!searchFieldLesson.getText().equals("")) {
+            Iterator<Lesson> i = lessonsData.iterator();
+            switch (criteriaButtonLesson.getText()) {
+                case "ID":
+                    while (i.hasNext()) {
+                        if (i.next().getId() != Integer.parseInt(searchFieldLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "ID группы":
+                    while (i.hasNext()) {
+                        if (!i.next().getGroupId().equals(searchFieldLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "ID лектора":
+                    while (i.hasNext()) {
+                        if (!i.next().getTeacher_subjectId().equals(searchFieldLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Аудитория":
+                    while (i.hasNext()) {
+                        if (!i.next().getCabinet().equals(searchFieldLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Дата":
+                    while (i.hasNext()) {
+                        if (!i.next().getDate().equals(searchFieldLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Время":
+                    while (i.hasNext()) {
+                        if (!i.next().getTime().equals(searchFieldLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void searchTeacherSubject() {
+        initUsersDataServerBuffer();
+        if (!searchFieldTeacherSubject.getText().equals("")) {
+            Iterator<TeacherSubject> i = teachersSubjectsData.iterator();
+            switch (criteriaButtonTeacherSubject.getText()) {
+                case "ID":
+                    while (i.hasNext()) {
+                        if (i.next().getId() != Integer.parseInt(searchFieldTeacherSubject.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "ID учителя":
+                    while (i.hasNext()) {
+                        if (!i.next().getTeacherId().equals(searchFieldTeacherSubject.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "ID предмета":
+                    while (i.hasNext()) {
+                        if (!i.next().getSubjectId().equals(searchFieldTeacherSubject.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void searchGroup() {
+        initUsersDataServerBuffer();
+        if (!searchFieldGroup.getText().equals("")) {
+            Iterator<Group> i = groupsData.iterator();
+            switch (criteriaButtonGroup.getText()) {
+                case "ID":
+                    while (i.hasNext()) {
+                        if (i.next().getId() != Integer.parseInt(searchFieldGroup.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Уровень":
+                    while (i.hasNext()) {
+                        if (!i.next().getLevel().equals(searchFieldGroup.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void searchStudent() {
+        initUsersDataServerBuffer();
+        if (!searchFieldStudent.getText().equals("")) {
+            Iterator<Student> i = studentsData.iterator();
+            switch (criteriaButtonStudent.getText()) {
+                case "ID":
+                    while (i.hasNext()) {
+                        if (i.next().getId() != Integer.parseInt(searchFieldStudent.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Имя":
+                    while (i.hasNext()) {
+                        if (!i.next().getName().equals(searchFieldStudent.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Фамилия":
+                    while (i.hasNext()) {
+                        if (!i.next().getSurname().equals(searchFieldStudent.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Отчество":
+                    while (i.hasNext()) {
+                        if (!i.next().getPatronymic().equals(searchFieldStudent.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "ID группы":
+                    while (i.hasNext()) {
+                        if (!i.next().getGroupId().equals(searchFieldStudent.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Эл. почта":
+                    while (i.hasNext()) {
+                        if (!i.next().getEmail().equals(searchFieldStudent.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Телефон":
+                    while (i.hasNext()) {
+                        if (i.next().getId() != Integer.parseInt(searchFieldStudent.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void searchTeacher() {
+        initUsersDataServerBuffer();
+        if (!searchFieldTeacher.getText().equals("")) {
+            Iterator<Teacher> i = teachersData.iterator();
+            switch (criteriaButtonTeacher.getText()) {
+                case "ID":
+                    while (i.hasNext()) {
+                        if (i.next().getId() != Integer.parseInt(searchFieldTeacher.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Имя":
+                    while (i.hasNext()) {
+                        if (!i.next().getName().equals(searchFieldTeacher.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Фамилия":
+                    while (i.hasNext()) {
+                        if (!i.next().getSurname().equals(searchFieldTeacher.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Отчество":
+                    while (i.hasNext()) {
+                        if (!i.next().getPatronymic().equals(searchFieldTeacher.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void searchSubject() {
+        initUsersDataServerBuffer();
+        if (!searchFieldSubject.getText().equals("")) {
+            Iterator<Subject> i = subjectsData.iterator();
+            switch (criteriaButtonSubject.getText()) {
+                case "ID":
+                    while (i.hasNext()) {
+                        if (i.next().getId() != Integer.parseInt(searchFieldSubject.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Название":
+                    while (i.hasNext()) {
+                        if (!i.next().getName().equals(searchFieldSubject.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "К-во часов":
+                    while (i.hasNext()) {
+                        if (!i.next().getHours().equals(searchFieldSubject.getText())) {
                             i.remove();
                         }
                     }

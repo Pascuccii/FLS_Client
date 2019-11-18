@@ -66,6 +66,20 @@ public class Teacher {
         this.patronymic = patronymic;
     }
 
+    public void setNameServer(ServerConnection conn, String name) {
+        this.name = name;
+        conn.sendString("Teacher|setName|" + id + "|" + name);
+    }
+    public void setSurnameServer(ServerConnection conn, String surname) {
+        this.surname = surname;
+        conn.sendString("Teacher|setSurname|" + id + "|" + surname);
+    }
+    public void setPatronymicServer(ServerConnection conn, String patronymic) {
+        this.patronymic = patronymic;
+        conn.sendString("Teacher|setPatronymic|" + id + "|" + patronymic);
+    }
+
+
     public void deleteServer(ServerConnection conn) {
         conn.sendString("Teacher|delete|" + id + "|" + name);
     }
