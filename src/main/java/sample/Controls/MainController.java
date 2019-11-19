@@ -31,8 +31,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Iterator;
 
@@ -199,6 +197,18 @@ public class MainController extends Application {
     private Button menuUserInfoButton;
     @FXML
     private Button logoutButtonUser;
+    @FXML
+    private Button addLessonButton;
+    @FXML
+    private Button addTeacherSubjectButton;
+    @FXML
+    private Button addGroupButton;
+    @FXML
+    private Button addStudentButton;
+    @FXML
+    private Button addTeacherButton;
+    @FXML
+    private Button addSubjectButton;
     @FXML
     private Button serverConnectButton;
     @FXML
@@ -720,8 +730,6 @@ public class MainController extends Application {
     private Label databaseSettingsUsernameLabel;
     @FXML
     private Label databaseSettingsPasswordLabel;
-    @FXML
-    private Button databaseSettingsConnectButton;
     @FXML
     private TextField databaseSettingsUsernameTextField;
     @FXML
@@ -1588,21 +1596,6 @@ public class MainController extends Application {
         });
 
         accountSettingsSaveButton.setOnAction(actionEvent -> changeAccountData());
-        databaseSettingsURLTextField.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER) {
-                databaseSettingsConnectButton.fire();
-            }
-        });
-        databaseSettingsUsernameTextField.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER) {
-                databaseSettingsConnectButton.fire();
-            }
-        });
-        databaseSettingsPasswordTextField.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER) {
-                databaseSettingsConnectButton.fire();
-            }
-        });
         accountSettingsUsernameTextField.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
                 accountSettingsSaveButton.fire();
@@ -2022,6 +2015,13 @@ public class MainController extends Application {
 
         addClientButton.setOnAction(actionEvent -> addClient());
 */
+        addLessonButton.setOnAction(actionEvent -> addLesson());
+        addTeacherSubjectButton.setOnAction(actionEvent -> addTeacherSubject());
+        addGroupButton.setOnAction(actionEvent -> addGroup());
+        addStudentButton.setOnAction(actionEvent -> addStudent());
+        addTeacherButton.setOnAction(actionEvent -> addTeacher());
+        addSubjectButton.setOnAction(actionEvent -> addSubject());
+
         languageItem_English.setOnAction(actionEvent -> {
             try {
                 if (currentUser != null)
@@ -2172,7 +2172,6 @@ public class MainController extends Application {
         searchButtonSubject.setOnAction(actionEvent -> searchSubject());
 
         /*searchButtonClient.setOnAction(actionEvent -> searchClient());*/
-        //databaseSettingsConnectButton.setOnAction(actionEvent -> newConnection());
 
         //#######################################################################УБРАТЬ
         /*addClientMobilePhoneTextField.setText("");
@@ -2313,7 +2312,6 @@ public class MainController extends Application {
                 accountSettingsLabel.setText("Account");
                 databaseSettingsLabel.setText("Database connection");
                 accountSettingsSaveButton.setText("Save");
-                databaseSettingsConnectButton.setText("Connect");
 
 
                 createUser_AnchorPane_Username.setPromptText("Username");
@@ -2350,8 +2348,8 @@ public class MainController extends Application {
                 loginPasswordLabel.setText("Пароль");
                 loginButton.setText("Войти");
                 menuAdminUsersButton.setText(" 1 Управление пользователями");
-                menuAdminSettingsButton.setText(" 3 Настройки");
-                menuUserSettingsButton.setText(" 3 Настройки");
+                menuAdminSettingsButton.setText(" 3 Аккаунт");
+                menuUserSettingsButton.setText(" 3 Аккаунт");
                 menuAdminInfoButton.setText(" 4 Информация");
                 menuUserInfoButton.setText(" 4 Информация");
                 logoutButtonAdmin.setText(" 5 Выйти");
@@ -2367,9 +2365,8 @@ public class MainController extends Application {
                 themeLabel.setText("Тема");
                 customizationLabel.setText("Кастомизация");
                 accountSettingsLabel.setText("Аккаунт");
-                databaseSettingsLabel.setText("Соединение с БД");
+                databaseSettingsLabel.setText("Соединение с сервером");
                 accountSettingsSaveButton.setText("Сохранить");
-                databaseSettingsConnectButton.setText("Подключить");
 
                 createUser_AnchorPane_Username.setPromptText("Имя пользователя");
                 if (createUser_AnchorPane_AccessMode_MenuButton.getText().equals("Пользователь")
@@ -2383,6 +2380,8 @@ public class MainController extends Application {
                 createUser_AnchorPane_Password.setPromptText("Пароль");
                 createUser_AnchorPane_Email.setPromptText("Электронный адрес");
                 createUserButton.setText("Добавить");
+                databaseSettingsURLLabel.setText("IP");
+                serverConnectButton.setText("Подключиться");
 
                 changeUser_AnchorPane_Username.setPromptText("Имя пользователя");
                 changeUser_AnchorPane_Password.setPromptText("Пароль");
@@ -4254,113 +4253,131 @@ public class MainController extends Application {
         }
     }
 
-    private void addClient() {
+    private void addLesson() {
+        System.out.println("addLesson");
         boolean result = true;
         if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
             result = addClientFillingError(addClientNameTextField, addClientNameDescription);
-        if (!addClientSurnameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
-            result = addClientFillingError(addClientSurnameTextField, addClientSurnameDescription);
-        if (!addClientPatronymicTextField.getText().trim().matches("[а-яА-Я]{2,30}"))
-            result = addClientFillingError(addClientPatronymicTextField, addClientPatronymicDescription);
-        if (!isFullnameUnique(addClientNameTextField, addClientSurnameTextField, addClientPatronymicTextField, addClientNameDescription))
-            result = false;
-        if (!addClientCityTextField.getText().trim().matches("[а-яА-Я.\\-\\s]{2,20}"))
-            result = addClientFillingError(addClientCityTextField, addClientCityDescription);
-        if (!addClientAddressTextField.getText().trim().matches("[а-яА-Я.\\-\\s/0-9]{2,40}"))
-            result = addClientFillingError(addClientAddressTextField, addClientAddressDescription);
-        if (!addClientRegistrationCityTextField.getText().trim().matches("[а-яА-Я.\\-\\s]{2,20}"))
-            result = addClientFillingError(addClientRegistrationCityTextField, addClientRegistrationCityDescription);
-        if (!addClientPassportSeriesTextField.getText().trim().matches("[A-Z]{2}"))
-            result = addClientFillingError(addClientPassportSeriesTextField, addClientPassportSeriesDescription);
-
-        if (!addClientPassportNumberTextField.getText().trim().matches("[0-9]{7}"))
-            result = addClientFillingError(addClientPassportNumberTextField, addClientPassportNumberDescription);
-        if (!isPassportNumberUnique(addClientPassportNumberTextField, addClientPassportNumberDescription))
-            result = false;
-        if (!addClientIssuedByTextField.getText().trim().matches("[а-яА-Я\\-\\s/.\\d]{2,40}"))
-            result = addClientFillingError(addClientIssuedByTextField, addClientIssuedByDescription);
-        if (!addClientBirthPlaceTextField.getText().trim().matches("[а-яА-Я\\-\\s/.]{2,30}"))
-            result = addClientFillingError(addClientBirthPlaceTextField, addClientBirthPlaceDescription);
-        if (!addClientCitizenshipTextField.getText().trim().matches("[а-яА-Я]{2,25}"))
-            result = addClientFillingError(addClientCitizenshipTextField, addClientCitizenshipDescription);
-        if (!addClientIDNumberTextField.getText().trim().matches("[0-9A-Z]{14}"))
-            result = addClientFillingError(addClientIDNumberTextField, addClientIDNumberDescription);
-        if (!isIDNumberUnique(addClientIDNumberTextField, addClientIDNumberDescription))
-            result = false;
-        if (!addClientMonthlyIncomeTextField.getText().trim().matches("^[0-9]+(\\.[0-9]+)?$") && !addClientMonthlyIncomeTextField.getText().equals(""))
-            result = addClientFillingError(addClientMonthlyIncomeTextField, addClientMonthlyIncomeDescription);
-        if (!addClientEmailTextField.getText().trim().matches("(?:[a-z0-9!_-]+(?:\\.[a-z0-9!_-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+))") && !addClientEmailTextField.getText().equals(""))
-            result = addClientFillingError(addClientEmailTextField, addClientEmailDescription);
-        if (!addClientMobilePhoneTextField.getText().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") && !addClientMobilePhoneTextField.getText().equals(""))
-            result = addClientFillingError(addClientMobilePhoneTextField, addClientMobilePhoneDescription);
-        if (!addClientHomePhoneTextField.getText().trim().matches("[0-9]{7}") && !addClientHomePhoneTextField.getText().equals(""))
-            result = addClientFillingError(addClientHomePhoneTextField, addClientHomePhoneDescription);
-
-        if (addClientBirthDatePicker.getValue().isAfter(LocalDate.now())) {
-            result = false;
-            addClientBirthDatePicker.setStyle("-fx-border-color: rgb(255,13,19);" +
-                    "-fx-border-width: 1px");
-            addClientBirthDateDescription.setText(currentLanguage.equals("English") ? "Wrong format" : "Неверный формат");
-        } else {
-            addClientBirthDatePicker.setStyle("-fx-border-color: transparent;" +
-                    "-fx-border-width: 0px");
-            addClientBirthDateDescription.setText("");
-        }
-        if (addClientIssuedDatePicker.getValue().isAfter(LocalDate.now())) {
-            result = false;
-            addClientIssuedDatePicker.setStyle("-fx-border-color: rgb(255,13,19);" +
-                    "-fx-border-width: 1px");
-            addClientIssuedDateDescription.setText(currentLanguage.equals("English") ? "Wrong format" : "Неверный формат");
-        } else {
-            addClientIssuedDatePicker.setStyle("-fx-border-color: transparent;" +
-                    "-fx-border-width: 0px");
-            addClientIssuedDateDescription.setText("");
-        }
 
         if (result) {
             System.out.println("Good");
             Client toAdd = new Client();
-            if (!addClientMobilePhoneTextField.getText().trim().equals(""))
-                toAdd.setMobileNumber(addClientMobilePhoneTextField.getText().trim());
-            if (!addClientMonthlyIncomeTextField.getText().trim().equals(""))
-                toAdd.setMonthlyIncome(addClientMonthlyIncomeTextField.getText().trim());
-            if (!addClientEmailTextField.getText().trim().equals(""))
-                toAdd.setEmail(addClientEmailTextField.getText().trim());
-            if (!addClientHomePhoneTextField.getText().trim().equals(""))
-                toAdd.setHomeNumber(addClientHomePhoneTextField.getText().trim());
-            toAdd.setPassportSeries(addClientPassportSeriesTextField.getText().trim());
-            toAdd.setPassportNumber(addClientPassportNumberTextField.getText().trim());
-            toAdd.setBirthPlace(addClientBirthPlaceTextField.getText().trim());
-            toAdd.setCitizenship(addClientCitizenshipTextField.getText().trim());
-            toAdd.setIssuedBy(addClientIssuedByTextField.getText().trim());
-            toAdd.setIdNumber(addClientIDNumberTextField.getText().trim());
-            toAdd.setRegistrationCity(addClientRegistrationCityTextField.getText().trim());
-            toAdd.setName(addClientNameTextField.getText().trim());
-            if (!addClientPositionTextField.getText().trim().equals(""))
-                toAdd.setPosition(addClientPositionTextField.getText().trim());
-            toAdd.setPatronymic(addClientPatronymicTextField.getText().trim());
-            if (!addClientJobTextField.getText().trim().equals(""))
-                toAdd.setJob(addClientJobTextField.getText().trim());
-            toAdd.setSurname(addClientSurnameTextField.getText().trim());
-            toAdd.setActualResidenceCity(addClientCityTextField.getText().trim());
-            toAdd.setActualResidenceAddress(addClientAddressTextField.getText().trim());
 
-            toAdd.setIssuedDate(addClientIssuedDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            toAdd.setBirthDate(addClientBirthDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            if (addClientMaritalStatusValue != null)
-                toAdd.setMaritalStatus(addClientMaritalStatusValue);
-            else
-                toAdd.setMaritalStatus(MaritalStatus.Single);
+            connServer.sendString("addClient|" + toAdd.toString());
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                    System.out.println("added");
+                }
+            }.start();
+        } else {
+            System.out.println("Not good");
+        }
+    }
 
-            if (addClientDisabilityValue != null)
-                toAdd.setDisability(addClientDisabilityValue);
-            else
-                toAdd.setDisability(Disability.No);
+    private void addTeacherSubject() {
+        System.out.println("addTeacherSubject");
+        boolean result = true;
+        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
 
-            if (addClientRetireeValue != null)
-                toAdd.setRetiree(addClientRetireeValue);
-            else
-                toAdd.setRetiree(Retiree.No);
+        if (result) {
+            System.out.println("Good");
+            Client toAdd = new Client();
+
+            connServer.sendString("addClient|" + toAdd.toString());
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                    System.out.println("added");
+                }
+            }.start();
+        } else {
+            System.out.println("Not good");
+        }
+    }
+
+    private void addGroup() {
+        System.out.println("addGroup");
+        boolean result = true;
+        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+
+        if (result) {
+            System.out.println("Good");
+            Client toAdd = new Client();
+
+            connServer.sendString("addClient|" + toAdd.toString());
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                    System.out.println("added");
+                }
+            }.start();
+        } else {
+            System.out.println("Not good");
+        }
+    }
+
+    private void addStudent() {
+        System.out.println("addStudent");
+        boolean result = true;
+        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+
+        if (result) {
+            System.out.println("Good");
+            Client toAdd = new Client();
+
+            connServer.sendString("addClient|" + toAdd.toString());
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                    System.out.println("added");
+                }
+            }.start();
+        } else {
+            System.out.println("Not good");
+        }
+    }
+
+    private void addTeacher() {
+        System.out.println("addTeacher");
+        boolean result = true;
+        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+
+        if (result) {
+            System.out.println("Good");
+            Client toAdd = new Client();
+
+            connServer.sendString("addClient|" + toAdd.toString());
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                    System.out.println("added");
+                }
+            }.start();
+        } else {
+            System.out.println("Not good");
+        }
+    }
+
+    private void addSubject() {
+        System.out.println("addSubject");
+        boolean result = true;
+        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+
+        if (result) {
+            System.out.println("Good");
+            Client toAdd = new Client();
+
             connServer.sendString("addClient|" + toAdd.toString());
             new Thread() {
                 @Override
