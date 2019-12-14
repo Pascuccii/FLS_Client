@@ -34,7 +34,7 @@
               <items>
                 <AnchorPane fx:id="leftAnchorPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="210.0">
                      <children>
-                        <FlowPane fx:id="menuAdmin" layoutX="-12.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <FlowPane fx:id="menuAdmin" layoutX="-12.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label fx:id="currentUserLabelAdmin" alignment="CENTER" prefHeight="25.0" prefWidth="203.0" text="gleb" textAlignment="CENTER">
                                  <padding>
@@ -57,7 +57,7 @@
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
                               </Button>
-                              <Button fx:id="menuAdminTeachersSubjectsButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 3 Учителя и их предметы">
+                              <Button fx:id="menuAdminGroupsButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="216.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 3 Группы">
                                  <padding>
                                     <Insets bottom="8.0" left="4.0" top="8.0" />
                                  </padding>
@@ -65,7 +65,7 @@
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
                               </Button>
-                              <Button fx:id="menuAdminGroupsButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="216.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 4 Группы">
+                              <Button fx:id="menuAdminStudentsButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="252.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 4 Студенты">
                                  <padding>
                                     <Insets bottom="8.0" left="4.0" top="8.0" />
                                  </padding>
@@ -73,7 +73,7 @@
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
                               </Button>
-                              <Button fx:id="menuAdminStudentsButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="252.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 5 Студенты">
+                              <Button fx:id="menuAdminTeachersButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="287.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 5 Учителя">
                                  <padding>
                                     <Insets bottom="8.0" left="4.0" top="8.0" />
                                  </padding>
@@ -81,7 +81,7 @@
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
                               </Button>
-                              <Button fx:id="menuAdminTeachersButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="287.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 6 Учителя">
+                              <Button fx:id="menuAdminSubjectsButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="322.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 6 Предметы">
                                  <padding>
                                     <Insets bottom="8.0" left="4.0" top="8.0" />
                                  </padding>
@@ -89,15 +89,7 @@
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
                               </Button>
-                              <Button fx:id="menuAdminSubjectsButton" alignment="TOP_LEFT" focusTraversable="false" layoutX="10.0" layoutY="322.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 7 Предметы">
-                                 <padding>
-                                    <Insets bottom="8.0" left="4.0" top="8.0" />
-                                 </padding>
-                                 <FlowPane.margin>
-                                    <Insets left="2.0" right="2.0" />
-                                 </FlowPane.margin>
-                              </Button>
-                              <Button fx:id="menuAdminSettingsButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="203.0" text=" 8  Settigns">
+                              <Button fx:id="menuAdminSettingsButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="203.0" text=" 7  Settigns">
                                  <FlowPane.margin>
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
@@ -125,7 +117,7 @@
                            <padding>
                               <Insets top="5.0" />
                            </padding></FlowPane>
-                        <FlowPane fx:id="menuUser" layoutX="-2.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <FlowPane fx:id="menuUser" layoutX="-2.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label fx:id="currentUserLabelUser" alignment="CENTER" prefHeight="25.0" prefWidth="203.0" text="gleb">
                                  <padding>
@@ -273,7 +265,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="menuPaneLessons" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="menuPaneLessons" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <ScrollPane fx:id="lessonsScrollPane" focusTraversable="false" prefHeight="462.0" prefWidth="573.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
@@ -285,10 +277,10 @@
                                                 <TextField fx:id="addLessonGroupIdTextField" layoutX="135.0" layoutY="14.0" />
                                                 <TextField fx:id="addLessonCabinetTextField" layoutX="135.0" layoutY="76.0" />
                                                 <TextField fx:id="addLessonTimeTextField" layoutX="135.0" layoutY="138.0" />
-                                                <TextField fx:id="addLessonTeacherSubjectIdTextField" layoutX="135.0" layoutY="45.0" />
+                                                <TextField fx:id="addLessonTeacherIdTextField" layoutX="135.0" layoutY="45.0" />
                                                 <TextField fx:id="addLessonDateTextField" layoutX="135.0" layoutY="107.0" />
                                                 <Label layoutX="14.0" layoutY="19.0" text="ID группы" />
-                                                <Label layoutX="14.0" layoutY="50.0" text="ID преподавателя" />
+                                                <Label layoutX="14.0" layoutY="50.0" text="ID учителя" />
                                                 <Label layoutX="14.0" layoutY="81.0" text="Аудитория" />
                                                 <Label layoutX="14.0" layoutY="112.0" text="Дата" />
                                                 <Label layoutX="14.0" layoutY="143.0" text="Время" />
@@ -298,7 +290,7 @@
                                              <columns>
                                                 <TableColumn fx:id="lessonIdColumn" maxWidth="150.0" minWidth="74.40002632141113" prefWidth="74.40002632141113" text="ID" />
                                                 <TableColumn fx:id="lessonGroupIdColumn" maxWidth="200.0" minWidth="80.0" prefWidth="120.0" text="ID группы" />
-                                                <TableColumn fx:id="lessonTeacherSubjectIdColumn" prefWidth="75.0" text="ID лектора" />
+                                                <TableColumn fx:id="lessonTeacherIdColumn" prefWidth="75.0" text="ID учителя" />
                                                 <TableColumn fx:id="lessonCabinetColumn" prefWidth="75.0" text="Аудитория" />
                                                 <TableColumn fx:id="lessonDateColumn" prefWidth="75.0" text="Дата" />
                                                 <TableColumn fx:id="lessonTimeColumn" prefWidth="75.0" text="Время" />
@@ -314,51 +306,10 @@
                                              <items>
                                                 <MenuItem fx:id="criteriaLessonId" mnemonicParsing="false" text="ID" />
                                                 <MenuItem fx:id="criteriaLessonGroupId" mnemonicParsing="false" text="ID группы" />
-                                                <MenuItem fx:id="criteriaLessonTeacherSubjectId" mnemonicParsing="false" text="ID лектора" />
+                                                <MenuItem fx:id="criteriaLessonTeacherId" mnemonicParsing="false" text="ID лектора" />
                                                 <MenuItem fx:id="criteriaLessonCebinet" mnemonicParsing="false" text="Аудитория" />
                                                 <MenuItem fx:id="criteriaLessonDate" mnemonicParsing="false" text="Дата" />
                                                 <MenuItem fx:id="criteriaLessonTime" mnemonicParsing="false" text="Время" />
-                                             </items>
-                                          </MenuButton>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="menuPaneTeachersSubjects" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <ScrollPane fx:id="teachersSubjectsScrollPane" focusTraversable="false" prefHeight="462.0" prefWidth="573.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <content>
-                                    <AnchorPane fx:id="teachersSubjectsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="572.0">
-                                       <children>
-                                          <AnchorPane fx:id="createTeacherSubjectAnchorPane" layoutX="14.0" layoutY="258.0" prefHeight="185.0" prefWidth="540.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
-                                             <children>
-                                                <Button fx:id="addTeacherSubjectButton" layoutX="344.0" layoutY="14.0" mnemonicParsing="false" text="Добавить" />
-                                                <TextField fx:id="addTeacherSubjectTeacherIdTextField" layoutX="137.0" layoutY="14.0" />
-                                                <TextField fx:id="addTeacherSubjectSubjectIdTextField" layoutX="137.0" layoutY="43.0" />
-                                                <Label layoutX="20.0" layoutY="19.0" text="ID учителя" />
-                                                <Label layoutX="20.0" layoutY="48.0" text="ID предмета" />
-                                             </children>
-                                          </AnchorPane>
-                                          <TableView fx:id="teachersSubjectsTable" editable="true" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="513.0" AnchorPane.bottomAnchor="212.2" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="47.0">
-                                             <columns>
-                                                <TableColumn fx:id="teacherSubjectIdColumn" prefWidth="75.0" text="ID" />
-                                                <TableColumn fx:id="teacherSubjectTeacherIdColumn" prefWidth="75.0" text="ID учителя" />
-                                                <TableColumn fx:id="teacherSubjectSubjectIdColumn" prefWidth="75.0" text="ID предмета" />
-                                             </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                          <TextField fx:id="searchFieldTeacherSubject" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="searchButtonTeacherSubject" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="resetButtonTeachersSubjects" focusTraversable="false" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" AnchorPane.rightAnchor="263.6" AnchorPane.topAnchor="9.0" />
-                                          <MenuButton fx:id="criteriaButtonTeacherSubject" focusTraversable="false" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" text="ID" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="9.0">
-                                             <items>
-                                                <MenuItem fx:id="criteriaTeacherSubjectId" mnemonicParsing="false" text="ID" />
-                                                <MenuItem fx:id="criteriaTeacherSubjectTeacherId" mnemonicParsing="false" text="ID учителя" />
-                                                <MenuItem fx:id="criteriaTeacherSubjectSubjectId" mnemonicParsing="false" text="ID предмета" />
                                              </items>
                                           </MenuButton>
                                        </children>
@@ -377,13 +328,16 @@
                                              <children>
                                                 <TextField fx:id="addGroupLevelTextField" layoutX="100.0" layoutY="10.0" />
                                                 <Button fx:id="addGroupButton" layoutX="270.0" layoutY="10.0" mnemonicParsing="false" text="Добавить" />
-                                                <Label layoutX="32.0" layoutY="15.0" text="Уровень" />
+                                                <Label layoutX="22.0" layoutY="15.0" text="Уровень" />
+                                                <Label layoutX="22.0" layoutY="50.0" text="ID предмета" />
+                                                <TextField fx:id="addGroupSubjectTextField" layoutX="100.0" layoutY="45.0" />
                                              </children>
                                           </AnchorPane>
                                           <TableView fx:id="groupsTable" editable="true" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="513.0" AnchorPane.bottomAnchor="212.2" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="47.0">
                                              <columns>
                                                 <TableColumn fx:id="groupIdColumn" prefWidth="75.0" text="ID" />
                                                 <TableColumn fx:id="groupLevelColumn" prefWidth="75.0" text="Уровень" />
+                                                <TableColumn fx:id="groupSubjectColumn" prefWidth="75.0" text="ID предмета" />
                                              </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -547,9 +501,9 @@
                               </ScrollPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="menuPaneSettings" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="menuPaneSettings" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane fx:id="menuPane31" layoutX="60.0" layoutY="31.0" prefHeight="76.0" prefWidth="513.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
+                              <AnchorPane fx:id="menuPane31" layoutX="60.0" layoutY="31.0" prefHeight="76.0" prefWidth="513.0" visible="false" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
                                  <children>
                                     <MenuButton fx:id="languageButton" focusTraversable="false" layoutX="137.0" layoutY="34.0" mnemonicParsing="false" prefWidth="103.0" text="English">
                                       <items>
@@ -568,7 +522,7 @@
                                     <Label fx:id="customizationLabel" alignment="CENTER" focusTraversable="false" layoutX="166.0" layoutY="5.0" prefHeight="18.0" prefWidth="180.0" text="Customization" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="accountSettingsPane" layoutX="30.0" layoutY="110.0" prefHeight="167.0" prefWidth="543.0" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="110.0">
+                              <AnchorPane fx:id="accountSettingsPane" layoutX="15.0" layoutY="15.0" prefHeight="434.0" prefWidth="543.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                                  <children>
                                     <Label fx:id="accountSettingsLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="170.0" layoutY="7.0" prefHeight="18.0" prefWidth="171.0" text="Account" textAlignment="CENTER" visible="false" />
                                     <TextField fx:id="accountSettingsUsernameTextField" layoutX="137.0" layoutY="35.0" prefWidth="240.0" />
@@ -581,7 +535,7 @@
                                     <Label fx:id="settingsWarningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="147.0" prefHeight="18.0" prefWidth="490.0" textAlignment="CENTER" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="databaseSettingsPane" layoutX="29.0" layoutY="300.0" prefHeight="170.0" prefWidth="513.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="280.0">
+                              <AnchorPane fx:id="databaseSettingsPane" layoutX="29.0" layoutY="300.0" prefHeight="170.0" prefWidth="513.0" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="280.0">
                                  <children>
                                     <Label fx:id="databaseSettingsLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="170.0" layoutY="7.0" prefHeight="18.0" prefWidth="171.0" text="Database connection" textAlignment="CENTER" />
                                     <TextField fx:id="databaseSettingsURLTextField" layoutX="136.0" layoutY="34.0" prefHeight="26.0" prefWidth="240.0" />
@@ -604,59 +558,6 @@
                               <Label layoutX="196.0" layoutY="171.0" text="4" />
 
                                        </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="menuPaneUserWriteIn" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <ScrollPane fx:id="lessonsScrollPane1" focusTraversable="false" prefHeight="462.0" prefWidth="573.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <content>
-                                    <AnchorPane fx:id="lessonsAnchorPane1" minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="572.0">
-                                       <children>
-                                          <AnchorPane fx:id="createLessonAnchorPane1" layoutX="14.0" layoutY="258.0" maxHeight="540.0" prefHeight="185.0" prefWidth="540.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
-                                             <children>
-                                                <Button fx:id="addLessonButton1" layoutX="431.0" layoutY="14.0" mnemonicParsing="false" text="Добавить" />
-                                                <TextField fx:id="addLessonGroupIdTextField1" layoutX="135.0" layoutY="14.0" />
-                                                <TextField fx:id="addLessonCabinetTextField1" layoutX="135.0" layoutY="76.0" />
-                                                <TextField fx:id="addLessonTimeTextField1" layoutX="135.0" layoutY="138.0" />
-                                                <TextField fx:id="addLessonTeacherSubjectIdTextField1" layoutX="135.0" layoutY="45.0" />
-                                                <TextField fx:id="addLessonDateTextField1" layoutX="135.0" layoutY="107.0" />
-                                                <Label layoutX="14.0" layoutY="19.0" text="ID группы" />
-                                                <Label layoutX="14.0" layoutY="50.0" text="ID преподавателя" />
-                                                <Label layoutX="14.0" layoutY="81.0" text="Аудитория" />
-                                                <Label layoutX="14.0" layoutY="112.0" text="Дата" />
-                                                <Label layoutX="14.0" layoutY="143.0" text="Время" />
-                                             </children>
-                                          </AnchorPane>
-                                          <TableView fx:id="lessonsTable1" editable="true" layoutX="26.0" layoutY="57.0" prefHeight="200.0" prefWidth="513.0" AnchorPane.bottomAnchor="212.2" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="47.0">
-                                             <columns>
-                                                <TableColumn fx:id="lessonIdColumn1" maxWidth="150.0" minWidth="74.40002632141113" prefWidth="74.40002632141113" text="ID" />
-                                                <TableColumn fx:id="lessonGroupIdColumn1" maxWidth="200.0" minWidth="80.0" prefWidth="120.0" text="ID группы" />
-                                                <TableColumn fx:id="lessonTeacherSubjectIdColumn1" prefWidth="75.0" text="ID лектора" />
-                                                <TableColumn fx:id="lessonCabinetColumn1" prefWidth="75.0" text="Аудитория" />
-                                                <TableColumn fx:id="lessonDateColumn1" prefWidth="75.0" text="Дата" />
-                                                <TableColumn fx:id="lessonTimeColumn1" prefWidth="75.0" text="Время" />
-                                             </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                          <TextField fx:id="searchFieldLesson1" layoutX="27.0" layoutY="14.0" prefHeight="27.0" prefWidth="258.0" promptText="Поиск..." text="1" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="269.20000000000005" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="searchButtonLesson1" focusTraversable="false" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0" />
-                                          <Button fx:id="resetButtonLessons1" focusTraversable="false" layoutX="266.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" AnchorPane.rightAnchor="263.6" AnchorPane.topAnchor="9.0" />
-                                          <MenuButton fx:id="criteriaButtonLesson1" focusTraversable="false" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" text="ID" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="9.0">
-                                             <items>
-                                                <MenuItem fx:id="criteriaLessonId1" mnemonicParsing="false" text="ID" />
-                                                <MenuItem fx:id="criteriaLessonGroupId1" mnemonicParsing="false" text="ID группы" />
-                                                <MenuItem fx:id="criteriaLessonTeacherSubjectId1" mnemonicParsing="false" text="ID лектора" />
-                                                <MenuItem fx:id="criteriaLessonCebinet1" mnemonicParsing="false" text="Аудитория" />
-                                                <MenuItem fx:id="criteriaLessonDate1" mnemonicParsing="false" text="Дата" />
-                                                <MenuItem fx:id="criteriaLessonTime1" mnemonicParsing="false" text="Время" />
-                                             </items>
-                                          </MenuButton>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
-                           </children>
                         </AnchorPane>
                         <AnchorPane fx:id="menuPaneUserSubjects" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -868,6 +769,35 @@
                                     </AnchorPane>
                                  </content>
                               </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="menuPaneUserWriteIn" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TextField layoutX="134.0" layoutY="34.0" />
+                              <TextField layoutX="134.0" layoutY="75.0" />
+                              <TextField layoutX="134.0" layoutY="112.0" />
+                              <TextField layoutX="134.0" layoutY="151.0" />
+                              <TextField layoutX="134.0" layoutY="189.0" />
+                              <MenuButton layoutX="134.0" layoutY="272.0" mnemonicParsing="false" text="Уровень">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                                </items>
+                              </MenuButton>
+                              <MenuButton layoutX="134.0" layoutY="231.0" mnemonicParsing="false" text="Предмет">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                                </items>
+                              </MenuButton>
+                              <Label layoutX="47.0" layoutY="39.0" text="Имя" />
+                              <Label layoutX="45.0" layoutY="80.0" text="Фамилия" />
+                              <Label layoutX="45.0" layoutY="117.0" text="Отчество" />
+                              <Label layoutX="45.0" layoutY="156.0" text="Эл. почта" />
+                              <Label layoutX="46.0" layoutY="194.0" text="Телефон" />
+                              <Label layoutX="47.0" layoutY="236.0" text="Предмет" />
+                              <Label layoutX="48.0" layoutY="277.0" text="Уровень" />
+                              <Button layoutX="157.0" layoutY="327.0" mnemonicParsing="false" text="Подобрать группу" />
                            </children>
                         </AnchorPane>
                      </children>

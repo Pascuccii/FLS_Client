@@ -5,15 +5,15 @@ import sample.Connectivity.ServerConnection;
 public class Lesson {
     private int id;
     private String groupId;
-    private String teacher_subjectId;
+    private String teacherId;
     private String cabinet;
     private String date;
     private String time;
 
-    public Lesson(int id, String groupId, String teacher_subjectId, String cabinet, String date, String time) {
+    public Lesson(int id, String groupId, String teacherId, String cabinet, String date, String time) {
         this.id = id;
         this.groupId = groupId;
-        this.teacher_subjectId = teacher_subjectId;
+        this.teacherId = teacherId;
         this.cabinet = cabinet;
         this.date = date;
         this.time = time;
@@ -23,7 +23,7 @@ public class Lesson {
         String[] vals = lesson.split("\\|");
         if (!vals[0].equals("null")) this.id = Integer.parseInt(vals[0]);
         if (!vals[1].equals("null")) this.groupId = vals[1];
-        if (!vals[2].equals("null")) this.teacher_subjectId = vals[2];
+        if (!vals[2].equals("null")) this.teacherId = vals[2];
         if (!vals[3].equals("null")) this.cabinet = vals[3];
         if (!vals[4].equals("null")) this.date = vals[4];
         if (!vals[5].equals("null")) this.time = vals[5];
@@ -36,7 +36,7 @@ public class Lesson {
     public String toString() {
         return id +
                 "|" + groupId +
-                "|" + teacher_subjectId +
+                "|" + teacherId +
                 "|" + cabinet +
                 "|" + date +
                 "|" + time + "|";
@@ -58,12 +58,12 @@ public class Lesson {
         this.groupId = groupId;
     }
 
-    public String getTeacher_subjectId() {
-        return teacher_subjectId;
+    public String getTeacherId() {
+        return teacherId;
     }
 
-    public void setTeacher_subjectId(String teacher_subjectId) {
-        this.teacher_subjectId = teacher_subjectId;
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getCabinet() {
@@ -94,9 +94,9 @@ public class Lesson {
         this.groupId = groupId;
         conn.sendString("Lesson|setGroupId|" + id + "|" + groupId);
     }
-    public void setTeacherSubjectIdServer(ServerConnection conn, String teacherSubjectId) {
-        this.teacher_subjectId = teacherSubjectId;
-        conn.sendString("Lesson|setTeacherSubjectId|" + id + "|" + teacherSubjectId);
+    public void setTeacherIdServer(ServerConnection conn, String teacherId) {
+        this.teacherId = teacherId;
+        conn.sendString("Lesson|setTeacherId|" + id + "|" + teacherId);
     }
     public void setCabinetServer(ServerConnection conn, String cabinet) {
         this.cabinet = cabinet;

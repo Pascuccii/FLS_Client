@@ -45,7 +45,7 @@ public class MainController extends Application {
     private double yOffset = 0;
     private User currentUser;
     private String currentTheme;
-    private String currentLanguage;
+    private String currentLanguage = "Russian";
     //private DatabaseConnection connDB;
     private ServerConnection connServer;
     private int theme = 0;
@@ -53,7 +53,6 @@ public class MainController extends Application {
     private TableColumn disabilityColumn;
     private TableColumn retireeColumn;
     private TableColumn deleteLessonColumn;
-    private TableColumn deleteTeacherSubjectColumn;
     private TableColumn deleteGroupColumn;
     private TableColumn deleteStudentColumn;
     private TableColumn deleteTeacherColumn;
@@ -65,7 +64,6 @@ public class MainController extends Application {
     private ObservableList<Student> studentsData = FXCollections.observableArrayList();
     private ObservableList<Subject> subjectsData = FXCollections.observableArrayList();
     private ObservableList<Teacher> teachersData = FXCollections.observableArrayList();
-    private ObservableList<TeacherSubject> teachersSubjectsData = FXCollections.observableArrayList();
 
     @FXML
     private TableView<User> usersTable;
@@ -86,6 +84,8 @@ public class MainController extends Application {
     private TableColumn<Group, Integer> groupIdColumn;
     @FXML
     private TableColumn<Group, String> groupLevelColumn;
+    @FXML
+    private TableColumn<Group, String> groupSubjectColumn;
 
     @FXML
     private TableView<Lesson> lessonsTable;
@@ -94,7 +94,7 @@ public class MainController extends Application {
     @FXML
     private TableColumn<Lesson, String> lessonGroupIdColumn;
     @FXML
-    private TableColumn<Lesson, String> lessonTeacherSubjectIdColumn;
+    private TableColumn<Lesson, String> lessonTeacherIdColumn;
     @FXML
     private TableColumn<Lesson, String> lessonCabinetColumn;
     @FXML
@@ -139,15 +139,6 @@ public class MainController extends Application {
     @FXML
     private TableColumn<Teacher, String> teacherPatronymicColumn;
 
-    @FXML
-    private TableView<TeacherSubject> teachersSubjectsTable;
-    @FXML
-    private TableColumn<TeacherSubject, Integer> teacherSubjectIdColumn;
-    @FXML
-    private TableColumn<TeacherSubject, String> teacherSubjectTeacherIdColumn;
-    @FXML
-    private TableColumn<TeacherSubject, String> teacherSubjectSubjectIdColumn;
-
 
     @FXML
     private AnchorPane primaryAnchorPane;
@@ -171,8 +162,6 @@ public class MainController extends Application {
     private Button menuAdminUsersButton;
     @FXML
     private Button menuAdminLessonsButton;
-    @FXML
-    private Button menuAdminTeachersSubjectsButton;
     @FXML
     private Button menuAdminGroupsButton;
     @FXML
@@ -200,8 +189,6 @@ public class MainController extends Application {
     @FXML
     private Button addLessonButton;
     @FXML
-    private Button addTeacherSubjectButton;
-    @FXML
     private Button addGroupButton;
     @FXML
     private Button addStudentButton;
@@ -221,12 +208,6 @@ public class MainController extends Application {
     private ScrollPane lessonsScrollPane;
     @FXML
     private AnchorPane lessonsAnchorPane;
-    @FXML
-    private AnchorPane menuPaneTeachersSubjects;
-    @FXML
-    private ScrollPane teachersSubjectsScrollPane;
-    @FXML
-    private AnchorPane teachersSubjectsAnchorPane;
     @FXML
     private AnchorPane menuPaneGroups;
     @FXML
@@ -255,8 +236,6 @@ public class MainController extends Application {
     @FXML
     private AnchorPane createLessonAnchorPane;
     @FXML
-    private AnchorPane createTeacherSubjectAnchorPane;
-    @FXML
     private AnchorPane createGroupAnchorPane;
     @FXML
     private AnchorPane createStudentAnchorPane;
@@ -269,8 +248,6 @@ public class MainController extends Application {
     private TextField searchField;
     @FXML
     private TextField searchFieldLesson;
-    @FXML
-    private TextField searchFieldTeacherSubject;
     @FXML
     private TextField searchFieldGroup;
     @FXML
@@ -298,21 +275,13 @@ public class MainController extends Application {
     @FXML
     private MenuItem criteriaLessonGroupId;
     @FXML
-    private MenuItem criteriaLessonTeacherSubjectId;
+    private MenuItem criteriaLessonTeacherId;
     @FXML
     private MenuItem criteriaLessonCebinet;
     @FXML
     private MenuItem criteriaLessonDate;
     @FXML
     private MenuItem criteriaLessonTime;
-    @FXML
-    private MenuButton criteriaButtonTeacherSubject;
-    @FXML
-    private MenuItem criteriaTeacherSubjectId;
-    @FXML
-    private MenuItem criteriaTeacherSubjectTeacherId;
-    @FXML
-    private MenuItem criteriaTeacherSubjectSubjectId;
     @FXML
     private MenuButton criteriaButtonGroup;
     @FXML
@@ -360,8 +329,6 @@ public class MainController extends Application {
     @FXML
     private Button searchButtonLesson;
     @FXML
-    private Button searchButtonTeacherSubject;
-    @FXML
     private Button searchButtonGroup;
     @FXML
     private Button searchButtonStudent;
@@ -373,8 +340,6 @@ public class MainController extends Application {
     private Button resetSearchButton;
     @FXML
     private Button resetButtonLessons;
-    @FXML
-    private Button resetButtonTeachersSubjects;
     @FXML
     private Button resetButtonGroups;
     @FXML
@@ -416,7 +381,7 @@ public class MainController extends Application {
     @FXML
     private TextField addLessonGroupIdTextField;
     @FXML
-    private TextField addLessonTeacherSubjectIdTextField;
+    private TextField addLessonTeacherIdTextField;
     @FXML
     private TextField addLessonCabinetTextField;
     @FXML
@@ -424,11 +389,9 @@ public class MainController extends Application {
     @FXML
     private TextField addLessonTimeTextField;
     @FXML
-    private TextField addTeacherSubjectTeacherIdTextField;
-    @FXML
-    private TextField addTeacherSubjectSubjectIdTextField;
-    @FXML
     private TextField addGroupLevelTextField;
+    @FXML
+    private TextField addGroupSubjectTextField;
     @FXML
     private TextField addStudentNameTextField;
     @FXML
@@ -884,6 +847,16 @@ public class MainController extends Application {
                 initGroupsDataServerBuffer();
             }
         });
+        groupSubjectColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        groupSubjectColumn.setOnEditCommit((TableColumn.CellEditEvent<Group, String> t) -> {
+            Group cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
+            if (isSubject(t.getNewValue().trim())) {
+                cl.setSubjectServer(connServer, t.getNewValue());
+                groupsTable.requestFocus();
+            } else {
+                initGroupsDataServerBuffer();
+            }
+        });
 
 
         lessonGroupIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -896,11 +869,11 @@ public class MainController extends Application {
                 initGroupsDataServerBuffer();
             }
         });
-        lessonTeacherSubjectIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        lessonTeacherSubjectIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
+        lessonTeacherIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lessonTeacherIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
             Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+") || teacherSubjectExists(Integer.parseInt(t.getNewValue().trim()))) {
-                cl.setTeacherSubjectIdServer(connServer, t.getNewValue());
+            if (t.getNewValue().trim().matches("[0-9]+") && teacherExists(Integer.parseInt(t.getNewValue().trim()))) {
+                cl.setTeacherIdServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
                 initGroupsDataServerBuffer();
@@ -971,7 +944,7 @@ public class MainController extends Application {
         studentGroupIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         studentGroupIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
             Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+") || groupExists(Integer.parseInt(t.getNewValue().trim()))) {
+            if (t.getNewValue().trim().matches("[0-9]+") && groupExists(Integer.parseInt(t.getNewValue().trim()))) {
                 cl.setGroupIdServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -1053,27 +1026,6 @@ public class MainController extends Application {
             }
         });
 
-
-        teacherSubjectTeacherIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        teacherSubjectTeacherIdColumn.setOnEditCommit((TableColumn.CellEditEvent<TeacherSubject, String> t) -> {
-            TeacherSubject cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+") || teacherExists(Integer.parseInt(t.getNewValue().trim()))) {
-                cl.setTeacherIdServer(connServer, t.getNewValue());
-                groupsTable.requestFocus();
-            } else {
-                initGroupsDataServerBuffer();
-            }
-        });
-        teacherSubjectSubjectIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        teacherSubjectSubjectIdColumn.setOnEditCommit((TableColumn.CellEditEvent<TeacherSubject, String> t) -> {
-            TeacherSubject cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+") || subjectExists(Integer.parseInt(t.getNewValue().trim()))) {
-                cl.setSubjectIdServer(connServer, t.getNewValue());
-                groupsTable.requestFocus();
-            } else {
-                initGroupsDataServerBuffer();
-            }
-        });
 
 
         /*
@@ -1342,39 +1294,35 @@ public class MainController extends Application {
                         break;
                     case DIGIT3:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminTeachersSubjectsButton.fire();
+                            menuAdminGroupsButton.fire();
                         else
                             menuUserTimeTableButton.fire();
                         break;
                     case DIGIT4:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminGroupsButton.fire();
+                            menuAdminStudentsButton.fire();
                         else
                             menuUserNotificationsButton.fire();
                         break;
                     case DIGIT5:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminStudentsButton.fire();
+                            menuAdminTeachersButton.fire();
                         else
                             menuUserGraphsButton.fire();
                         break;
                     case DIGIT6:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminTeachersButton.fire();
+                            menuAdminSubjectsButton.fire();
                         else
                             menuUserSettingsButton.fire();
                         break;
                     case DIGIT7:
                         if (currentUser.getAccessMode() == 1)
-                            menuAdminSubjectsButton.fire();
+                            menuAdminSettingsButton.fire();
                         else
                             menuUserInfoButton.fire();
                         break;
                     case DIGIT8:
-                        if (currentUser.getAccessMode() == 1)
-                            menuAdminSettingsButton.fire();
-                        break;
-                    case DIGIT9:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminInfoButton.fire();
                         break;
@@ -1399,14 +1347,12 @@ public class MainController extends Application {
         clientManagementScrollPane.setMaxWidth(1920);*/
 
         lessonsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        teachersSubjectsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         groupsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         studentsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         teachersScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         subjectsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         lessonsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        teachersSubjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         groupsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         studentsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         teachersScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -1414,8 +1360,6 @@ public class MainController extends Application {
 
         lessonsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
         lessonsScrollPane.getStyleClass().add("clientManagementScrollPane");
-        teachersSubjectsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
-        teachersSubjectsScrollPane.getStyleClass().add("clientManagementScrollPane");
         groupsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
         groupsScrollPane.getStyleClass().add("clientManagementScrollPane");
         studentsAnchorPane.getStyleClass().add("clientManagementAnchorPane");
@@ -1449,7 +1393,6 @@ public class MainController extends Application {
         logoutButtonAdmin.setFocusTraversable(false);
         logoutButtonUser.setFocusTraversable(false);
         lessonsScrollPane.setFocusTraversable(false);
-        teachersSubjectsScrollPane.setFocusTraversable(false);
         groupsScrollPane.setFocusTraversable(false);
         studentsScrollPane.setFocusTraversable(false);
         teachersScrollPane.setFocusTraversable(false);
@@ -1463,10 +1406,11 @@ public class MainController extends Application {
 
         groupIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         groupLevelColumn.setCellValueFactory(new PropertyValueFactory<>("level"));
+        groupSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subjectId"));
 
         lessonIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         lessonGroupIdColumn.setCellValueFactory(new PropertyValueFactory<>("groupId"));
-        lessonTeacherSubjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("teacher_subjectId"));
+        lessonTeacherIdColumn.setCellValueFactory(new PropertyValueFactory<>("teacherId"));
         lessonCabinetColumn.setCellValueFactory(new PropertyValueFactory<>("cabinet"));
         lessonDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -1488,10 +1432,6 @@ public class MainController extends Application {
         teacherSurnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
         teacherPatronymicColumn.setCellValueFactory(new PropertyValueFactory<>("patronymic"));
 
-        teacherSubjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        teacherSubjectTeacherIdColumn.setCellValueFactory(new PropertyValueFactory<>("teacherId"));
-        teacherSubjectSubjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("subjectId"));
-
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //USER
@@ -1509,8 +1449,6 @@ public class MainController extends Application {
         //2
         menuAdminLessonsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminLessonsButton, menuPaneLessons));
         //3
-        menuAdminTeachersSubjectsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminTeachersSubjectsButton, menuPaneTeachersSubjects));
-        //4
         menuAdminGroupsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminGroupsButton, menuPaneGroups));
         //5
         menuAdminStudentsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminStudentsButton, menuPaneStudents));
@@ -1544,7 +1482,6 @@ public class MainController extends Application {
         lessonsTable.getStyleClass().add("usersTable");
         studentsTable.getStyleClass().add("usersTable");
         subjectsTable.getStyleClass().add("usersTable");
-        teachersSubjectsTable.getStyleClass().add("usersTable");
         teachersTable.getStyleClass().add("usersTable");
 
         loginPane.setOnKeyPressed(keyEvent -> {
@@ -1815,14 +1752,10 @@ public class MainController extends Application {
 
         criteriaLessonId.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonId.getText()));
         criteriaLessonGroupId.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonGroupId.getText()));
-        criteriaLessonTeacherSubjectId.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonTeacherSubjectId.getText()));
+        criteriaLessonTeacherId.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonTeacherId.getText()));
         criteriaLessonCebinet.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonCebinet.getText()));
         criteriaLessonDate.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonDate.getText()));
         criteriaLessonTime.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonTime.getText()));
-
-        criteriaTeacherSubjectId.setOnAction(actionEvent -> criteriaButtonTeacherSubject.setText(criteriaTeacherSubjectId.getText()));
-        criteriaTeacherSubjectTeacherId.setOnAction(actionEvent -> criteriaButtonTeacherSubject.setText(criteriaTeacherSubjectTeacherId.getText()));
-        criteriaTeacherSubjectSubjectId.setOnAction(actionEvent -> criteriaButtonTeacherSubject.setText(criteriaTeacherSubjectSubjectId.getText()));
 
         criteriaGroupId.setOnAction(actionEvent -> criteriaButtonGroup.setText(criteriaGroupId.getText()));
         criteriaGroupLevel.setOnAction(actionEvent -> criteriaButtonGroup.setText(criteriaGroupLevel.getText()));
@@ -2086,7 +2019,6 @@ public class MainController extends Application {
         addClientButton.setOnAction(actionEvent -> addClient());
 */
         addLessonButton.setOnAction(actionEvent -> addLesson());
-        addTeacherSubjectButton.setOnAction(actionEvent -> addTeacherSubject());
         addGroupButton.setOnAction(actionEvent -> addGroup());
         addStudentButton.setOnAction(actionEvent -> addStudent());
         addTeacherButton.setOnAction(actionEvent -> addTeacher());
@@ -2125,7 +2057,6 @@ public class MainController extends Application {
 
         resetSearchButton.getStyleClass().add("resetSearchButton");
         resetButtonLessons.getStyleClass().add("resetSearchButton");
-        resetButtonTeachersSubjects.getStyleClass().add("resetSearchButton");
         resetButtonGroups.getStyleClass().add("resetSearchButton");
         resetButtonStudents.getStyleClass().add("resetSearchButton");
         resetButtonTeachers.getStyleClass().add("resetSearchButton");
@@ -2151,15 +2082,6 @@ public class MainController extends Application {
         });
         resetButtonLessons.setOnAction(actionEvent -> {
             searchFieldLesson.clear();
-            new Thread() {
-                @Override
-                public void run() {
-                    initDataFromServer();
-                }
-            }.start();
-        });
-        resetButtonTeachersSubjects.setOnAction(actionEvent -> {
-            searchFieldTeacherSubject.clear();
             new Thread() {
                 @Override
                 public void run() {
@@ -2212,10 +2134,6 @@ public class MainController extends Application {
             if (keyEvent.getCode() == KeyCode.ENTER)
                 searchButtonLesson.fire();
         });
-        searchFieldTeacherSubject.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
-                searchButtonTeacherSubject.fire();
-        });
         searchFieldGroup.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER)
                 searchButtonGroup.fire();
@@ -2235,7 +2153,6 @@ public class MainController extends Application {
 
         searchButton.setOnAction(actionEvent -> searchUser());
         searchButtonLesson.setOnAction(actionEvent -> searchLesson());
-        searchButtonTeacherSubject.setOnAction(actionEvent -> searchTeacherSubject());
         searchButtonGroup.setOnAction(actionEvent -> searchGroup());
         searchButtonStudent.setOnAction(actionEvent -> searchStudent());
         searchButtonTeacher.setOnAction(actionEvent -> searchTeacher());
@@ -2418,11 +2335,11 @@ public class MainController extends Application {
                 loginPasswordLabel.setText("Пароль");
                 loginButton.setText("Войти");
                 menuAdminUsersButton.setText(" 1 Управление пользователями");
-                menuAdminSettingsButton.setText(" 8 Аккаунт");
+                menuAdminSettingsButton.setText(" 7 Аккаунт");
                 menuUserSettingsButton.setText(" 6 Аккаунт");
-                menuAdminInfoButton.setText(" 9 Информация");
+                menuAdminInfoButton.setText(" 8 Информация");
                 menuUserInfoButton.setText(" 7 Информация");
-                logoutButtonAdmin.setText(" 10 Выйти");
+                logoutButtonAdmin.setText(" 9 Выйти");
                 logoutButtonUser.setText(" 8 Выйти");
 
                 menuPane1_DBLabel.setText("Соединение");
@@ -2614,7 +2531,6 @@ public class MainController extends Application {
     private void selectMenuItem(Button menuItem, AnchorPane pane) {
         menuAdminUsersButton.setStyle("");
         menuAdminLessonsButton.setStyle("");
-        menuAdminTeachersSubjectsButton.setStyle("");
         menuAdminGroupsButton.setStyle("");
         menuAdminStudentsButton.setStyle("");
         menuAdminTeachersButton.setStyle("");
@@ -2635,10 +2551,6 @@ public class MainController extends Application {
             menuPaneLessons.setVisible(true);
             lessonsScrollPane.setVisible(true);
             lessonsAnchorPane.requestFocus();
-        } else if (pane == menuPaneTeachersSubjects) {
-            menuPaneTeachersSubjects.setVisible(true);
-            teachersSubjectsScrollPane.setVisible(true);
-            teachersSubjectsAnchorPane.requestFocus();
         } else if (pane == menuPaneGroups) {
             menuPaneGroups.setVisible(true);
             groupsScrollPane.setVisible(true);
@@ -2695,7 +2607,6 @@ public class MainController extends Application {
         currentUserLabelAdmin.setText(currentUser.getUsername());
         currentUserLabelUser.setText(currentUser.getUsername());
         accountSettingsUsernameTextField.setText(currentUser.getUsername());
-        accountSettingsPasswordTextField.setText(currentUser.getPassword());
         accountSettingsEmailTextField.setText(currentUser.getEmail());
 
         connServer.sendString("setCurrentUser|" + currentUser.getUsername() + "|");
@@ -2706,7 +2617,6 @@ public class MainController extends Application {
     private void setAllPanesInvisible() {
         menuPaneUsers.setVisible(false);
         menuPaneLessons.setVisible(false);
-        menuPaneTeachersSubjects.setVisible(false);
         menuPaneGroups.setVisible(false);
         menuPaneStudents.setVisible(false);
         menuPaneTeachers.setVisible(false);
@@ -2971,8 +2881,6 @@ public class MainController extends Application {
 
             lessonsTable.setPrefWidth(513d);
             lessonsTable.setPrefHeight(200d);
-            teachersSubjectsTable.setPrefWidth(513d);
-            teachersSubjectsTable.setPrefHeight(200d);
             groupsTable.setPrefWidth(513d);
             groupsTable.setPrefHeight(200d);
             studentsTable.setPrefWidth(513d);
@@ -2991,7 +2899,6 @@ public class MainController extends Application {
             loginWarning.setLayoutY(117);
             searchField.setPrefWidth(136);
             AnchorPane.setTopAnchor(createLessonAnchorPane, 263.6);
-            AnchorPane.setTopAnchor(createTeacherSubjectAnchorPane, 263.6);
             AnchorPane.setTopAnchor(createGroupAnchorPane, 263.6);
             AnchorPane.setTopAnchor(createStudentAnchorPane, 263.6);
             AnchorPane.setTopAnchor(createTeacherAnchorPane, 263.6);
@@ -3002,12 +2909,6 @@ public class MainController extends Application {
             lessonsAnchorPane.setPrefWidth(572);
             lessonsScrollPane.setPrefHeight(462);
             lessonsAnchorPane.setPrefHeight(459);
-
-            teachersSubjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            teachersSubjectsScrollPane.setPrefWidth(573);
-            teachersSubjectsAnchorPane.setPrefWidth(572);
-            teachersSubjectsScrollPane.setPrefHeight(462);
-            teachersSubjectsAnchorPane.setPrefHeight(459);
 
             groupsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             groupsScrollPane.setPrefWidth(573);
@@ -3034,7 +2935,6 @@ public class MainController extends Application {
             subjectsAnchorPane.setPrefHeight(459);
 
             createLessonAnchorPane.setPrefHeight(930);
-            createTeacherSubjectAnchorPane.setPrefHeight(930);
             createGroupAnchorPane.setPrefHeight(930);
             createStudentAnchorPane.setPrefHeight(930);
             createTeacherAnchorPane.setPrefHeight(930);
@@ -3050,7 +2950,6 @@ public class MainController extends Application {
             loginWarning.setLayoutY(290);
             searchField.setPrefWidth(350);
             AnchorPane.setTopAnchor(createLessonAnchorPane, 630.0);
-            AnchorPane.setTopAnchor(createTeacherSubjectAnchorPane, 630.0);
             AnchorPane.setTopAnchor(createGroupAnchorPane, 630.0);
             AnchorPane.setTopAnchor(createStudentAnchorPane, 630.0);
             AnchorPane.setTopAnchor(createTeacherAnchorPane, 630.0);
@@ -3061,12 +2960,6 @@ public class MainController extends Application {
             lessonsAnchorPane.setPrefWidth(1304);
             lessonsScrollPane.setPrefHeight(850);
             lessonsAnchorPane.setPrefHeight(820);
-
-            teachersSubjectsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            teachersSubjectsScrollPane.setPrefWidth(1310);
-            teachersSubjectsAnchorPane.setPrefWidth(1304);
-            teachersSubjectsScrollPane.setPrefHeight(850);
-            teachersSubjectsAnchorPane.setPrefHeight(820);
 
             groupsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             groupsScrollPane.setPrefWidth(1310);
@@ -3093,7 +2986,6 @@ public class MainController extends Application {
             subjectsAnchorPane.setPrefHeight(820);
 
             createLessonAnchorPane.setPrefHeight(380);
-            createTeacherSubjectAnchorPane.setPrefHeight(380);
             createGroupAnchorPane.setPrefHeight(380);
             createStudentAnchorPane.setPrefHeight(380);
             createTeacherAnchorPane.setPrefHeight(380);
@@ -3223,21 +3115,12 @@ public class MainController extends Application {
         teachersTable.refresh();
     }
 
-    private synchronized void initTeachersSubjectsDataServerBuffer() {
-        teachersSubjectsTable.setItems(teachersSubjectsData);
-        teachersSubjectsData.clear();
-        for (TeacherSubject ts : connServer.getTeachersSubjectsList())
-            teachersSubjectsData.add(ts);
-        teachersSubjectsTable.refresh();
-    }
-
 
     private void addButtonsToTable() {
         maritalStatusColumn = new TableColumn("Marital Status");
         disabilityColumn = new TableColumn("Disability");
         retireeColumn = new TableColumn("Retiree");
         deleteLessonColumn = new TableColumn("");
-        deleteTeacherSubjectColumn = new TableColumn("");
         deleteGroupColumn = new TableColumn("");
         deleteStudentColumn = new TableColumn("");
         deleteTeacherColumn = new TableColumn("");
@@ -3248,8 +3131,6 @@ public class MainController extends Application {
         retireeColumn.setMinWidth(80);
         deleteLessonColumn.setMaxWidth(23);
         deleteLessonColumn.setMinWidth(23);
-        deleteTeacherSubjectColumn.setMaxWidth(23);
-        deleteTeacherSubjectColumn.setMinWidth(23);
         deleteGroupColumn.setMaxWidth(23);
         deleteGroupColumn.setMinWidth(23);
         deleteStudentColumn.setMaxWidth(23);
@@ -3263,7 +3144,6 @@ public class MainController extends Application {
         disabilityColumn.setResizable(false);
         retireeColumn.setResizable(false);
         deleteLessonColumn.setResizable(false);
-        deleteTeacherSubjectColumn.setResizable(false);
         deleteGroupColumn.setResizable(false);
         deleteStudentColumn.setResizable(false);
         deleteTeacherColumn.setResizable(false);
@@ -3590,52 +3470,6 @@ public class MainController extends Application {
                 };
             }
         };
-        Callback<TableColumn<TeacherSubject, Void>, TableCell<TeacherSubject, Void>> cellFactoryDeleteTeacherSubject =
-                new Callback<>() {
-                    @Override
-                    public TableCell<TeacherSubject, Void> call(TableColumn<TeacherSubject, Void> param) {
-                        return new TableCell<>() {
-
-                            private Button btn =
-                                    new Button("");
-
-                            {
-                                btn.getStyleClass().add("deleteClientButton");
-                                btn.setMinWidth(15);
-                                btn.setPrefWidth(15);
-                                btn.setOnAction(event -> {
-                                    getTableView().getItems().get(getIndex()).deleteServer(connServer);
-                                    lessonsData.remove(getTableView().getItems().get(getIndex()));
-                                    //clientsTable.refresh();
-                                    new Thread() {
-                                        @Override
-                                        public void run() {
-                                            initDataFromServer();
-                                            System.out.println("deleted");
-                                        }
-                                    }.start();
-                                });
-                            }
-
-                            @Override
-                            public void updateItem(Void item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setGraphic(null);
-                                } else {
-                                    String toSet;
-                                    if (currentLanguage.equals("English")) {
-                                        btn.setText("");
-                                    }
-                                    if (currentLanguage.equals("Russian")) {
-                                        btn.setText("");
-                                    }
-                                    setGraphic(btn);
-                                }
-                            }
-                        };
-                    }
-                };
         Callback<TableColumn<Group, Void>, TableCell<Group, Void>> cellFactoryDeleteGroup = new Callback<>() {
             @Override
             public TableCell<Group, Void> call(TableColumn<Group, Void> param) {
@@ -3822,14 +3656,12 @@ public class MainController extends Application {
         retireeColumn.setCellFactory(cellFactory3);
 
         deleteLessonColumn.setCellFactory(cellFactoryDeleteLesson);
-        deleteTeacherSubjectColumn.setCellFactory(cellFactoryDeleteTeacherSubject);
         deleteGroupColumn.setCellFactory(cellFactoryDeleteGroup);
         deleteStudentColumn.setCellFactory(cellFactoryDeleteStudent);
         deleteTeacherColumn.setCellFactory(cellFactoryDeleteTeacher);
         deleteSubjectColumn.setCellFactory(cellFactoryDeleteSubject);
 
         lessonsTable.getColumns().add(0, deleteLessonColumn);
-        teachersSubjectsTable.getColumns().add(0, deleteTeacherSubjectColumn);
         groupsTable.getColumns().add(0, deleteGroupColumn);
         studentsTable.getColumns().add(0, deleteStudentColumn);
         teachersTable.getColumns().add(0, deleteTeacherColumn);
@@ -3930,7 +3762,7 @@ public class MainController extends Application {
                     break;
                 case "ID лектора":
                     while (i.hasNext()) {
-                        if (!i.next().getTeacher_subjectId().equals(searchFieldLesson.getText())) {
+                        if (!i.next().getTeacherId().equals(searchFieldLesson.getText())) {
                             i.remove();
                         }
                     }
@@ -3952,36 +3784,6 @@ public class MainController extends Application {
                 case "Время":
                     while (i.hasNext()) {
                         if (!i.next().getTime().equals(searchFieldLesson.getText())) {
-                            i.remove();
-                        }
-                    }
-                    break;
-            }
-        }
-    }
-
-    private void searchTeacherSubject() {
-        initUsersDataServerBuffer();
-        if (!searchFieldTeacherSubject.getText().equals("")) {
-            Iterator<TeacherSubject> i = teachersSubjectsData.iterator();
-            switch (criteriaButtonTeacherSubject.getText()) {
-                case "ID":
-                    while (i.hasNext()) {
-                        if (i.next().getId() != Integer.parseInt(searchFieldTeacherSubject.getText())) {
-                            i.remove();
-                        }
-                    }
-                    break;
-                case "ID учителя":
-                    while (i.hasNext()) {
-                        if (!i.next().getTeacherId().equals(searchFieldTeacherSubject.getText())) {
-                            i.remove();
-                        }
-                    }
-                    break;
-                case "ID предмета":
-                    while (i.hasNext()) {
-                        if (!i.next().getSubjectId().equals(searchFieldTeacherSubject.getText())) {
                             i.remove();
                         }
                     }
@@ -4353,7 +4155,7 @@ public class MainController extends Application {
         initDataFromServer();
         System.out.println("addLesson");
         boolean result = true;
-        if (!addLessonTeacherSubjectIdTextField.getText().trim().matches("[0-9]+") || !teacherSubjectExists(Integer.parseInt(addLessonTeacherSubjectIdTextField.getText().trim())))
+        if (!addLessonTeacherIdTextField.getText().trim().matches("[0-9]+") || !teacherExists(Integer.parseInt(addLessonTeacherIdTextField.getText().trim())))
             result = false;
         if (!addLessonGroupIdTextField.getText().trim().matches("[0-9]+") || !groupExists(Integer.parseInt(addLessonGroupIdTextField.getText().trim())))
             result = false;
@@ -4369,7 +4171,7 @@ public class MainController extends Application {
             Lesson toAdd = new Lesson();
             //TODO: добавить сеттеры в функции добавления
 
-            toAdd.setTeacher_subjectId(addLessonTeacherSubjectIdTextField.getText().trim());
+            toAdd.setTeacherId(addLessonTeacherIdTextField.getText().trim());
             toAdd.setGroupId(addLessonGroupIdTextField.getText().trim());
             toAdd.setCabinet(addLessonCabinetTextField.getText().trim());
             toAdd.setDate(addLessonDateTextField.getText().trim());
@@ -4388,39 +4190,21 @@ public class MainController extends Application {
         }
     }
 
-    private void addTeacherSubject() {
-        initDataFromServer();
-        System.out.println("addTeacherSubject");
-        boolean result = true;
-        if (!addTeacherSubjectTeacherIdTextField.getText().trim().matches("[0-9]+") || !teacherExists(Integer.parseInt(addTeacherSubjectTeacherIdTextField.getText().trim())))
-            result = false;
-        if (!addTeacherSubjectSubjectIdTextField.getText().trim().matches("[0-9]+") || !subjectExists(Integer.parseInt(addTeacherSubjectSubjectIdTextField.getText().trim())))
-            result = false;
 
-        if (result) {
-            System.out.println("Good");
-            TeacherSubject toAdd = new TeacherSubject();
-
-            toAdd.setTeacherId(addTeacherSubjectTeacherIdTextField.getText().trim());
-            toAdd.setSubjectId(addTeacherSubjectSubjectIdTextField.getText().trim());
-
-            connServer.sendString("addTeacherSubject|" + toAdd.toString());
-            new Thread() {
-                @Override
-                public void run() {
-                    initDataFromServer();
-                    System.out.println("added");
-                }
-            }.start();
-        } else {
-            System.out.println("Not good");
-        }
+    private boolean isSubject(String subjectId) {
+        for (Subject s : subjectsData)
+            if(s.getId() == Integer.parseInt(subjectId))
+                return true;
+            return false;
     }
 
     private void addGroup() {
         System.out.println("addGroup");
+        initDataFromServer();
         boolean result = true;
         if (!addGroupLevelTextField.getText().trim().matches("[ABC]"))
+            result = false;
+        if (!isSubject(addGroupSubjectTextField.getText().trim()))
             result = false;
 
         if (result) {
@@ -4428,6 +4212,7 @@ public class MainController extends Application {
             Group toAdd = new Group();
 
             toAdd.setLevel(addGroupLevelTextField.getText());
+            toAdd.setSubjectId(addGroupSubjectTextField.getText());
 
             connServer.sendString("addGroup|" + toAdd.toString());
             new Thread() {
@@ -4504,13 +4289,6 @@ public class MainController extends Application {
     public boolean subjectExists(int id) {
         for (Subject s : subjectsData)
             if (s.getId() == id)
-                return true;
-        return false;
-    }
-
-    public boolean teacherSubjectExists(int id) {
-        for (TeacherSubject ts : teachersSubjectsData)
-            if (ts.getId() == id)
                 return true;
         return false;
     }
@@ -4659,7 +4437,6 @@ public class MainController extends Application {
                     initStudentsDataServerBuffer();
                     initSubjectsDataServerBuffer();
                     initTeachersDataServerBuffer();
-                    initTeachersSubjectsDataServerBuffer();
 
                     System.out.println("USERS :");
                     for (User u : usersData)
@@ -4679,9 +4456,6 @@ public class MainController extends Application {
                     System.out.println("TEACHERS :");
                     for (Teacher t : teachersData)
                         System.out.println(t);
-                    System.out.println("TEACHERS SUBJECTS :");
-                    for (TeacherSubject ts : teachersSubjectsData)
-                        System.out.println(ts);
                     break;
                 }
                 try {
