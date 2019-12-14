@@ -93,7 +93,10 @@ public class Student {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email.equals(""))
+            this.email = "null";
+        else
+            this.email = email;
     }
 
     public String getPhone() {
@@ -101,32 +104,40 @@ public class Student {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        if (phone.equals(""))
+            this.phone = "null";
+        else
+            this.phone = phone;
     }
 
     public void setNameServer(ServerConnection conn, String name) {
         this.name = name;
         conn.sendString("Student|setName|" + id + "|" + name);
     }
+
     public void setSurnameServer(ServerConnection conn, String surname) {
         this.surname = surname;
         conn.sendString("Student|setSurname|" + id + "|" + surname);
     }
+
     public void setPatronymicServer(ServerConnection conn, String patronymic) {
         this.patronymic = patronymic;
         conn.sendString("Student|setPatronymic|" + id + "|" + patronymic);
     }
+
     public void setGroupIdServer(ServerConnection conn, String groupId) {
         this.groupId = groupId;
         conn.sendString("Student|setGroupId|" + id + "|" + groupId);
     }
+
     public void setEmailServer(ServerConnection conn, String email) {
-        this.email = email;
-        conn.sendString("Student|setEmail|" + id + "|" + email);
+        setEmail(email);
+        conn.sendString("Student|setEmail|" + id + "|" + this.email);
     }
+
     public void setPhoneServer(ServerConnection conn, String phone) {
-        this.phone = phone;
-        conn.sendString("Student|setPhone|" + id + "|" + phone);
+        setPhone(phone);
+        conn.sendString("Student|setPhone|" + id + "|" + this.phone);
     }
 
 

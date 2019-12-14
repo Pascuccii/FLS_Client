@@ -355,7 +355,6 @@ public class MainController extends Application {
     private MenuItem criteriaSubjectHours;
 
 
-
     @FXML
     private Button searchButton;
     @FXML
@@ -414,6 +413,46 @@ public class MainController extends Application {
     private Button changeUser_AnchorPane_IdSubmitButton;
     @FXML
     private Button changeUserButton;
+    @FXML
+    private TextField addLessonGroupIdTextField;
+    @FXML
+    private TextField addLessonTeacherSubjectIdTextField;
+    @FXML
+    private TextField addLessonCabinetTextField;
+    @FXML
+    private TextField addLessonDateTextField;
+    @FXML
+    private TextField addLessonTimeTextField;
+    @FXML
+    private TextField addTeacherSubjectTeacherIdTextField;
+    @FXML
+    private TextField addTeacherSubjectSubjectIdTextField;
+    @FXML
+    private TextField addGroupLevelTextField;
+    @FXML
+    private TextField addStudentNameTextField;
+    @FXML
+    private TextField addStudentSurnameTextField;
+    @FXML
+    private TextField addStudentPatronymicTextField;
+    @FXML
+    private TextField addStudentGroupIdTextField;
+    @FXML
+    private TextField addStudentEmailTextField;
+    @FXML
+    private TextField addStudentPhoneTextField;
+    @FXML
+    private TextField addTeacherNameTextField;
+    @FXML
+    private TextField addTeacherSurnameTextField;
+    @FXML
+    private TextField addTeacherPatronymicTextField;
+    @FXML
+    private TextField addSubjectNameTextField;
+    @FXML
+    private TextField addSubjectHoursTextField;
+
+
     @FXML
     private MenuButton changeUser_AnchorPane_AccessMode_MenuButton;
     @FXML
@@ -699,6 +738,16 @@ public class MainController extends Application {
     @FXML
     private Label customizationLabel;
     @FXML
+    private AnchorPane menuPaneUserWriteIn;
+    @FXML
+    private AnchorPane menuPaneUserSubjects;
+    @FXML
+    private AnchorPane menuPaneUserTimeTable;
+    @FXML
+    private AnchorPane menuPaneUserNotifications;
+    @FXML
+    private AnchorPane menuPaneUserGraphs;
+    @FXML
     private AnchorPane accountSettingsPane;
     @FXML
     private Label accountSettingsLabel;
@@ -741,6 +790,16 @@ public class MainController extends Application {
     @FXML
     private Button connectionIndicator;
     @FXML
+    private Button menuUserWriteInButton;
+    @FXML
+    private Button menuUserSubjectsButton;
+    @FXML
+    private Button menuUserTimeTableButton;
+    @FXML
+    private Button menuUserNotificationsButton;
+    @FXML
+    private Button menuUserGraphsButton;
+    @FXML
     private Label menuPane1_DBLabel;
     @FXML
     private AnchorPane menuPaneInfo;
@@ -780,12 +839,8 @@ public class MainController extends Application {
                         "&useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow", "root", "root");*/
         connServer = new ServerConnection("127.0.0.1", 8000);
         if (!connServer.exists()) {
-            connServer = new ServerConnection("192.168.43.226", 8000);
-            if (!connServer.exists()) {
-                loginWarning.setStyle("-fx-text-fill: #d85751");
-                loginWarning.setText("No connection.");
-            } else
-                serverIP = "192.168.43.226";
+            loginWarning.setStyle("-fx-text-fill: #d85751");
+            loginWarning.setText("No connection.");
         } else
             serverIP = "127.0.0.1";
 
@@ -834,7 +889,7 @@ public class MainController extends Application {
         lessonGroupIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lessonGroupIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
             Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("[0-9]+") || groupExists(Integer.parseInt(t.getNewValue().trim()))) {
                 cl.setGroupIdServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -844,7 +899,7 @@ public class MainController extends Application {
         lessonTeacherSubjectIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lessonTeacherSubjectIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
             Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("[0-9]+") || teacherSubjectExists(Integer.parseInt(t.getNewValue().trim()))) {
                 cl.setTeacherSubjectIdServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -864,7 +919,7 @@ public class MainController extends Application {
         lessonDateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lessonDateColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
             Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$")) {
                 cl.setDateServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -874,7 +929,7 @@ public class MainController extends Application {
         lessonTimeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lessonTimeColumn.setOnEditCommit((TableColumn.CellEditEvent<Lesson, String> t) -> {
             Lesson cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)")) {
                 cl.setTimeServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -916,7 +971,7 @@ public class MainController extends Application {
         studentGroupIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         studentGroupIdColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
             Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("[0-9]+") || groupExists(Integer.parseInt(t.getNewValue().trim()))) {
                 cl.setGroupIdServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -926,7 +981,7 @@ public class MainController extends Application {
         studentEmailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         studentEmailColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
             Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("(?:[a-z0-9!_-]+(?:\\.[a-z0-9!_-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+))") || t.getNewValue().equals("")) {
                 cl.setEmailServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -936,14 +991,13 @@ public class MainController extends Application {
         studentPhoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         studentPhoneColumn.setOnEditCommit((TableColumn.CellEditEvent<Student, String> t) -> {
             Student cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") || t.getNewValue().equals("")) {
                 cl.setPhoneServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
                 initGroupsDataServerBuffer();
             }
         });
-
 
 
         subjectNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -966,7 +1020,6 @@ public class MainController extends Application {
                 initGroupsDataServerBuffer();
             }
         });
-
 
 
         teacherNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -1004,7 +1057,7 @@ public class MainController extends Application {
         teacherSubjectTeacherIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         teacherSubjectTeacherIdColumn.setOnEditCommit((TableColumn.CellEditEvent<TeacherSubject, String> t) -> {
             TeacherSubject cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("[0-9]+") || teacherExists(Integer.parseInt(t.getNewValue().trim()))) {
                 cl.setTeacherIdServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -1014,7 +1067,7 @@ public class MainController extends Application {
         teacherSubjectSubjectIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         teacherSubjectSubjectIdColumn.setOnEditCommit((TableColumn.CellEditEvent<TeacherSubject, String> t) -> {
             TeacherSubject cl = (t.getTableView().getItems().get(t.getTablePosition().getRow()));
-            if (t.getNewValue().trim().matches("[0-9]+")) {
+            if (t.getNewValue().trim().matches("[0-9]+") || subjectExists(Integer.parseInt(t.getNewValue().trim()))) {
                 cl.setSubjectIdServer(connServer, t.getNewValue());
                 groupsTable.requestFocus();
             } else {
@@ -1276,45 +1329,54 @@ public class MainController extends Application {
             if (currentUser != null) {
                 switch (keyEvent.getCode()) {
                     case DIGIT1:
-                        System.out.println("YEEESSS");
                         if (currentUser.getAccessMode() == 1)
                             menuAdminUsersButton.fire();
+                        else
+                            menuUserWriteInButton.fire();
                         break;
                     case DIGIT2:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminLessonsButton.fire();
+                        else
+                            menuUserSubjectsButton.fire();
                         break;
                     case DIGIT3:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminTeachersSubjectsButton.fire();
+                        else
+                            menuUserTimeTableButton.fire();
                         break;
                     case DIGIT4:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminGroupsButton.fire();
+                        else
+                            menuUserNotificationsButton.fire();
                         break;
                     case DIGIT5:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminStudentsButton.fire();
+                        else
+                            menuUserGraphsButton.fire();
                         break;
                     case DIGIT6:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminTeachersButton.fire();
+                        else
+                            menuUserSettingsButton.fire();
                         break;
                     case DIGIT7:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminSubjectsButton.fire();
+                        else
+                            menuUserInfoButton.fire();
                         break;
                     case DIGIT8:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminSettingsButton.fire();
-                        else
-                            menuUserSettingsButton.fire();
                         break;
                     case DIGIT9:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminInfoButton.fire();
-                        else
-                            menuUserInfoButton.fire();
                         break;
                     case ESCAPE:
                         logoutButtonAdmin.fire();
@@ -1431,7 +1493,17 @@ public class MainController extends Application {
         teacherSubjectSubjectIdColumn.setCellValueFactory(new PropertyValueFactory<>("subjectId"));
 
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //USER
+        menuUserWriteInButton.setOnAction(actionEvent -> selectMenuItem(menuUserWriteInButton, menuPaneUserWriteIn));
+        menuUserSubjectsButton.setOnAction(actionEvent -> selectMenuItem(menuUserSubjectsButton, menuPaneUserSubjects));
+        menuUserTimeTableButton.setOnAction(actionEvent -> selectMenuItem(menuUserTimeTableButton, menuPaneUserTimeTable));
+        menuUserNotificationsButton.setOnAction(actionEvent -> selectMenuItem(menuUserNotificationsButton, menuPaneUserNotifications));
+        menuUserGraphsButton.setOnAction(actionEvent -> selectMenuItem(menuUserGraphsButton, menuPaneUserGraphs));
+        menuUserSettingsButton.setOnAction(actionEvent -> selectMenuItem(menuUserSettingsButton, menuPaneSettings));
+
+        menuUserInfoButton.setOnAction(actionEvent -> selectMenuItem(menuUserInfoButton, menuPaneInfo));
+        //ADMIN
         //1
         menuAdminUsersButton.setOnAction(actionEvent -> selectMenuItem(menuAdminUsersButton, menuPaneUsers));
         //2
@@ -1448,10 +1520,8 @@ public class MainController extends Application {
         menuAdminSubjectsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminSubjectsButton, menuPaneSubjects));
         //8
         menuAdminSettingsButton.setOnAction(actionEvent -> selectMenuItem(menuAdminSettingsButton, menuPaneSettings));
-        menuUserSettingsButton.setOnAction(actionEvent -> selectMenuItem(menuUserSettingsButton, menuPaneSettings));
         //9
         menuAdminInfoButton.setOnAction(actionEvent -> selectMenuItem(menuAdminInfoButton, menuPaneInfo));
-        menuUserInfoButton.setOnAction(actionEvent -> selectMenuItem(menuUserInfoButton, menuPaneInfo));
 
         menuPaneUsers.setOnMouseClicked(mouseEvent -> {
             menuPaneUsers.requestFocus();
@@ -2049,7 +2119,7 @@ public class MainController extends Application {
         themeItem_Light.setOnAction(actionEvent -> {
             if (currentUser != null)
                 currentUser.setThemeServer(connServer, "Light");
-            setTheme("Light");
+            setTheme("Dark");
         });
         themeItem_Light.setDisable(false);
 
@@ -2348,12 +2418,12 @@ public class MainController extends Application {
                 loginPasswordLabel.setText("Пароль");
                 loginButton.setText("Войти");
                 menuAdminUsersButton.setText(" 1 Управление пользователями");
-                menuAdminSettingsButton.setText(" 3 Аккаунт");
-                menuUserSettingsButton.setText(" 3 Аккаунт");
-                menuAdminInfoButton.setText(" 4 Информация");
-                menuUserInfoButton.setText(" 4 Информация");
-                logoutButtonAdmin.setText(" 5 Выйти");
-                logoutButtonUser.setText(" 5 Выйти");
+                menuAdminSettingsButton.setText(" 8 Аккаунт");
+                menuUserSettingsButton.setText(" 6 Аккаунт");
+                menuAdminInfoButton.setText(" 9 Информация");
+                menuUserInfoButton.setText(" 7 Информация");
+                logoutButtonAdmin.setText(" 10 Выйти");
+                logoutButtonUser.setText(" 8 Выйти");
 
                 menuPane1_DBLabel.setText("Соединение");
                 searchButton.setText("Поиск");
@@ -2535,7 +2605,7 @@ public class MainController extends Application {
                 themeButton.setText("Light");
                 currentTheme = "Light";
                 primaryAnchorPane.getStylesheets().clear();
-                primaryAnchorPane.getStylesheets().add("CSS/LightTheme.css");
+                primaryAnchorPane.getStylesheets().add("CSS/DarkTheme.css");
 
                 break;
         }
@@ -2550,8 +2620,14 @@ public class MainController extends Application {
         menuAdminTeachersButton.setStyle("");
         menuAdminSubjectsButton.setStyle("");
         menuAdminSettingsButton.setStyle("");
-        menuUserSettingsButton.setStyle("");
         menuAdminInfoButton.setStyle("");
+
+        menuUserWriteInButton.setStyle("");
+        menuUserSubjectsButton.setStyle("");
+        menuUserTimeTableButton.setStyle("");
+        menuUserNotificationsButton.setStyle("");
+        menuUserGraphsButton.setStyle("");
+        menuUserSettingsButton.setStyle("");
         menuUserInfoButton.setStyle("");
 
         setAllPanesInvisible();
@@ -2637,6 +2713,11 @@ public class MainController extends Application {
         menuPaneSubjects.setVisible(false);
         menuPaneSettings.setVisible(false);
         menuPaneInfo.setVisible(false);
+        menuPaneUserWriteIn.setVisible(false);
+        menuPaneUserSubjects.setVisible(false);
+        menuPaneUserTimeTable.setVisible(false);
+        menuPaneUserNotifications.setVisible(false);
+        menuPaneUserGraphs.setVisible(false);
         loginPane.setVisible(false);
     }
 
@@ -2715,7 +2796,8 @@ public class MainController extends Application {
                             if (u.getId() == enteredId)
                                 if (enteredPassword.matches("[0-9a-zA-Z]{6,}")) {
                                     u.setUsernameServer(connServer, enteredUsername);
-                                    u.setPasswordServer(connServer, enteredPassword);
+                                    if (!enteredPassword.equals("previous"))
+                                        u.setPasswordServer(connServer, enteredPassword);
                                     u.setAccessModeServer(connServer, String.valueOf(enteredAccessMode));
                                     u.setEMailServer(connServer, enteredEmail);
                                 }
@@ -2740,6 +2822,7 @@ public class MainController extends Application {
                     if (id == u.getId()) {
                         changeUser_AnchorPane_Username.setText(u.getUsername());
                         changeUser_AnchorPane_Email.setText(u.getEmail());
+                        changeUser_AnchorPane_Password.setText("previous");
                         if (currentLanguage.equals("English"))
                             changeUser_AnchorPane_AccessMode_MenuButton.setText((u.getAccessMode() == 0) ? "User" : "Admin");
                         if (currentLanguage.equals("Russian"))
@@ -2907,6 +2990,12 @@ public class MainController extends Application {
             loginWarning.setLayoutX(45);
             loginWarning.setLayoutY(117);
             searchField.setPrefWidth(136);
+            AnchorPane.setTopAnchor(createLessonAnchorPane, 263.6);
+            AnchorPane.setTopAnchor(createTeacherSubjectAnchorPane, 263.6);
+            AnchorPane.setTopAnchor(createGroupAnchorPane, 263.6);
+            AnchorPane.setTopAnchor(createStudentAnchorPane, 263.6);
+            AnchorPane.setTopAnchor(createTeacherAnchorPane, 263.6);
+            AnchorPane.setTopAnchor(createSubjectAnchorPane, 263.6);
 
             lessonsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             lessonsScrollPane.setPrefWidth(573);
@@ -2960,6 +3049,12 @@ public class MainController extends Application {
             loginWarning.setLayoutX(405);
             loginWarning.setLayoutY(290);
             searchField.setPrefWidth(350);
+            AnchorPane.setTopAnchor(createLessonAnchorPane, 630.0);
+            AnchorPane.setTopAnchor(createTeacherSubjectAnchorPane, 630.0);
+            AnchorPane.setTopAnchor(createGroupAnchorPane, 630.0);
+            AnchorPane.setTopAnchor(createStudentAnchorPane, 630.0);
+            AnchorPane.setTopAnchor(createTeacherAnchorPane, 630.0);
+            AnchorPane.setTopAnchor(createSubjectAnchorPane, 630.0);
 
             lessonsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             lessonsScrollPane.setPrefWidth(1310);
@@ -3495,51 +3590,52 @@ public class MainController extends Application {
                 };
             }
         };
-        Callback<TableColumn<TeacherSubject, Void>, TableCell<TeacherSubject, Void>> cellFactoryDeleteTeacherSubject = new Callback<>() {
-            @Override
-            public TableCell<TeacherSubject, Void> call(TableColumn<TeacherSubject, Void> param) {
-                return new TableCell<>() {
-
-                    private Button btn =
-                            new Button("");
-
-                    {
-                        btn.getStyleClass().add("deleteClientButton");
-                        btn.setMinWidth(15);
-                        btn.setPrefWidth(15);
-                        btn.setOnAction(event -> {
-                            getTableView().getItems().get(getIndex()).deleteServer(connServer);
-                            lessonsData.remove(getTableView().getItems().get(getIndex()));
-                            //clientsTable.refresh();
-                            new Thread() {
-                                @Override
-                                public void run() {
-                                    initDataFromServer();
-                                    System.out.println("deleted");
-                                }
-                            }.start();
-                        });
-                    }
-
+        Callback<TableColumn<TeacherSubject, Void>, TableCell<TeacherSubject, Void>> cellFactoryDeleteTeacherSubject =
+                new Callback<>() {
                     @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            String toSet;
-                            if (currentLanguage.equals("English")) {
-                                btn.setText("");
+                    public TableCell<TeacherSubject, Void> call(TableColumn<TeacherSubject, Void> param) {
+                        return new TableCell<>() {
+
+                            private Button btn =
+                                    new Button("");
+
+                            {
+                                btn.getStyleClass().add("deleteClientButton");
+                                btn.setMinWidth(15);
+                                btn.setPrefWidth(15);
+                                btn.setOnAction(event -> {
+                                    getTableView().getItems().get(getIndex()).deleteServer(connServer);
+                                    lessonsData.remove(getTableView().getItems().get(getIndex()));
+                                    //clientsTable.refresh();
+                                    new Thread() {
+                                        @Override
+                                        public void run() {
+                                            initDataFromServer();
+                                            System.out.println("deleted");
+                                        }
+                                    }.start();
+                                });
                             }
-                            if (currentLanguage.equals("Russian")) {
-                                btn.setText("");
+
+                            @Override
+                            public void updateItem(Void item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                } else {
+                                    String toSet;
+                                    if (currentLanguage.equals("English")) {
+                                        btn.setText("");
+                                    }
+                                    if (currentLanguage.equals("Russian")) {
+                                        btn.setText("");
+                                    }
+                                    setGraphic(btn);
+                                }
                             }
-                            setGraphic(btn);
-                        }
+                        };
                     }
                 };
-            }
-        };
         Callback<TableColumn<Group, Void>, TableCell<Group, Void>> cellFactoryDeleteGroup = new Callback<>() {
             @Override
             public TableCell<Group, Void> call(TableColumn<Group, Void> param) {
@@ -4254,16 +4350,32 @@ public class MainController extends Application {
     }
 
     private void addLesson() {
+        initDataFromServer();
         System.out.println("addLesson");
         boolean result = true;
-        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
-            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+        if (!addLessonTeacherSubjectIdTextField.getText().trim().matches("[0-9]+") || !teacherSubjectExists(Integer.parseInt(addLessonTeacherSubjectIdTextField.getText().trim())))
+            result = false;
+        if (!addLessonGroupIdTextField.getText().trim().matches("[0-9]+") || !groupExists(Integer.parseInt(addLessonGroupIdTextField.getText().trim())))
+            result = false;
+        if (!addLessonCabinetTextField.getText().trim().matches("[0-9]+"))
+            result = false;
+        if (!addLessonDateTextField.getText().trim().matches("^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$"))
+            result = false;
+        if (!addLessonTimeTextField.getText().trim().matches("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)"))
+            result = false;
 
         if (result) {
             System.out.println("Good");
-            Client toAdd = new Client();
+            Lesson toAdd = new Lesson();
+            //TODO: добавить сеттеры в функции добавления
 
-            connServer.sendString("addClient|" + toAdd.toString());
+            toAdd.setTeacher_subjectId(addLessonTeacherSubjectIdTextField.getText().trim());
+            toAdd.setGroupId(addLessonGroupIdTextField.getText().trim());
+            toAdd.setCabinet(addLessonCabinetTextField.getText().trim());
+            toAdd.setDate(addLessonDateTextField.getText().trim());
+            toAdd.setTime(addLessonTimeTextField.getText().trim());
+
+            connServer.sendString("addLesson|" + toAdd.toString());
             new Thread() {
                 @Override
                 public void run() {
@@ -4277,16 +4389,22 @@ public class MainController extends Application {
     }
 
     private void addTeacherSubject() {
+        initDataFromServer();
         System.out.println("addTeacherSubject");
         boolean result = true;
-        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
-            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+        if (!addTeacherSubjectTeacherIdTextField.getText().trim().matches("[0-9]+") || !teacherExists(Integer.parseInt(addTeacherSubjectTeacherIdTextField.getText().trim())))
+            result = false;
+        if (!addTeacherSubjectSubjectIdTextField.getText().trim().matches("[0-9]+") || !subjectExists(Integer.parseInt(addTeacherSubjectSubjectIdTextField.getText().trim())))
+            result = false;
 
         if (result) {
             System.out.println("Good");
-            Client toAdd = new Client();
+            TeacherSubject toAdd = new TeacherSubject();
 
-            connServer.sendString("addClient|" + toAdd.toString());
+            toAdd.setTeacherId(addTeacherSubjectTeacherIdTextField.getText().trim());
+            toAdd.setSubjectId(addTeacherSubjectSubjectIdTextField.getText().trim());
+
+            connServer.sendString("addTeacherSubject|" + toAdd.toString());
             new Thread() {
                 @Override
                 public void run() {
@@ -4302,14 +4420,16 @@ public class MainController extends Application {
     private void addGroup() {
         System.out.println("addGroup");
         boolean result = true;
-        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
-            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+        if (!addGroupLevelTextField.getText().trim().matches("[ABC]"))
+            result = false;
 
         if (result) {
             System.out.println("Good");
-            Client toAdd = new Client();
+            Group toAdd = new Group();
 
-            connServer.sendString("addClient|" + toAdd.toString());
+            toAdd.setLevel(addGroupLevelTextField.getText());
+
+            connServer.sendString("addGroup|" + toAdd.toString());
             new Thread() {
                 @Override
                 public void run() {
@@ -4323,20 +4443,42 @@ public class MainController extends Application {
     }
 
     private void addStudent() {
+        initDataFromServer();
         System.out.println("addStudent");
         boolean result = true;
-        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
-            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+
+        if (!addStudentNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = false;
+        if (!addStudentSurnameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = false;
+        if (!addStudentPatronymicTextField.getText().trim().matches("[а-яА-Я]{2,30}"))
+            result = false;
+        if (!addStudentGroupIdTextField.getText().trim().matches("[0-9]+") || !groupExists(Integer.parseInt(addStudentGroupIdTextField.getText().trim())))
+            result = false;
+        if (!addStudentEmailTextField.getText().trim().matches("(?:[a-z0-9!_-]+(?:\\.[a-z0-9!_-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+))") && !addStudentEmailTextField.getText().equals(""))
+            result = false;
+        if (!addStudentPhoneTextField.getText().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") && !addStudentPhoneTextField.getText().equals(""))
+            result = false;
+
 
         if (result) {
             System.out.println("Good");
-            Client toAdd = new Client();
+            Student toAdd = new Student();
 
-            connServer.sendString("addClient|" + toAdd.toString());
+            toAdd.setName(addStudentNameTextField.getText().trim());
+            toAdd.setSurname(addStudentSurnameTextField.getText().trim());
+            toAdd.setPatronymic(addStudentPatronymicTextField.getText().trim());
+            toAdd.setGroupId(addStudentGroupIdTextField.getText().trim());
+            toAdd.setEmail(addStudentEmailTextField.getText().trim());
+            toAdd.setPhone(addStudentPhoneTextField.getText().trim());
+
+            System.out.println(toAdd);
+            connServer.sendString("addStudent|" + toAdd.toString());
             new Thread() {
                 @Override
                 public void run() {
                     initDataFromServer();
+
                     System.out.println("added");
                 }
             }.start();
@@ -4345,17 +4487,54 @@ public class MainController extends Application {
         }
     }
 
+    public boolean groupExists(int id) {
+        for (Group g : groupsData)
+            if (g.getId() == id)
+                return true;
+        return false;
+    }
+
+    public boolean teacherExists(int id) {
+        for (Teacher t : teachersData)
+            if (t.getId() == id)
+                return true;
+        return false;
+    }
+
+    public boolean subjectExists(int id) {
+        for (Subject s : subjectsData)
+            if (s.getId() == id)
+                return true;
+        return false;
+    }
+
+    public boolean teacherSubjectExists(int id) {
+        for (TeacherSubject ts : teachersSubjectsData)
+            if (ts.getId() == id)
+                return true;
+        return false;
+    }
+
     private void addTeacher() {
         System.out.println("addTeacher");
         boolean result = true;
-        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
-            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+
+        if (!addTeacherNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = false;
+        if (!addTeacherSurnameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = false;
+        if (!addTeacherPatronymicTextField.getText().trim().matches("[а-яА-Я]{2,30}"))
+            result = false;
 
         if (result) {
             System.out.println("Good");
-            Client toAdd = new Client();
+            Teacher toAdd = new Teacher();
 
-            connServer.sendString("addClient|" + toAdd.toString());
+            toAdd.setName(addTeacherNameTextField.getText().trim());
+            toAdd.setSurname(addTeacherSurnameTextField.getText().trim());
+            toAdd.setPatronymic(addTeacherPatronymicTextField.getText().trim());
+
+            connServer.sendString("addTeacher|" + toAdd.toString());
             new Thread() {
                 @Override
                 public void run() {
@@ -4371,14 +4550,20 @@ public class MainController extends Application {
     private void addSubject() {
         System.out.println("addSubject");
         boolean result = true;
-        if (!addClientNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
-            result = addClientFillingError(addClientNameTextField, addClientNameDescription);
+
+        if (!addSubjectNameTextField.getText().trim().matches("[а-яА-Я]{2,30}"))
+            result = false;
+        if (!addSubjectHoursTextField.getText().trim().matches("[0-9]+"))
+            result = false;
 
         if (result) {
             System.out.println("Good");
-            Client toAdd = new Client();
+            Subject toAdd = new Subject();
 
-            connServer.sendString("addClient|" + toAdd.toString());
+            toAdd.setName(addSubjectNameTextField.getText().trim());
+            toAdd.setHours(addSubjectHoursTextField.getText().trim());
+
+            connServer.sendString("addSubject|" + toAdd.toString());
             new Thread() {
                 @Override
                 public void run() {
