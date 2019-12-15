@@ -2,12 +2,14 @@ package sample.Controls;
 
 import com.mysql.cj.util.StringUtils;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -57,13 +59,23 @@ public class MainController extends Application {
     private TableColumn deleteStudentColumn;
     private TableColumn deleteTeacherColumn;
     private TableColumn deleteSubjectColumn;
+    private TableColumn writeStudentColumn;
     private ObservableList<User> usersData = FXCollections.observableArrayList();
     private ObservableList<Client> clientsData = FXCollections.observableArrayList();
     private ObservableList<Group> groupsData = FXCollections.observableArrayList();
+    private ObservableList<Group> writeGroupsData = FXCollections.observableArrayList();
     private ObservableList<Lesson> lessonsData = FXCollections.observableArrayList();
+    private ObservableList<Lesson> lessonsUserData = FXCollections.observableArrayList();
     private ObservableList<Student> studentsData = FXCollections.observableArrayList();
     private ObservableList<Subject> subjectsData = FXCollections.observableArrayList();
     private ObservableList<Teacher> teachersData = FXCollections.observableArrayList();
+    private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<Group> writeStudentTable;
+    @FXML
+    private TableColumn<Group, Integer> writeStudentTableGroupIdColumn;
+
 
     @FXML
     private TableView<User> usersTable;
@@ -101,6 +113,19 @@ public class MainController extends Application {
     private TableColumn<Lesson, String> lessonDateColumn;
     @FXML
     private TableColumn<Lesson, String> lessonTimeColumn;
+
+    @FXML
+    private TableView<Lesson> lessonsUserTable;
+    @FXML
+    private TableColumn<Lesson, String> lessonUserGroupIdColumn;
+    @FXML
+    private TableColumn<Lesson, String> lessonUserTeacherIdColumn;
+    @FXML
+    private TableColumn<Lesson, String> lessonUserCabinetColumn;
+    @FXML
+    private TableColumn<Lesson, String> lessonUserDateColumn;
+    @FXML
+    private TableColumn<Lesson, String> lessonUserTimeColumn;
 
     @FXML
     private TableView<Student> studentsTable;
@@ -189,6 +214,8 @@ public class MainController extends Application {
     @FXML
     private Button addLessonButton;
     @FXML
+    private Button searchWriteGroupButton;
+    @FXML
     private Button addGroupButton;
     @FXML
     private Button addStudentButton;
@@ -249,6 +276,8 @@ public class MainController extends Application {
     @FXML
     private TextField searchFieldLesson;
     @FXML
+    private TextField searchFieldUserLesson;
+    @FXML
     private TextField searchFieldGroup;
     @FXML
     private TextField searchFieldStudent;
@@ -282,6 +311,23 @@ public class MainController extends Application {
     private MenuItem criteriaLessonDate;
     @FXML
     private MenuItem criteriaLessonTime;
+
+
+    @FXML
+    private MenuButton criteriaButtonUserLesson;
+    @FXML
+    private MenuItem criteriaUserLessonStudentId;
+    @FXML
+    private MenuItem criteriaUserLessonGroupId;
+    @FXML
+    private MenuItem criteriaUserLessonTeacherId;
+    @FXML
+    private MenuItem criteriaUserLessonCabinet;
+    @FXML
+    private MenuItem criteriaUserLessonDate;
+    @FXML
+    private MenuItem criteriaUserLessonTime;
+
     @FXML
     private MenuButton criteriaButtonGroup;
     @FXML
@@ -325,9 +371,34 @@ public class MainController extends Application {
 
 
     @FXML
+    private TextField writeNameTextField;
+    @FXML
+    private TextField writeSurnameTextField;
+    @FXML
+    private TextField writePatronymicTextField;
+    @FXML
+    private TextField writeEmailTextField;
+    @FXML
+    private TextField writePhoneTextField;
+
+    @FXML
+    private MenuButton writeStudentLevelMenuButton;
+    @FXML
+    private MenuButton writeStudentSubjectMenuButton;
+    @FXML
+    private MenuItem writeStudentLevelMenuItem_A;
+    @FXML
+    private MenuItem writeStudentLevelMenuItem_B;
+    @FXML
+    private MenuItem writeStudentLevelMenuItem_C;
+
+
+    @FXML
     private Button searchButton;
     @FXML
     private Button searchButtonLesson;
+    @FXML
+    private Button searchButtonUserLesson;
     @FXML
     private Button searchButtonGroup;
     @FXML
@@ -340,6 +411,8 @@ public class MainController extends Application {
     private Button resetSearchButton;
     @FXML
     private Button resetButtonLessons;
+    @FXML
+    private Button resetButtonUserLessons;
     @FXML
     private Button resetButtonGroups;
     @FXML
@@ -434,6 +507,14 @@ public class MainController extends Application {
     private ScrollPane clientManagementScrollPane;
     @FXML
     private AnchorPane clientManagementAnchorPane;
+    @FXML
+    private BarChart<String, Number> barChart;
+    @FXML
+    private CategoryAxis xAxis;
+    @FXML
+    private NumberAxis yAxis;
+    @FXML
+    private PieChart pieChart;
     //ФОРМА ДОБАВЛЕНИЯ КЛИЕНТА
     @FXML
     private AnchorPane createClient_AnchorPane;
@@ -1405,6 +1486,7 @@ public class MainController extends Application {
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         groupIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        writeStudentTableGroupIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         groupLevelColumn.setCellValueFactory(new PropertyValueFactory<>("level"));
         groupSubjectColumn.setCellValueFactory(new PropertyValueFactory<>("subjectId"));
 
@@ -1414,6 +1496,12 @@ public class MainController extends Application {
         lessonCabinetColumn.setCellValueFactory(new PropertyValueFactory<>("cabinet"));
         lessonDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+
+        lessonUserGroupIdColumn.setCellValueFactory(new PropertyValueFactory<>("groupId"));
+        lessonUserTeacherIdColumn.setCellValueFactory(new PropertyValueFactory<>("teacherId"));
+        lessonUserCabinetColumn.setCellValueFactory(new PropertyValueFactory<>("cabinet"));
+        lessonUserDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        lessonUserTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
 
         studentIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         studentNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -1480,6 +1568,7 @@ public class MainController extends Application {
         usersTable.getStyleClass().add("usersTable");
         groupsTable.getStyleClass().add("usersTable");
         lessonsTable.getStyleClass().add("usersTable");
+        lessonsUserTable.getStyleClass().add("usersTable");
         studentsTable.getStyleClass().add("usersTable");
         subjectsTable.getStyleClass().add("usersTable");
         teachersTable.getStyleClass().add("usersTable");
@@ -1757,6 +1846,13 @@ public class MainController extends Application {
         criteriaLessonDate.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonDate.getText()));
         criteriaLessonTime.setOnAction(actionEvent -> criteriaButtonLesson.setText(criteriaLessonTime.getText()));
 
+        criteriaUserLessonStudentId.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonStudentId.getText()));
+        criteriaUserLessonGroupId.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonGroupId.getText()));
+        criteriaUserLessonTeacherId.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonTeacherId.getText()));
+        criteriaUserLessonCabinet.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonCabinet.getText()));
+        criteriaUserLessonDate.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonDate.getText()));
+        criteriaUserLessonTime.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonTime.getText()));
+
         criteriaGroupId.setOnAction(actionEvent -> criteriaButtonGroup.setText(criteriaGroupId.getText()));
         criteriaGroupLevel.setOnAction(actionEvent -> criteriaButtonGroup.setText(criteriaGroupLevel.getText()));
 
@@ -1777,6 +1873,9 @@ public class MainController extends Application {
         criteriaSubjectName.setOnAction(actionEvent -> criteriaButtonSubject.setText(criteriaSubjectName.getText()));
         criteriaSubjectHours.setOnAction(actionEvent -> criteriaButtonSubject.setText(criteriaSubjectHours.getText()));
 
+        writeStudentLevelMenuItem_A.setOnAction(event -> writeStudentLevelMenuButton.setText("A"));
+        writeStudentLevelMenuItem_B.setOnAction(event -> writeStudentLevelMenuButton.setText("B"));
+        writeStudentLevelMenuItem_C.setOnAction(event -> writeStudentLevelMenuButton.setText("C"));
 
         /*criteriaClientName.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientName.getText()));
         criteriaClientSurname.setOnAction(actionEvent -> criteriaButtonClient.setText(criteriaClientSurname.getText()));
@@ -2057,6 +2156,7 @@ public class MainController extends Application {
 
         resetSearchButton.getStyleClass().add("resetSearchButton");
         resetButtonLessons.getStyleClass().add("resetSearchButton");
+        resetButtonUserLessons.getStyleClass().add("resetSearchButton");
         resetButtonGroups.getStyleClass().add("resetSearchButton");
         resetButtonStudents.getStyleClass().add("resetSearchButton");
         resetButtonTeachers.getStyleClass().add("resetSearchButton");
@@ -2082,6 +2182,15 @@ public class MainController extends Application {
         });
         resetButtonLessons.setOnAction(actionEvent -> {
             searchFieldLesson.clear();
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                }
+            }.start();
+        });
+        resetButtonUserLessons.setOnAction(actionEvent -> {
+            searchFieldUserLesson.clear();
             new Thread() {
                 @Override
                 public void run() {
@@ -2153,10 +2262,13 @@ public class MainController extends Application {
 
         searchButton.setOnAction(actionEvent -> searchUser());
         searchButtonLesson.setOnAction(actionEvent -> searchLesson());
+        searchButtonUserLesson.setOnAction(actionEvent -> searchUserLesson());
         searchButtonGroup.setOnAction(actionEvent -> searchGroup());
         searchButtonStudent.setOnAction(actionEvent -> searchStudent());
         searchButtonTeacher.setOnAction(actionEvent -> searchTeacher());
         searchButtonSubject.setOnAction(actionEvent -> searchSubject());
+
+        searchWriteGroupButton.setOnAction(actionEvent -> searchWriteGroup());
 
         /*searchButtonClient.setOnAction(actionEvent -> searchClient());*/
 
@@ -2337,8 +2449,8 @@ public class MainController extends Application {
                 menuAdminUsersButton.setText(" 1 Управление пользователями");
                 menuAdminSettingsButton.setText(" 7 Аккаунт");
                 menuUserSettingsButton.setText(" 6 Аккаунт");
-                menuAdminInfoButton.setText(" 8 Информация");
-                menuUserInfoButton.setText(" 7 Информация");
+                menuAdminInfoButton.setText(" 8 Руководство пользователя");
+                menuUserInfoButton.setText(" 7 Руководство пользователя");
                 logoutButtonAdmin.setText(" 9 Выйти");
                 logoutButtonUser.setText(" 8 Выйти");
 
@@ -2607,6 +2719,7 @@ public class MainController extends Application {
         currentUserLabelAdmin.setText(currentUser.getUsername());
         currentUserLabelUser.setText(currentUser.getUsername());
         accountSettingsUsernameTextField.setText(currentUser.getUsername());
+        accountSettingsPasswordTextField.setText("previous");
         accountSettingsEmailTextField.setText(currentUser.getEmail());
 
         connServer.sendString("setCurrentUser|" + currentUser.getUsername() + "|");
@@ -2638,15 +2751,20 @@ public class MainController extends Application {
         if (enteredEmail.equals(""))
             enteredEmail = "null";
         String enteredPassword;
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return;
-        }
-        byte[] hash = digest.digest(accountSettingsPasswordTextField.getText().trim().getBytes(StandardCharsets.UTF_8));
-        enteredPassword = Base64.getEncoder().encodeToString(hash);
+        if (!accountSettingsPasswordTextField.getText().equals("previous")) {
+            MessageDigest digest = null;
+            try {
+                digest = MessageDigest.getInstance("SHA-256");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+                return;
+            }
+            byte[] hash =
+                    digest.digest(accountSettingsPasswordTextField.getText().trim().getBytes(StandardCharsets.UTF_8));
+            enteredPassword = Base64.getEncoder().encodeToString(hash);
+        } else
+            enteredPassword = currentUser.getPassword();
+
 
         settingsWarningLabel.setStyle("-fx-text-fill: #d85751");
         if (!(enteredPassword.length() < 3 || enteredUsername.length() < 3)) {
@@ -3077,18 +3195,37 @@ public class MainController extends Application {
 
     private synchronized void initGroupsDataServerBuffer() {
         groupsTable.setItems(groupsData);
+        writeStudentTable.setItems(writeGroupsData);
         groupsData.clear();
         for (Group g : connServer.getGroupsList())
             groupsData.add(g);
         groupsTable.refresh();
     }
 
+    private void searchWriteGroup() {
+        writeGroupsData.clear();
+        int subjectId = 0;
+        for (Subject s : subjectsData)
+            if (s.getName().equals(writeStudentSubjectMenuButton.getText()))
+                subjectId = s.getId();
+
+        for (Group g : groupsData)
+            if (g.getLevel().equals(writeStudentLevelMenuButton.getText()) && Integer.parseInt(g.getSubjectId()) == subjectId)
+                writeGroupsData.add(g);
+    }
+
     private synchronized void initLessonsDataServerBuffer() {
         lessonsTable.setItems(lessonsData);
+        lessonsUserTable.setItems(lessonsUserData);
+
         lessonsData.clear();
+        lessonsUserData.clear();
+
         for (Lesson l : connServer.getLessonsList())
             lessonsData.add(l);
+
         lessonsTable.refresh();
+        lessonsUserTable.refresh();
     }
 
     private synchronized void initStudentsDataServerBuffer() {
@@ -3096,15 +3233,51 @@ public class MainController extends Application {
         studentsData.clear();
         for (Student st : connServer.getStudentsList())
             studentsData.add(st);
+
+        XYChart.Series series1 = new XYChart.Series();
+        for (Group g : groupsData) {
+            int popularity = 0;
+            for (Student s : studentsData)
+                if (Integer.parseInt(s.getGroupId()) == g.getId())
+                    popularity++;
+            series1.getData().add(new XYChart.Data(String.valueOf(g.getId()), popularity));
+        }
+
+        barChart.getData().addAll(series1);
+
         studentsTable.refresh();
     }
 
     private synchronized void initSubjectsDataServerBuffer() {
         subjectsTable.setItems(subjectsData);
+        pieChart.setData(pieChartData);
         subjectsData.clear();
         for (Subject sb : connServer.getSubjectsList())
             subjectsData.add(sb);
         subjectsTable.refresh();
+
+        writeStudentSubjectMenuButton.getItems().clear();
+        for (Subject s : subjectsData) {
+            int popularity = 0;
+
+            for (Student st : studentsData)
+                for (Group g : groupsData)
+                    if (g.getId() == Integer.parseInt(st.getGroupId()))
+                        if (Integer.parseInt(g.getSubjectId()) == s.getId())
+                            popularity++;
+            if (popularity != 0)
+                pieChartData.add(new PieChart.Data(s.getName(), popularity));
+
+            MenuItem newItem = new MenuItem(s.getName());
+            writeStudentSubjectMenuButton.getItems().add(newItem);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    newItem.setOnAction(event -> writeStudentSubjectMenuButton.setText(newItem.getText()));
+                    newItem.fire();
+                }
+            });
+        }
     }
 
     private synchronized void initTeachersDataServerBuffer() {
@@ -3115,6 +3288,46 @@ public class MainController extends Application {
         teachersTable.refresh();
     }
 
+    private void writeInStudent(int groupId) {
+        System.out.println("addStudent");
+        boolean result = true;
+
+        if (!writeNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = false;
+        if (!writeSurnameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+            result = false;
+        if (!writePatronymicTextField.getText().trim().matches("[а-яА-Я]{2,30}"))
+            result = false;
+        if (!writeEmailTextField.getText().trim().matches("(?:[a-z0-9!_-]+(?:\\.[a-z0-9!_-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+))") && !writeEmailTextField.getText().equals(""))
+            result = false;
+        if (!writePhoneTextField.getText().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") && !writePhoneTextField.getText().equals(""))
+            result = false;
+
+
+        if (result) {
+            System.out.println("Good");
+            Student toAdd = new Student();
+
+            toAdd.setName(writeNameTextField.getText().trim());
+            toAdd.setSurname(writeSurnameTextField.getText().trim());
+            toAdd.setPatronymic(writePatronymicTextField.getText().trim());
+            toAdd.setGroupId(String.valueOf(groupId));
+            toAdd.setEmail(writeEmailTextField.getText().trim());
+            toAdd.setPhone(writePhoneTextField.getText().trim());
+
+            System.out.println(toAdd);
+            connServer.sendString("addStudent|" + toAdd.toString());
+            new Thread() {
+                @Override
+                public void run() {
+                    initDataFromServer();
+                    System.out.println("added");
+                }
+            }.start();
+        } else {
+            System.out.println("Not good");
+        }
+    }
 
     private void addButtonsToTable() {
         maritalStatusColumn = new TableColumn("Marital Status");
@@ -3125,6 +3338,7 @@ public class MainController extends Application {
         deleteStudentColumn = new TableColumn("");
         deleteTeacherColumn = new TableColumn("");
         deleteSubjectColumn = new TableColumn("");
+        writeStudentColumn = new TableColumn("");
 
         maritalStatusColumn.setMinWidth(180);
         disabilityColumn.setMinWidth(180);
@@ -3139,6 +3353,8 @@ public class MainController extends Application {
         deleteTeacherColumn.setMinWidth(23);
         deleteSubjectColumn.setMaxWidth(23);
         deleteSubjectColumn.setMinWidth(23);
+        writeStudentColumn.setMaxWidth(90);
+        writeStudentColumn.setMinWidth(90);
 
         maritalStatusColumn.setResizable(false);
         disabilityColumn.setResizable(false);
@@ -3148,6 +3364,7 @@ public class MainController extends Application {
         deleteStudentColumn.setResizable(false);
         deleteTeacherColumn.setResizable(false);
         deleteSubjectColumn.setResizable(false);
+        writeStudentColumn.setResizable(false);
 
         Callback<TableColumn<Client, Void>, TableCell<Client, Void>> cellFactory1 = new Callback<>() {
             @Override
@@ -3650,6 +3867,32 @@ public class MainController extends Application {
                 };
             }
         };
+        Callback<TableColumn<Group, Void>, TableCell<Group, Void>> cellFactoryWrite = new Callback<>() {
+            @Override
+            public TableCell<Group, Void> call(TableColumn<Group, Void> param) {
+
+                return new TableCell<>() {
+                    private Button btn =
+                            new Button("Записаться");
+
+                    {
+                        btn.setOnAction(event -> writeInStudent(getTableView().getItems().get(getIndex()).getId()));
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+
 
         maritalStatusColumn.setCellFactory(cellFactory1);
         disabilityColumn.setCellFactory(cellFactory2);
@@ -3660,12 +3903,14 @@ public class MainController extends Application {
         deleteStudentColumn.setCellFactory(cellFactoryDeleteStudent);
         deleteTeacherColumn.setCellFactory(cellFactoryDeleteTeacher);
         deleteSubjectColumn.setCellFactory(cellFactoryDeleteSubject);
+        writeStudentColumn.setCellFactory(cellFactoryWrite);
 
         lessonsTable.getColumns().add(0, deleteLessonColumn);
         groupsTable.getColumns().add(0, deleteGroupColumn);
         studentsTable.getColumns().add(0, deleteStudentColumn);
         teachersTable.getColumns().add(0, deleteTeacherColumn);
         subjectsTable.getColumns().add(0, deleteSubjectColumn);
+        writeStudentTable.getColumns().add(0, writeStudentColumn);
 
 //        clientsTable.getColumns().add(18, maritalStatusColumn);
 //        clientsTable.getColumns().add(18, disabilityColumn);
@@ -3784,6 +4029,67 @@ public class MainController extends Application {
                 case "Время":
                     while (i.hasNext()) {
                         if (!i.next().getTime().equals(searchFieldLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void searchUserLesson() {
+        initUsersDataServerBuffer();
+        lessonsUserData.clear();
+
+        for (Lesson l : connServer.getLessonsList())
+            lessonsUserData.add(l);
+
+        if (!searchFieldUserLesson.getText().equals("")) {
+            Iterator<Lesson> i = lessonsUserData.iterator();
+            switch (criteriaButtonUserLesson.getText()) {
+                case "ID студента":
+                    int studentId = Integer.parseInt(searchFieldUserLesson.getText());
+                    String groupId = "";
+                    for (Student s : studentsData)
+                        if (s.getId() == studentId)
+                            groupId = s.getGroupId();
+                    while (i.hasNext()) {
+                        if (!i.next().getGroupId().equals(groupId)) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "ID группы":
+                    while (i.hasNext()) {
+                        if (!i.next().getGroupId().equals(searchFieldUserLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "ID учителя":
+                    while (i.hasNext()) {
+                        if (!i.next().getTeacherId().equals(searchFieldUserLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Аудитория":
+                    while (i.hasNext()) {
+                        if (!i.next().getCabinet().equals(searchFieldUserLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Дата":
+                    while (i.hasNext()) {
+                        if (!i.next().getDate().equals(searchFieldUserLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
+                case "Время":
+                    while (i.hasNext()) {
+                        if (!i.next().getTime().equals(searchFieldUserLesson.getText())) {
                             i.remove();
                         }
                     }
@@ -4193,9 +4499,9 @@ public class MainController extends Application {
 
     private boolean isSubject(String subjectId) {
         for (Subject s : subjectsData)
-            if(s.getId() == Integer.parseInt(subjectId))
+            if (s.getId() == Integer.parseInt(subjectId))
                 return true;
-            return false;
+        return false;
     }
 
     private void addGroup() {
@@ -4349,6 +4655,14 @@ public class MainController extends Application {
                     System.out.println("added");
                 }
             }.start();
+
+            writeStudentSubjectMenuButton.getItems().clear();
+            for (Subject s : subjectsData) {
+                MenuItem newItem = new MenuItem(s.getName());
+                newItem.setOnAction(event -> writeStudentSubjectMenuButton.setText(newItem.getText()));
+                writeStudentSubjectMenuButton.getItems().add(newItem);
+                newItem.fire();
+            }
         } else {
             System.out.println("Not good");
         }
