@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -27,6 +28,7 @@ import sample.enums.MaritalStatus;
 import sample.enums.Retiree;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -75,6 +77,24 @@ public class MainController extends Application {
     private TableView<Group> writeStudentTable;
     @FXML
     private TableColumn<Group, Integer> writeStudentTableGroupIdColumn;
+
+    @FXML
+    private Label writeWarning;
+
+    public Label englishText;
+    public ImageView englishImage;
+    public Label chineseText;
+    public ImageView chineseImage;
+    public Label spanishText;
+    public ImageView spanishImage;
+    public Label polishText;
+    public ImageView polishImage;
+    public Label deutschText;
+    public ImageView deutschImage;
+    public Label turkishText;
+    public ImageView turkishImage;
+    public Label czechText;
+    public ImageView czechImage;
 
 
     @FXML
@@ -877,7 +897,7 @@ public class MainController extends Application {
     @FXML
     void initialize() throws SQLException {
         start = Instant.now();
-        primaryAnchorPane.getStylesheets().add("CSS/DarkTheme.css");
+        primaryAnchorPane.getStylesheets().add("DarkTheme.css");
         /*connDB =
                 new DatabaseConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true" +
                         "&useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow", "root", "root");*/
@@ -1717,7 +1737,7 @@ public class MainController extends Application {
 
                 if (connServer.exists()) {
                     loginWarning.setStyle("-fx-text-fill: #7f8e55");
-                    loginWarning.setText("Connection established.");
+                    loginWarning.setText("Соединение восстановлено.");
                 } else {
                     loginWarning.setStyle("-fx-text-fill: #d85751");
                     loginWarning.setText("No connection.");
@@ -2153,6 +2173,9 @@ public class MainController extends Application {
             setTheme("Dark");
         });
         themeItem_Light.setDisable(false);
+
+
+
 
         resetSearchButton.getStyleClass().add("resetSearchButton");
         resetButtonLessons.getStyleClass().add("resetSearchButton");
@@ -3242,10 +3265,29 @@ public class MainController extends Application {
                     popularity++;
             series1.getData().add(new XYChart.Data(String.valueOf(g.getId()), popularity));
         }
+        refreshBarChart(series1);
 
-        barChart.getData().addAll(series1);
 
         studentsTable.refresh();
+    }
+
+    private synchronized void refreshBarChart(XYChart.Series series) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                barChart.getData().clear();
+                barChart.getData().addAll(series);
+            }
+        });
+    }
+
+    private synchronized void addLanguageInPie(String lang, int pplrty) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                pieChartData.add(new PieChart.Data(lang, pplrty));
+            }
+        });
     }
 
     private synchronized void initSubjectsDataServerBuffer() {
@@ -3255,7 +3297,8 @@ public class MainController extends Application {
         for (Subject sb : connServer.getSubjectsList())
             subjectsData.add(sb);
         subjectsTable.refresh();
-
+        englishText.setText("string\nstring\nstring\nstring\n");
+        pieChartData.clear();
         writeStudentSubjectMenuButton.getItems().clear();
         for (Subject s : subjectsData) {
             int popularity = 0;
@@ -3266,7 +3309,7 @@ public class MainController extends Application {
                         if (Integer.parseInt(g.getSubjectId()) == s.getId())
                             popularity++;
             if (popularity != 0)
-                pieChartData.add(new PieChart.Data(s.getName(), popularity));
+                addLanguageInPie(s.getName(), popularity);
 
             MenuItem newItem = new MenuItem(s.getName());
             writeStudentSubjectMenuButton.getItems().add(newItem);
@@ -3291,21 +3334,33 @@ public class MainController extends Application {
     private void writeInStudent(int groupId) {
         System.out.println("addStudent");
         boolean result = true;
-
-        if (!writeNameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+        String message = "";
+        writeWarning.setStyle("-fx-text-fill: #d85751");
+        if (!writeNameTextField.getText().trim().matches("[а-яА-Я]{2,20}")) {
+            message += "Некорректное имя. ";
             result = false;
-        if (!writeSurnameTextField.getText().trim().matches("[а-яА-Я]{2,20}"))
+        }
+        if (!writeSurnameTextField.getText().trim().matches("[а-яА-Я]{2,20}")){
+            message += "Некорректная фамилия. ";
             result = false;
-        if (!writePatronymicTextField.getText().trim().matches("[а-яА-Я]{2,30}"))
+        }
+        if (!writePatronymicTextField.getText().trim().matches("[а-яА-Я]{2,30}")){
+            message += "Некорректное отчество.\n";
             result = false;
-        if (!writeEmailTextField.getText().trim().matches("(?:[a-z0-9!_-]+(?:\\.[a-z0-9!_-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+))") && !writeEmailTextField.getText().equals(""))
+        }
+        if (!writeEmailTextField.getText().trim().matches("(?:[a-z0-9!_-]+(?:\\.[a-z0-9!_-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+))") && !writeEmailTextField.getText().equals("")){
+            message += "Некорректный адрес эл. почты. ";
             result = false;
-        if (!writePhoneTextField.getText().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") && !writePhoneTextField.getText().equals(""))
+        }
+        if (!writePhoneTextField.getText().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") && !writePhoneTextField.getText().equals("")){
+            message += "Некорректный номер телефона. ";
             result = false;
-
+        }
 
         if (result) {
             System.out.println("Good");
+            writeWarning.setStyle("-fx-text-fill: #7f8e55");
+            writeWarning.setText("Студент записан");
             Student toAdd = new Student();
 
             toAdd.setName(writeNameTextField.getText().trim());
@@ -3326,6 +3381,7 @@ public class MainController extends Application {
             }.start();
         } else {
             System.out.println("Not good");
+            writeWarning.setText(message);
         }
     }
 
@@ -4475,7 +4531,6 @@ public class MainController extends Application {
         if (result) {
             System.out.println("Good");
             Lesson toAdd = new Lesson();
-            //TODO: добавить сеттеры в функции добавления
 
             toAdd.setTeacherId(addLessonTeacherIdTextField.getText().trim());
             toAdd.setGroupId(addLessonGroupIdTextField.getText().trim());
@@ -4781,5 +4836,5 @@ public class MainController extends Application {
         }
     }
 
-    // TODO:
+    // TODO: инфа про языки
 }
