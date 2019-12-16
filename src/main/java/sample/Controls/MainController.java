@@ -808,8 +808,6 @@ public class MainController extends Application {
     @FXML
     private AnchorPane menuPaneUserTimeTable;
     @FXML
-    private AnchorPane menuPaneUserNotifications;
-    @FXML
     private AnchorPane menuPaneUserGraphs;
     @FXML
     private AnchorPane accountSettingsPane;
@@ -859,8 +857,6 @@ public class MainController extends Application {
     private Button menuUserSubjectsButton;
     @FXML
     private Button menuUserTimeTableButton;
-    @FXML
-    private Button menuUserNotificationsButton;
     @FXML
     private Button menuUserGraphsButton;
     @FXML
@@ -1403,25 +1399,23 @@ public class MainController extends Application {
                         if (currentUser.getAccessMode() == 1)
                             menuAdminStudentsButton.fire();
                         else
-                            menuUserNotificationsButton.fire();
+                            menuUserGraphsButton.fire();
                         break;
                     case DIGIT5:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminTeachersButton.fire();
                         else
-                            menuUserGraphsButton.fire();
+                            menuUserSettingsButton.fire();
                         break;
                     case DIGIT6:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminSubjectsButton.fire();
                         else
-                            menuUserSettingsButton.fire();
+                            menuUserInfoButton.fire();
                         break;
                     case DIGIT7:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminSettingsButton.fire();
-                        else
-                            menuUserInfoButton.fire();
                         break;
                     case DIGIT8:
                         if (currentUser.getAccessMode() == 1)
@@ -1546,7 +1540,6 @@ public class MainController extends Application {
         menuUserWriteInButton.setOnAction(actionEvent -> selectMenuItem(menuUserWriteInButton, menuPaneUserWriteIn));
         menuUserSubjectsButton.setOnAction(actionEvent -> selectMenuItem(menuUserSubjectsButton, menuPaneUserSubjects));
         menuUserTimeTableButton.setOnAction(actionEvent -> selectMenuItem(menuUserTimeTableButton, menuPaneUserTimeTable));
-        menuUserNotificationsButton.setOnAction(actionEvent -> selectMenuItem(menuUserNotificationsButton, menuPaneUserNotifications));
         menuUserGraphsButton.setOnAction(actionEvent -> selectMenuItem(menuUserGraphsButton, menuPaneUserGraphs));
         menuUserSettingsButton.setOnAction(actionEvent -> selectMenuItem(menuUserSettingsButton, menuPaneSettings));
 
@@ -2471,11 +2464,11 @@ public class MainController extends Application {
                 loginButton.setText("Войти");
                 menuAdminUsersButton.setText(" 1 Управление пользователями");
                 menuAdminSettingsButton.setText(" 7 Аккаунт");
-                menuUserSettingsButton.setText(" 6 Аккаунт");
+                menuUserSettingsButton.setText(" 5 Аккаунт");
                 menuAdminInfoButton.setText(" 8 Руководство пользователя");
-                menuUserInfoButton.setText(" 7 Руководство пользователя");
+                menuUserInfoButton.setText(" 6 Руководство пользователя");
                 logoutButtonAdmin.setText(" 9 Выйти");
-                logoutButtonUser.setText(" 8 Выйти");
+                logoutButtonUser.setText(" 7 Выйти");
 
                 menuPane1_DBLabel.setText("Соединение");
                 searchButton.setText("Поиск");
@@ -2676,7 +2669,6 @@ public class MainController extends Application {
         menuUserWriteInButton.setStyle("");
         menuUserSubjectsButton.setStyle("");
         menuUserTimeTableButton.setStyle("");
-        menuUserNotificationsButton.setStyle("");
         menuUserGraphsButton.setStyle("");
         menuUserSettingsButton.setStyle("");
         menuUserInfoButton.setStyle("");
@@ -2762,7 +2754,6 @@ public class MainController extends Application {
         menuPaneUserWriteIn.setVisible(false);
         menuPaneUserSubjects.setVisible(false);
         menuPaneUserTimeTable.setVisible(false);
-        menuPaneUserNotifications.setVisible(false);
         menuPaneUserGraphs.setVisible(false);
         loginPane.setVisible(false);
     }
@@ -3297,7 +3288,6 @@ public class MainController extends Application {
         for (Subject sb : connServer.getSubjectsList())
             subjectsData.add(sb);
         subjectsTable.refresh();
-        englishText.setText("string\nstring\nstring\nstring\n");
         pieChartData.clear();
         writeStudentSubjectMenuButton.getItems().clear();
         for (Subject s : subjectsData) {

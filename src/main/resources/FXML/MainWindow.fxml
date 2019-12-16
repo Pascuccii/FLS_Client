@@ -23,7 +23,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="primaryAnchorPane" prefHeight="500.0" prefWidth="800.0" stylesheets="@../CSS/DarkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controls.MainController">
    <children>
@@ -158,7 +157,7 @@
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
                               </Button>
-                              <Button fx:id="menuUserNotificationsButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 4 Контактная информация">
+                              <Button fx:id="menuUserGraphsButton" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 4 Инфографика">
                                  <padding>
                                     <Insets bottom="8.0" left="4.0" top="8.0" />
                                  </padding>
@@ -166,15 +165,7 @@
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
                               </Button>
-                              <Button fx:id="menuUserGraphsButton" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 5 Инфографика">
-                                 <padding>
-                                    <Insets bottom="8.0" left="4.0" top="8.0" />
-                                 </padding>
-                                 <FlowPane.margin>
-                                    <Insets left="2.0" right="2.0" />
-                                 </FlowPane.margin>
-                              </Button>
-                              <Button fx:id="menuUserSettingsButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 6 Аккаунт">
+                              <Button fx:id="menuUserSettingsButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 5 Аккаунт">
                                  <FlowPane.margin>
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
@@ -182,7 +173,7 @@
                                     <Insets bottom="8.0" left="4.0" top="8.0" />
                                  </padding>
                               </Button>
-                              <Button fx:id="menuUserInfoButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 7 Руководство пользователя">
+                              <Button fx:id="menuUserInfoButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 6 Руководство пользователя">
                                  <FlowPane.margin>
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
@@ -582,7 +573,7 @@
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов: ">
+                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов:  110">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -592,7 +583,7 @@
                                                       <Image url="@../assets/United-Kingdom.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label fx:id="englishText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Англи́йский язы́к (самоназвание — English, the English language) — язык англо-фризской подгруппы западной группы германской ветви индоевропейской языковой семьи. Английский язык — важнейший международный язык[4], что является следствием колониальной политики Британской империи в XIX веке и мирового влияния США в XX—XXI веках. Существует значительное разнообразие диалектов и говоров английского языка.Английский язык возник в раннем Средневековье как язык части германских племён, вторгшихся в Британию. Он стал родным для большинства населения Великобритании, а с территориальным ростом Британской империи распространился в Азию, Африку, Северную Америку и Австралию. После обретения независимости британскими колониями английский язык остался либо родным языком большей части населения (США, Канада, Австралия, Новая Зеландия), либо одним из официальных языков (Индия, Нигерия). Английский язык изучают в образовательных учреждениях многих стран как иностранный." textAlignment="JUSTIFY" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0">
+                                                <Label fx:id="englishText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Англи́йский язы́к (самоназвание — English, the English language) — язык англо-фризской подгруппы западной группы германской ветви индоевропейской языковой семьи. Английский язык — важнейший международный язык, что является следствием колониальной политики Британской империи в XIX веке и мирового влияния США в XX—XXI веках. Существует значительное разнообразие диалектов и говоров английского языка.Английский язык возник в раннем Средневековье как язык части германских племён, вторгшихся в Британию. Он стал родным для большинства населения Великобритании, а с территориальным ростом Британской империи распространился в Азию, Африку, Северную Америку и Австралию. После обретения независимости британскими колониями английский язык остался либо родным языком большей части населения (США, Канада, Австралия, Новая Зеландия), либо одним из официальных языков (Индия, Нигерия). Английский язык изучают в образовательных учреждениях многих стран как иностранный." textAlignment="JUSTIFY" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0">
                                                    <font>
                                                       <Font size="9.0" />
                                                    </font></Label>
@@ -608,7 +599,7 @@
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов: ">
+                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов:  350">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -618,7 +609,7 @@
                                                       <Image url="@../assets/China.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label fx:id="chineseText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Text" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
+                                                <Label fx:id="chineseText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Кита́йский язы́к (китайские, синитские, синитические языки; устная речь: пиньинь: hànyǔ, палл.: ханьюй; письменная речь: кит., пиньинь: zhōngwén, палл.: чжунвэнь) — язык или языковая ветвь сино-тибетской языковой семьи, состоящая из разновидностей, взаимопонятных в различной степени. Китайский язык является наиболее распространённым современным языком с общим числом говорящих более 1,3 млрд человек.Китайский язык является одной из двух ветвей сино-тибетской семьи языков. Первоначально он был языком основной этнической группы Китая — народа хань. В своей стандартной форме китайский является официальным языком КНР и Тайваня, а также одним из шести официальных и рабочих языков ООН.Китайский язык представляет собой совокупность весьма сильно различающихся диалектов, и потому рассматривается большинством языковедов как самостоятельная языковая ветвь, состоящая из отдельных, хотя и родственных между собой, языковых и/или диалектных групп." textAlignment="JUSTIFY" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
                                              </children></AnchorPane>
                                        </content>
                                     </Tab>
@@ -631,7 +622,7 @@
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов: ">
+                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов:  100">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -641,7 +632,7 @@
                                                       <Image url="@../assets/Spain.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label fx:id="spanishText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Text" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
+                                                <Label fx:id="spanishText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Испа́нский, или касти́льский язык (исп. español, castellano) — плюрицентрический иберо-романский язык, зародившийся в средневековом королевстве Кастилия, которое включало в себя современную территорию провинции Бургос и автономных областей Ла-Риоха и Кантабрия, и широко распространившийся в других регионах мира (в первую очередь в Южной и Центральной Америке) в эпоху Великих географических открытий. Относится к индоевропейской семье языков (романская группа, иберо-романская подгруппа). Письменность на основе латинского алфавита. Второй по распространённости родной язык в мире (после китайского) с 470 миллионами носителей и самый распространённый романский язык. По разным оценкам, во всём мире на испанском языке могут изъясняться до 548 миллионов человек (включая тех людей, для которых испанский является вторым языком, и тех, кто изучает его как иностранный — 20 миллионов человек). Крупнейшей по населению испаноязычной страной мира является Мексика (свыше 120 миллионов жителей), по территории — Аргентина. 9/10 носителей испанского языка в настоящее время живут в Западном полушарии." textAlignment="JUSTIFY" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
                                              </children></AnchorPane>
                                        </content>
                                     </Tab>
@@ -654,7 +645,7 @@
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов: ">
+                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов:  60">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -664,7 +655,7 @@
                                                       <Image url="@../assets/Poland.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label fx:id="polishText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Text" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
+                                                <Label fx:id="polishText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="По́льский язы́к (język polski, polszczyzna) — язык поляков, относящийся к лехитской подгруппе западнославянской группы славянской ветви индоевропейской языковой семьи. Является официальным языком Польши и одним из 24 официальных языков Европейского союза. Помимо Польши, распространён также в других странах Европы (Германия, Франция, Великобритания, Литва, Чехия, Россия, Белоруссия, Украина, Словакия, Латвия и другие), в странах Америки (США, Бразилия, Канада и другие) и в Австралии. В ряде европейских стран с компактным расселением поляков польский получил статус регионального языка.Польский язык — один из крупнейших славянских языков и самый крупный западнославянский язык по числу носителей и занимаемому им ареалу. Общее число говорящих на польском языке — около 40 млн чел. (2007, оценочно), в том числе 36 млн 410 тыс. в Польше (2011, перепись)." textAlignment="JUSTIFY" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
                                              </children></AnchorPane>
                                        </content>
                                     </Tab>
@@ -677,7 +668,7 @@
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов: ">
+                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов:  200">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -687,7 +678,7 @@
                                                       <Image url="@../assets/Germany.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label fx:id="deutschText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Text" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
+                                                <Label fx:id="deutschText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Неме́цкий язык (нем. Deutsch (инф.), произносится: [ˈdɔʏ̯tʃ]; deutsche Sprache, произносится: [ˈdɔʏ̯tʃə ˈʃpʁaːχə]) — язык немцев, австрийцев, лихтенштейнцев и большей части швейцарцев, официальный язык Германии, Австрии, Лихтенштейна, один из официальных языков Швейцарии, Люксембурга и Бельгии. Является одним из самых распространённых языков в мире после китайского, арабского, хинди, английского, испанского, бенгальского, португальского, французского, русского и японского. Немецкий язык занимает третье место (после английского и русского) по использованию в интернете. Является самым распространённым языком в Европе (более 90 миллионов носителей). Также немецкий — один из официальных и рабочих языков Европейского союза и ряда других международных организаций.Относится к западной подгруппе германских языков индоевропейской семьи. Письменность на основе латинского алфавита, дополненного тремя графемами, обозначающими умлауты (ä, ö, ü), и лигатурой эсцет (ß). Древнейшие памятники письменности относятся к VIII веку." textAlignment="JUSTIFY" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
                                              </children></AnchorPane>
                                        </content>
                                     </Tab>
@@ -700,7 +691,7 @@
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов: ">
+                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов:  230">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -710,7 +701,7 @@
                                                       <Image url="@../assets/Turkey.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label fx:id="turkishText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Text" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
+                                                <Label fx:id="turkishText" alignment="TOP_CENTER" layoutX="115.0" layoutY="150.0" styleClass="langText" text="Туре́цкий язы́к (самоназвание: Türk dili (кратко: Türkçe [ˈt̪yɾktʃe] Информация о файле слушать), рус. историч. турской языкъ) — официальный язык Турции, входящий в тюркскую языковую семью. В качестве альтернативного названия в тюркологии используется также Türkiye Türkçesi («турецкий тюркский»).Современный турецкий язык относится к юго-западной (или западно-огузской) подгруппе тюркских языков. Языками, наиболее близкими к турецкому в лексическом, фонетическом и синтаксическом отношении, являются прежде всего балкано-тюркский язык гагаузов, распространённый на территории современных Молдавии, Румынии и Болгарии (собственно гагаузский и балкано-гагаузский), и южный диалект крымскотатарского языка. Чуть далее отстоит от литературного турецкого азербайджанский (сохранивший немало архаизмов и персидских заимствований и образующий с восточно-анатолийскими диалектами турецкого языка диалектный континуум) и, ввиду ряда фонетических и некоторых грамматических отличий, туркменский язык." textAlignment="JUSTIFY" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
                                              </children></AnchorPane>
                                        </content>
                                     </Tab>
@@ -723,7 +714,7 @@
                                                       <Font size="28.0" />
                                                    </font>
                                                 </Label>
-                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов: ">
+                                                <Label layoutX="140.0" layoutY="65.0" prefHeight="34.0" prefWidth="171.0" styleClass="hoursQuantity" text="Кол-во часов:  90">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -733,7 +724,7 @@
                                                       <Image url="@../assets/Czech-Republic.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label fx:id="czechText" alignment="TOP_CENTER" layoutX="23.0" layoutY="116.0" prefHeight="298.0" prefWidth="532.0" styleClass="langText" text="Text" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
+                                                <Label fx:id="czechText" alignment="TOP_CENTER" layoutX="23.0" layoutY="116.0" prefHeight="298.0" prefWidth="532.0" styleClass="langText" text="Че́шский язы́к (самоназвания: čeština, český jazyk) — язык чехов, один из славянских языков. Относится к западнославянской группе, наиболее близок словацкому языку, с которым объединяется в чешско-словацкую подгруппу. Распространён преимущественно в Чехии, небольшие группы носителей чешского живут также в Словакии, Австрии, России, Хорватии, в ряде стран Западной Европы, в США, Канаде, Аргентине, Австралии и других странах. Является официальным языком Чешской Республики (úřední jazyk) и одним из 24 официальных языков Европейского союза (с 2004 года). В ряде государств Центральной и Восточной Европы, в которых чехи, как правило, расселены компактно (Австрия, Босния и Герцеговина, Хорватия и Словакия), для чешского предусмотрена возможность получения статуса регионального языка.Общее число носителей чешского языка в мире превышает 10,62 млн чел., из них в Чехии — 10,40 млн человек (2012)." textAlignment="JUSTIFY" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="115.0" />
                                              </children></AnchorPane>
                                        </content>
                                     </Tab>
@@ -768,11 +759,6 @@
                                     <MenuItem fx:id="criteriaUserLessonTime" mnemonicParsing="false" text="Время" />
                                  </items>
                               </MenuButton>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="menuPaneUserNotifications" layoutX="30.0" layoutY="30.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Text layoutX="174.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Контактная информацмя" wrappingWidth="150.39999999999986" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="menuPaneUserGraphs" layoutX="40.0" layoutY="40.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
