@@ -28,7 +28,6 @@ import sample.enums.MaritalStatus;
 import sample.enums.Retiree;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -2329,7 +2328,7 @@ public class MainController extends Application {
             }
         }.start();
 
-
+        pieChart.setData(pieChartData);
         loadLastConfig();
         loginBegin();
     } //INITIALIZE
@@ -3276,20 +3275,29 @@ public class MainController extends Application {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                for(PieChart.Data p : pieChartData)
+                    System.out.println(p.getName());
                 pieChartData.add(new PieChart.Data(lang, pplrty));
+            }
+        });
+    }
+    private synchronized void clearPieChartData() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                pieChartData.clear();
             }
         });
     }
 
     private synchronized void initSubjectsDataServerBuffer() {
         subjectsTable.setItems(subjectsData);
-        pieChart.setData(pieChartData);
         subjectsData.clear();
         for (Subject sb : connServer.getSubjectsList())
             subjectsData.add(sb);
         subjectsTable.refresh();
-        pieChartData.clear();
         writeStudentSubjectMenuButton.getItems().clear();
+        clearPieChartData();
         for (Subject s : subjectsData) {
             int popularity = 0;
 
