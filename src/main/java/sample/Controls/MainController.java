@@ -3352,6 +3352,7 @@ public class MainController extends Application {
         boolean result = true;
         String message = "";
         writeWarning.setStyle("-fx-text-fill: #d85751");
+
         if (!writeNameTextField.getText().trim().matches("[а-яА-Я]{2,20}")) {
             message += "Некорректное имя. ";
             result = false;
@@ -3370,6 +3371,10 @@ public class MainController extends Application {
         }
         if (!writePhoneTextField.getText().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") && !writePhoneTextField.getText().equals("")) {
             message += "Некорректный номер телефона. ";
+            result = false;
+        }
+        if (!isFullnameUnique(writeNameTextField.getText().trim(),writeSurnameTextField.getText().trim(),writePatronymicTextField.getText().trim())) {
+            message += "Неуникальное ФИО.";
             result = false;
         }
 
@@ -4817,7 +4822,7 @@ public class MainController extends Application {
     }
 
     private boolean isFullnameUnique(String name, String surname, String patro) {
-        for (Client c : clientsData) {
+        for (Student c : studentsData) {
             if (c.getName().equals(name) && c.getSurname().equals(surname) && c.getPatronymic().equals(patro)) {
                 return false;
             }
