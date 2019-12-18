@@ -34,10 +34,14 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Base64;
 import java.util.Iterator;
 
 import static java.lang.Thread.sleep;
+
+
+//searchFieldUserLesson
 
 @SuppressWarnings("ALL")
 public class MainController extends Application {
@@ -90,7 +94,11 @@ public class MainController extends Application {
     @FXML
     private TableColumn<Group, Integer> writeStudentTableGroupIdColumn;
     @FXML
+    private Label reportInfoLabel;
+    @FXML
     private Label writeWarning;
+    @FXML
+    private Label createReportWarning;
     @FXML
     private TextField portTextField;
     @FXML
@@ -194,6 +202,8 @@ public class MainController extends Application {
     @FXML
     private Button exitButton;
     @FXML
+    private Button createReportButton;
+    @FXML
     private AnchorPane workPane;
     @FXML
     private AnchorPane leftAnchorPane;
@@ -225,8 +235,6 @@ public class MainController extends Application {
     private Label currentUserLabelUser;
     @FXML
     private Button menuUserSettingsButton;
-    @FXML
-    private Button menuUserInfoButton;
     @FXML
     private Button logoutButtonUser;
     @FXML
@@ -1410,8 +1418,6 @@ public class MainController extends Application {
                     case DIGIT6:
                         if (currentUser.getAccessMode() == 1)
                             menuAdminSubjectsButton.fire();
-                        else
-                            menuUserInfoButton.fire();
                         break;
                     case DIGIT7:
                         if (currentUser.getAccessMode() == 1)
@@ -1543,7 +1549,6 @@ public class MainController extends Application {
         menuUserGraphsButton.setOnAction(actionEvent -> selectMenuItem(menuUserGraphsButton, menuPaneUserGraphs));
         menuUserSettingsButton.setOnAction(actionEvent -> selectMenuItem(menuUserSettingsButton, menuPaneSettings));
 
-        menuUserInfoButton.setOnAction(actionEvent -> selectMenuItem(menuUserInfoButton, menuPaneInfo));
         //ADMIN
         //1
         menuAdminUsersButton.setOnAction(actionEvent -> selectMenuItem(menuAdminUsersButton, menuPaneUsers));
@@ -1597,6 +1602,11 @@ public class MainController extends Application {
             if (keyEvent.getCode() == KeyCode.TAB) {
                 passwordField.requestFocus();
                 passwordField.selectAll();
+            }
+        });
+        searchFieldUserLesson.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                searchButtonUserLesson.fire();
             }
         });
         passwordField.setOnKeyPressed(keyEvent -> {
@@ -1721,6 +1731,13 @@ public class MainController extends Application {
                 accountSettingsSaveButton.fire();
             }
         });
+
+        reportInfoLabel.setText("Содержание отчёта:\n" +
+                "1. Информация о дате, времени и авторе создания отчёта.\n" +
+                "2. Статистика загруженности преподавателей.\n" +
+                "3. Статистика заполненности групп школы.\n" +
+                "4. Статистика популярности языков в школе.\n" +
+                "5. Представление состояния данных из всех таблиц БД на момент формирования отчёта.\n");
 
         loginButton.setOnAction(actionEvent -> {
             System.out.println(serverIP);
@@ -2277,6 +2294,7 @@ public class MainController extends Application {
                 searchButtonSubject.fire();
         });
 
+        createReportButton.setOnAction(actionEvent -> createReport());
         searchButton.setOnAction(actionEvent -> searchUser());
         searchButtonLesson.setOnAction(actionEvent -> searchLesson());
         searchButtonUserLesson.setOnAction(actionEvent -> searchUserLesson());
@@ -2410,7 +2428,6 @@ public class MainController extends Application {
                 menuAdminSettingsButton.setText(" 3 Settings");
                 menuUserSettingsButton.setText(" 3 Settings");
                 menuAdminInfoButton.setText(" 4 Information");
-                menuUserInfoButton.setText(" 4 Information");
                 logoutButtonAdmin.setText(" 5 Log Out");
                 logoutButtonUser.setText(" 5 Log Out");
 
@@ -2466,10 +2483,9 @@ public class MainController extends Application {
                 menuAdminUsersButton.setText(" 1 Управление пользователями");
                 menuAdminSettingsButton.setText(" 7 Аккаунт");
                 menuUserSettingsButton.setText(" 5 Аккаунт");
-                menuAdminInfoButton.setText(" 8 Руководство пользователя");
-                menuUserInfoButton.setText(" 6 Руководство пользователя");
+                menuAdminInfoButton.setText(" 8 Создать отчёт");
                 logoutButtonAdmin.setText(" 9 Выйти");
-                logoutButtonUser.setText(" 7 Выйти");
+                logoutButtonUser.setText(" 6 Выйти");
 
                 menuPane1_DBLabel.setText("Соединение");
                 searchButton.setText("Поиск");
@@ -2672,7 +2688,6 @@ public class MainController extends Application {
         menuUserTimeTableButton.setStyle("");
         menuUserGraphsButton.setStyle("");
         menuUserSettingsButton.setStyle("");
-        menuUserInfoButton.setStyle("");
 
         setAllPanesInvisible();
         if (pane == menuPaneLessons) {
@@ -2726,7 +2741,7 @@ public class MainController extends Application {
             databaseSettingsPane.setDisable(false);
         } else {
             menuUser.setVisible(true);
-            menuUserInfoButton.fire();
+            menuUserSubjectsButton.fire();
             databaseSettingsPane.setDisable(true);
         }
         setTheme(currentUser.getTheme());
@@ -3232,7 +3247,7 @@ public class MainController extends Application {
     private synchronized void initLessonsDataServerBuffer() {
         lessonsTable.setItems(lessonsData);
         lessonsUserTable.setItems(lessonsUserData);
-
+        lessonsUserTable.setPlaceholder(new Label("По вашему запросу ничего не найдёно"));
         lessonsData.clear();
         lessonsUserData.clear();
 
@@ -4810,6 +4825,82 @@ public class MainController extends Application {
         return true;
     }
 
+    private void createReport() {
+        try {
+            String path = System.getProperty("user.home") + "\\Documents\\report.txt";
+            FileWriter resWriter = new FileWriter(new File(path), false);
+            String reportText = "Отчёт на момент " + getCurrentDateTime() + "\n" +
+                    "Создан администратором: " + currentUser.getUsername() + "\n";
+            reportText += "\n\n---Статистика заполненности групп---\n" +
+                    "|Группа|Кол-во студентов|\n";
+            for (Group g : groupsData) {
+                int popularity = 0;
+                for (Student s : studentsData)
+                    if (Integer.parseInt(s.getGroupId()) == g.getId())
+                        popularity++;
+                reportText += "|" + g.getId() + "|" + popularity + "|\n";
+            }
+            reportText += "\n\n---Статистика популярности языков---\n" +
+                    "|Язык|Кол-во изучающих его студентов|\n";
+            for (Subject s : subjectsData) {
+                int popularity = 0;
+                for (Student st : studentsData)
+                    for (Group g : groupsData)
+                        if (g.getId() == Integer.parseInt(st.getGroupId()))
+                            if (Integer.parseInt(g.getSubjectId()) == s.getId())
+                                popularity++;
+                reportText += "|" + s.getName() + "|" + popularity + "|\n";
+            }
+            reportText += "\n\n--Статистика загруженности учителей--\n" +
+                    "|Учитель|Кол-во занятий|\n";
+            for (Teacher tch : teachersData) {
+                int popularity = 0;
+                for (Lesson ls : lessonsData)
+                    if (Integer.parseInt(ls.getTeacherId()) == tch.getId())
+                        popularity++;
+                reportText += "|" + tch.getSurname() + "|" + popularity + "|\n";
+            }
+
+            reportText += "\n\n--------------Состояние данных в БД------------\n" +
+                    "\nРасписание занятий:\n" +
+                    "ID|Группа|Учитель|Аудитория|Дата|Время|\n";
+            for (Lesson ls : lessonsData)
+                reportText += ls.toString() + "\n";
+            reportText += "\nСписок студентов:\n" +
+                    "ID|Имя|Фамилия|Отчество|Группа|Эл.почта|Телефон|\n";
+            for (Student st : studentsData)
+                reportText += st.toString() + "\n";
+            reportText += "\nСписок учителей:\n" +
+                    "ID|Имя|Фамилия|Отчество|\n";
+            for (Teacher tch : teachersData)
+                reportText += tch.toString() + "\n";
+            reportText += "\nСписок языков:\n" +
+                    "ID|Название|Кол-во часов|\n";
+            for (Subject sb : subjectsData)
+                reportText += sb.toString() + "\n";
+            reportText += "\nСписок групп:\n" +
+                    "ID|Уровень|Язык|\n";
+            for (Group gr : groupsData)
+                reportText += gr.toString() + "\n";
+            resWriter.write(reportText);
+            resWriter.flush();
+            createReportWarning.setStyle("-fx-text-fill: #7f8e55");
+            createReportWarning.setText("Отчёт сформирован. Файл отчёта: " + path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getCurrentDateTime() {
+        ZonedDateTime zdt = ZonedDateTime.now();
+        String year = String.valueOf(zdt.getYear());
+        String month = String.valueOf(zdt.getMonthValue());
+        String day = String.valueOf(zdt.getDayOfMonth());
+        String hour = String.valueOf(zdt.getHour());
+        String minute = String.valueOf(zdt.getMinute());
+        String second = String.valueOf(zdt.getSecond());
+        return year + "/" + month + "/" + day + "-" + hour + ":" + minute + ":" + second;
+    }
 
     private synchronized void initDataFromServer() {
         if (!connServer.exists())
@@ -4854,5 +4945,5 @@ public class MainController extends Application {
         }
     }
 
-    // TODO: инфа про языки
+    // TODO:
 }

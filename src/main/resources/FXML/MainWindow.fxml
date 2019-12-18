@@ -43,7 +43,7 @@
               <items>
                 <AnchorPane fx:id="leftAnchorPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="210.0">
                      <children>
-                        <FlowPane fx:id="menuAdmin" layoutX="-12.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <FlowPane fx:id="menuAdmin" layoutX="-12.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label fx:id="currentUserLabelAdmin" alignment="CENTER" prefHeight="25.0" prefWidth="203.0" text="gleb" textAlignment="CENTER">
                                  <padding>
@@ -126,7 +126,7 @@
                            <padding>
                               <Insets top="5.0" />
                            </padding></FlowPane>
-                        <FlowPane fx:id="menuUser" layoutX="-2.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <FlowPane fx:id="menuUser" layoutX="-2.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label fx:id="currentUserLabelUser" alignment="CENTER" prefHeight="25.0" prefWidth="203.0" text="gleb">
                                  <padding>
@@ -166,14 +166,6 @@
                                  </FlowPane.margin>
                               </Button>
                               <Button fx:id="menuUserSettingsButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 5 Аккаунт">
-                                 <FlowPane.margin>
-                                    <Insets left="2.0" right="2.0" />
-                                 </FlowPane.margin>
-                                 <padding>
-                                    <Insets bottom="8.0" left="4.0" top="8.0" />
-                                 </padding>
-                              </Button>
-                              <Button fx:id="menuUserInfoButton" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="34.0" prefWidth="203.0" text=" 6 Руководство пользователя">
                                  <FlowPane.margin>
                                     <Insets left="2.0" right="2.0" />
                                  </FlowPane.margin>
@@ -554,9 +546,14 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="menuPaneInfo" layoutX="20.0" layoutY="20.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="menuPaneInfo" layoutX="20.0" layoutY="20.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label layoutX="196.0" layoutY="171.0" text="4" />
+                              <Label fx:id="reportInfoLabel" alignment="TOP_CENTER" layoutX="41.0" layoutY="79.0" prefHeight="238.0" prefWidth="490.0" text="Отчёт будет содержать информацию о дате и авторе его создания, данные всех таблиц на момент создания" wrapText="true">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font></Label>
+                              <Button fx:id="createReportButton" layoutX="217.0" layoutY="312.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="137.0" text="Создать отчёт" />
+                              <Label fx:id="createReportWarning" alignment="TOP_CENTER" layoutX="13.0" layoutY="349.0" prefHeight="18.0" prefWidth="538.0" textAlignment="CENTER" />
 
                                        </children>
                         </AnchorPane>
@@ -732,7 +729,7 @@
                               </TabPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="menuPaneUserTimeTable" layoutX="20.0" layoutY="20.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="menuPaneUserTimeTable" layoutX="20.0" layoutY="20.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <TableView fx:id="lessonsUserTable" editable="true" prefHeight="200.0" prefWidth="513.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="47.0">
                                  <columns>
