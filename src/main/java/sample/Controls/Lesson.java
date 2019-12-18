@@ -6,7 +6,17 @@ public class Lesson {
     private int id;
     private String groupId;
     private String teacherId;
+    private String teacherSurname;
     private String cabinet;
+
+    public String getTeacherSurname() {
+        return teacherSurname;
+    }
+
+    public void setTeacherSurname(String teacherSurname) {
+        this.teacherSurname = teacherSurname;
+    }
+
     private String date;
     private String time;
 

@@ -179,7 +179,6 @@ public class ServerConnection implements TCPConnectionListener {
         return inProcess;
     }
 
-
     public synchronized boolean exists() {
         return connection != null;
     }

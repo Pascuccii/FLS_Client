@@ -206,6 +206,10 @@
     -fx-background-color: #383838;
 }
 
+.writeFieldsPane {
+    -fx-background-color: #383838;
+    -fx-border-color: #B8B8B8;
+}
 .leftAnchorPane {
     -fx-background-color: #383838;
     -fx-border-color: #B8B8B8;

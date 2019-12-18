@@ -42,6 +42,20 @@ import static java.lang.Thread.sleep;
 @SuppressWarnings("ALL")
 public class MainController extends Application {
     private static String serverIP = "127.0.0.1";
+    public Label englishText;
+    public ImageView englishImage;
+    public Label chineseText;
+    public ImageView chineseImage;
+    public Label spanishText;
+    public ImageView spanishImage;
+    public Label polishText;
+    public ImageView polishImage;
+    public Label deutschText;
+    public ImageView deutschImage;
+    public Label turkishText;
+    public ImageView turkishImage;
+    public Label czechText;
+    public ImageView czechImage;
     private Instant start;
     private Instant stop;
     private double xOffset = 0;
@@ -71,31 +85,14 @@ public class MainController extends Application {
     private ObservableList<Subject> subjectsData = FXCollections.observableArrayList();
     private ObservableList<Teacher> teachersData = FXCollections.observableArrayList();
     private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-
     @FXML
     private TableView<Group> writeStudentTable;
     @FXML
     private TableColumn<Group, Integer> writeStudentTableGroupIdColumn;
-
     @FXML
     private Label writeWarning;
-
-    public Label englishText;
-    public ImageView englishImage;
-    public Label chineseText;
-    public ImageView chineseImage;
-    public Label spanishText;
-    public ImageView spanishImage;
-    public Label polishText;
-    public ImageView polishImage;
-    public Label deutschText;
-    public ImageView deutschImage;
-    public Label turkishText;
-    public ImageView turkishImage;
-    public Label czechText;
-    public ImageView czechImage;
-
-
+    @FXML
+    private TextField portTextField;
     @FXML
     private TableView<User> usersTable;
     @FXML
@@ -186,6 +183,8 @@ public class MainController extends Application {
 
     @FXML
     private AnchorPane primaryAnchorPane;
+    @FXML
+    private AnchorPane writeFieldsAnchorPane;
     @FXML
     private AnchorPane title;
     @FXML
@@ -340,6 +339,8 @@ public class MainController extends Application {
     private MenuItem criteriaUserLessonGroupId;
     @FXML
     private MenuItem criteriaUserLessonTeacherId;
+    @FXML
+    private MenuItem criteriaUserLessonTeacherSurname;
     @FXML
     private MenuItem criteriaUserLessonCabinet;
     @FXML
@@ -1511,7 +1512,7 @@ public class MainController extends Application {
         lessonTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
 
         lessonUserGroupIdColumn.setCellValueFactory(new PropertyValueFactory<>("groupId"));
-        lessonUserTeacherIdColumn.setCellValueFactory(new PropertyValueFactory<>("teacherId"));
+        lessonUserTeacherIdColumn.setCellValueFactory(new PropertyValueFactory<>("teacherSurname"));
         lessonUserCabinetColumn.setCellValueFactory(new PropertyValueFactory<>("cabinet"));
         lessonUserDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonUserTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -1572,6 +1573,7 @@ public class MainController extends Application {
         menuPaneUsers.getStyleClass().add("menuPane");
         menuPaneSettings.getStyleClass().add("menuPane");
         menuPaneInfo.getStyleClass().add("menuPane");
+        writeFieldsAnchorPane.getStyleClass().add("writeFieldsPane");
 
         signUpButton.getStyleClass().add("signUpButton");
         loginButton.getStyleClass().add("loginButton");
@@ -1725,7 +1727,8 @@ public class MainController extends Application {
             if (!connServer.exists()) {
                 loginButton.setDisable(true);
                 signUpButton.setDisable(true);
-                connServer = new ServerConnection(serverIP, 8000);
+                if (portTextField.getText().matches("[0-9]{4}"))
+                    connServer = new ServerConnection(serverIP, Integer.parseInt(portTextField.getText()));
 
                 if (connServer.exists()) {
                     loginWarning.setStyle("-fx-text-fill: #7f8e55");
@@ -1861,6 +1864,7 @@ public class MainController extends Application {
         criteriaUserLessonStudentId.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonStudentId.getText()));
         criteriaUserLessonGroupId.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonGroupId.getText()));
         criteriaUserLessonTeacherId.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonTeacherId.getText()));
+        criteriaUserLessonTeacherSurname.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonTeacherSurname.getText()));
         criteriaUserLessonCabinet.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonCabinet.getText()));
         criteriaUserLessonDate.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonDate.getText()));
         criteriaUserLessonTime.setOnAction(actionEvent -> criteriaButtonUserLesson.setText(criteriaUserLessonTime.getText()));
@@ -2165,8 +2169,6 @@ public class MainController extends Application {
             setTheme("Dark");
         });
         themeItem_Light.setDisable(false);
-
-
 
 
         resetSearchButton.getStyleClass().add("resetSearchButton");
@@ -3275,12 +3277,13 @@ public class MainController extends Application {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                for(PieChart.Data p : pieChartData)
+                for (PieChart.Data p : pieChartData)
                     System.out.println(p.getName());
                 pieChartData.add(new PieChart.Data(lang, pplrty));
             }
         });
     }
+
     private synchronized void clearPieChartData() {
         Platform.runLater(new Runnable() {
             @Override
@@ -3338,19 +3341,19 @@ public class MainController extends Application {
             message += "Некорректное имя. ";
             result = false;
         }
-        if (!writeSurnameTextField.getText().trim().matches("[а-яА-Я]{2,20}")){
+        if (!writeSurnameTextField.getText().trim().matches("[а-яА-Я]{2,20}")) {
             message += "Некорректная фамилия. ";
             result = false;
         }
-        if (!writePatronymicTextField.getText().trim().matches("[а-яА-Я]{2,30}")){
+        if (!writePatronymicTextField.getText().trim().matches("[а-яА-Я]{2,30}")) {
             message += "Некорректное отчество.\n";
             result = false;
         }
-        if (!writeEmailTextField.getText().trim().matches("(?:[a-z0-9!_-]+(?:\\.[a-z0-9!_-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+))") && !writeEmailTextField.getText().equals("")){
+        if (!writeEmailTextField.getText().trim().matches("(?:[a-z0-9!_-]+(?:\\.[a-z0-9!_-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+))") && !writeEmailTextField.getText().equals("")) {
             message += "Некорректный адрес эл. почты. ";
             result = false;
         }
-        if (!writePhoneTextField.getText().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") && !writePhoneTextField.getText().equals("")){
+        if (!writePhoneTextField.getText().trim().matches("^(\\+375|375)?[\\s\\-]?\\(?(17|29|33|44)\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$") && !writePhoneTextField.getText().equals("")) {
             message += "Некорректный номер телефона. ";
             result = false;
         }
@@ -4095,8 +4098,11 @@ public class MainController extends Application {
         initUsersDataServerBuffer();
         lessonsUserData.clear();
 
-        for (Lesson l : connServer.getLessonsList())
+        for (Lesson l : connServer.getLessonsList()) {
+            Teacher bufTeacher = findTeacher(l.getTeacherId());
+            l.setTeacherSurname(bufTeacher.getSurname() + " " + bufTeacher.getName().charAt(0) + ". " + bufTeacher.getPatronymic().charAt(0) + ".");
             lessonsUserData.add(l);
+        }
 
         if (!searchFieldUserLesson.getText().equals("")) {
             Iterator<Lesson> i = lessonsUserData.iterator();
@@ -4127,6 +4133,13 @@ public class MainController extends Application {
                         }
                     }
                     break;
+                case "Фамилия учителя":
+                    while (i.hasNext()) {
+                        if (!findTeacher(i.next().getTeacherId()).getSurname().equals(searchFieldUserLesson.getText())) {
+                            i.remove();
+                        }
+                    }
+                    break;
                 case "Аудитория":
                     while (i.hasNext()) {
                         if (!i.next().getCabinet().equals(searchFieldUserLesson.getText())) {
@@ -4150,6 +4163,13 @@ public class MainController extends Application {
                     break;
             }
         }
+    }
+
+    private Teacher findTeacher(String id) {
+        for (Teacher t : teachersData)
+            if (t.getId() == Integer.parseInt(id))
+                return t;
+        return null;
     }
 
     private void searchGroup() {
