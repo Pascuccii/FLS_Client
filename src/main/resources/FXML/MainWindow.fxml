@@ -43,7 +43,7 @@
               <items>
                 <AnchorPane fx:id="leftAnchorPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="210.0">
                      <children>
-                        <FlowPane fx:id="menuAdmin" layoutX="-12.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <FlowPane fx:id="menuAdmin" layoutX="-12.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label fx:id="currentUserLabelAdmin" alignment="CENTER" prefHeight="25.0" prefWidth="203.0" text="gleb" textAlignment="CENTER">
                                  <padding>
@@ -126,7 +126,7 @@
                            <padding>
                               <Insets top="5.0" />
                            </padding></FlowPane>
-                        <FlowPane fx:id="menuUser" layoutX="-2.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <FlowPane fx:id="menuUser" layoutX="-2.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label fx:id="currentUserLabelUser" alignment="CENTER" prefHeight="25.0" prefWidth="203.0" text="gleb">
                                  <padding>
@@ -546,7 +546,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="menuPaneInfo" layoutX="20.0" layoutY="20.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="menuPaneInfo" layoutX="20.0" layoutY="20.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label fx:id="reportInfoLabel" alignment="TOP_CENTER" layoutX="41.0" layoutY="79.0" prefHeight="238.0" prefWidth="490.0" text="Отчёт будет содержать информацию о дате и авторе его создания, данные всех таблиц на момент создания" wrapText="true">
                                  <font>
@@ -792,7 +792,7 @@
                               </TabPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="menuPaneUserWriteIn" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="menuPaneUserWriteIn" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane fx:id="writeFieldsAnchorPane" layoutX="30.0" layoutY="25.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                                  <children>
@@ -841,6 +841,7 @@
             <AnchorPane fx:id="loginPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
                <children>
                   <TextField fx:id="portTextField" focusTraversable="false" layoutX="729.0" layoutY="14.0" prefHeight="27.0" prefWidth="45.0" text="8000" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                  <TextField fx:id="ipTextField" focusTraversable="false" layoutX="612.6" layoutY="15.0" prefHeight="27.0" prefWidth="110.0" text="127.0.0.1" AnchorPane.rightAnchor="67.0" AnchorPane.topAnchor="15.0" />
                   <AnchorPane fx:id="loginElementsPane" layoutX="250.0" layoutY="176.0" prefHeight="149.0" prefWidth="308.0">
                      <children>
                         <TextField fx:id="usernameField" layoutX="79.0" prefWidth="150.0" />
@@ -852,6 +853,7 @@
                      </children>
                   </AnchorPane>
                   <Label fx:id="loginWarning" alignment="CENTER" layoutX="45.0" layoutY="117.0" prefHeight="18.0" prefWidth="709.0" />
+                  <Label layoutX="724.0" layoutY="19.0" text=":" />
                </children>
             </AnchorPane>
          </children>

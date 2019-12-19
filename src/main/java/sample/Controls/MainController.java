@@ -102,6 +102,8 @@ public class MainController extends Application {
     @FXML
     private TextField portTextField;
     @FXML
+    private TextField ipTextField;
+    @FXML
     private TableView<User> usersTable;
     @FXML
     private TableColumn<User, Integer> idColumn;
@@ -908,7 +910,7 @@ public class MainController extends Application {
         connServer = new ServerConnection("127.0.0.1", 8000);
         if (!connServer.exists()) {
             loginWarning.setStyle("-fx-text-fill: #d85751");
-            loginWarning.setText("No connection.");
+            loginWarning.setText("Нет подключения.");
         } else
             serverIP = "127.0.0.1";
 
@@ -1744,8 +1746,11 @@ public class MainController extends Application {
             if (!connServer.exists()) {
                 loginButton.setDisable(true);
                 signUpButton.setDisable(true);
-                if (portTextField.getText().matches("[0-9]{4}"))
+                if (portTextField.getText().matches("[0-9]{4}") && ipTextField.getText().trim().matches("([0-9]{1,3}[.]){3}[0-9]{1,3}")) {
+                    serverIP = ipTextField.getText().trim();
                     connServer = new ServerConnection(serverIP, Integer.parseInt(portTextField.getText()));
+                } else
+                    System.out.println("bad conn data");
 
                 if (connServer.exists()) {
                     loginWarning.setStyle("-fx-text-fill: #7f8e55");
